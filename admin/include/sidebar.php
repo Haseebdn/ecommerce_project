@@ -22,6 +22,14 @@ print_r ($page);
                     <li><a class="nav-link" href="export-table.php">View Categories</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                        data-feather="briefcase"></i><span>Subcategory</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="basic-form.php">Add Subcategory</a></li>
+                    <li><a class="nav-link" href="https://ecommerce-project.test/admin/subcat-table.php">View Subategories</a></li>
+                </ul>
+            </li>
         </ul>
     </aside>
 </div>

@@ -2,7 +2,9 @@
   include "./include/header.php";
   include "./include/sidebar.php";
   include "./sql/conn.php";
+
   ?>
+
 
 
 
@@ -11,18 +13,25 @@
    <section class="section">
      <div class="section-body">
        <?php
-    if (isset($_GET['success'])) {
-        if ($_GET['success'] == 1) {
-    ?>
-            <div class="alert text-center alert-success">Date saved successfully</div>
-        <?php
-        } else {
+        if (isset($_GET['success'])) {
+          if ($_GET['success'] == 1) {
         ?>
-            <div class="alert text-center alert-danger">Date save failed</div>
-    <?php
+           <div class="alert text-center alert-success">Date saved successfully</div>
+         <?php
+          } else {
+          ?>
+           <div class="alert text-center alert-danger">Date save failed</div>
+       <?php
+          }
         }
-    }
-    ?>
+        if (isset($_GET['delete-success'])) {
+          if ($_GET['delete-success'] == 1) {
+            echo '<div class="alert alert-success">Category Deleted successfully</div>';
+          } else {
+            echo '<div class="alert alert-success">Category Deletion Failed</div>';
+          }
+        }
+        ?>
        <div class="row">
          <div class="col-12">
            <div class="card">
@@ -36,8 +45,7 @@
                    <thead>
                      <tr>
                        <th>Category</th>
-                       <th colspan="2">Description</th>
-                       <th></th>
+                       <th>Description</th>
                        <th>Status</th>
                        <th>Actions</th>
                      </tr>
@@ -51,22 +59,20 @@
                       ?>
                        <tr>
                          <td><?php echo $row['cat_name']; ?></td>
-                         <td colspan="2"><?php echo $row['cat_description']; ?></td>
-                         <td></td>
+                         <td><?php echo $row['cat_description']; ?></td>
                          <td>
-                           <div class="form-check form-switch">
-                             <input class="form-check-input status-toggle"
-                               type="checkbox"
+                           <label class="custom-switch pl-0">
+                             <input onchange="fetchstatus(<?php echo $row['cat_id'] ?>, 'categories')"
                                id="switch_<?php echo $row['cat_id']; ?>"
-                               <?php echo ($row['is_active'] == 1) ? 'checked' : ''; ?>>
-                             <label for="switch_<?php echo $row['cat_id']; ?>" class="form-check-label ml-2 fw-bold">
-                              Active
-                             </label>
-                           </div>
+                               <?php echo ($row['is_active'] == 1) ? 'checked' : '' ?> type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                             <span class="custom-switch-indicator"></span>
+                             <span class="custom-switch-description">Active</span>
+                           </label>
+
                          </td>
                          <td>
-                           <a class="btn btn-primary btn-sm" href="">Edit</a>
-                           <a class="btn btn-danger btn-sm" href="">Delete</a>
+                           <a class="btn btn-primary btn-md h1" href="./basic-form.php?id=<?php echo $row['cat_id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                           <a class="btn btn-danger btn-md h1" href="./handlers/category/delete.php?id=<?php echo $row['cat_id']; ?>"><i class="fa-solid fa-trash"></i></a>
                          </td>
                        </tr>
                      <?php } ?>
