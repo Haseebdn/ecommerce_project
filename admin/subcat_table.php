@@ -13,19 +13,19 @@
    <section class="section">
      <div class="section-body">
        <?php
-        if (isset($_GET['success'])) {
-          if ($_GET['success'] == 1) {
+        if (isset($_GET['progress'])) {
+          if ($_GET['progress'] == 1) {
         ?>
-           <div class="alert text-center alert-success">Date saved successfully</div>
+           <div class="alert text-center alert-success">Data saved successfully</div>
          <?php
           } else {
           ?>
-           <div class="alert text-center alert-danger">Date save failed</div>
+           <div class="alert text-center alert-danger">Data save failed</div>
        <?php
           }
         }
-        if (isset($_GET['delete-success'])) {
-          if ($_GET['delete-success'] == 1) {
+        if (isset($_GET['delete-progress'])) {
+          if ($_GET['delete-progress'] == 1) {
             echo '<div class="alert alert-success">Category Deleted successfully</div>';
           } else {
             echo '<div class="alert alert-success">Category Deletion Failed</div>';
@@ -36,43 +36,51 @@
          <div class="col-12">
            <div class="card">
              <div class="card-header d-flex justify-content-between">
-               <h4>Category Table</h4>
-               <a href="./basic-form.php" class="btn btn-primary">Add Category</a>
+               <h4>Subcategory Table</h4>
+               <a href="./subcat_form.php" class="btn btn-primary">Add Subcategory</a>
              </div>
              <div class="card-body">
                <div class="table-responsive">
                  <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                    <thead>
                      <tr>
+                       <th>Subcategory</th>
                        <th>Category</th>
                        <th>Description</th>
                        <th>Status</th>
+                       <th>Created At</th>
                        <th>Actions</th>
                      </tr>
                    </thead>
                    <tbody>
                      <?php
-                      $query = "SELECT subcat*,cat.cat_name AS parent_name FROM categories AS subcat LEFT JOIN categories AS cat ON subcat.parent_id=cat.cat_id WHERE `parent_id` IS NULL";
+                      $query = "SELECT subcat.*,subcat.cat_id AS subcat_id,cat.cat_id AS cat_id, cat.cat_name AS parent_name 
+                                            FROM categories AS subcat 
+                                            LEFT JOIN categories AS cat 
+                                              ON subcat.parent_id = cat.cat_id 
+                                            WHERE subcat.parent_id IS NOT NULL";
                       $sql = mysqli_query($conn, $query);
 
                       while ($row = mysqli_fetch_assoc($sql)) {
                       ?>
                        <tr>
                          <td><?php echo $row['cat_name']; ?></td>
+                         <td><?php echo $row['parent_name']    ?></td>
                          <td><?php echo $row['cat_description']; ?></td>
                          <td>
                            <label class="custom-switch pl-0">
-                             <input onchange="fetchstatus(<?php echo $row['cat_id'] ?>, 'categories')"
-                               id="switch_<?php echo $row['cat_id']; ?>"
+                             <input onchange="fetchstatus(<?php echo $row['subcat_id'] ?>, 'categories')"
+                               id="switch_<?php echo $row['subcat_id']; ?>"
                                <?php echo ($row['is_active'] == 1) ? 'checked' : '' ?> type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
                              <span class="custom-switch-indicator"></span>
                              <span class="custom-switch-description">Active</span>
                            </label>
 
                          </td>
+                         <td><?php echo $row['created_at']; ?></td>
                          <td>
-                           <a class="btn btn-primary btn-sm" href="./basic-form.php?id=<?php echo $row['cat_id']; ?>"><i class="fa-solid fa-pen"></i></a>
-                           <a class="btn btn-danger btn-sm" href="./handlers/category/delete.php?id=<?php echo $row['cat_id']; ?>"><i class="fa-solid fa-trash"></i></a>
+                           <a class="btn btn-primary btn-sm" href="./subcat_form.php?id=<?php echo $row['subcat_id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                           <a class="btn btn-danger btn-sm" href="./handlers/category/delete.php?id=<?php echo $row['subcat_id']; ?>"><i class="fa-solid fa-trash"></i></a>
                          </td>
                        </tr>
                      <?php } ?>

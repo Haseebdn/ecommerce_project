@@ -26,8 +26,8 @@ print_r ($page);
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
                         data-feather="briefcase"></i><span>Subcategory</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="basic-form.php">Add Subcategory</a></li>
-                    <li><a class="nav-link" href="https://ecommerce-project.test/admin/subcat-table.php">View Subategories</a></li>
+                    <li><a class="nav-link" href="subcat_form.php">Add Subcategory</a></li>
+                    <li><a class="nav-link" href="https://ecommerce-project.test/admin/subcat_table.php">View Subategories</a></li>
                 </ul>
             </li>
         </ul>

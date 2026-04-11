@@ -34,6 +34,15 @@
         if (success)
             window.location.assign("/admin/export-table.php");
     }, 2000);
+
+    setTimeout(() => {
+        let params = new URLSearchParams(window.location.search);
+
+        let progress = params.get("progress") || params.get("delete-progress");
+
+        if (progress)
+            window.location.assign("/admin/subcat_table.php");
+    }, 2000);
 </script>
 
 </body>
