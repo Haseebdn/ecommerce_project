@@ -26,9 +26,9 @@
         }
         if (isset($_GET['delete-progress'])) {
           if ($_GET['delete-progress'] == 1) {
-            echo '<div class="alert alert-success">Category Deleted successfully</div>';
+            echo '<div class="alert alert-success">Subcategory Deleted successfully</div>';
           } else {
-            echo '<div class="alert alert-success">Category Deletion Failed</div>';
+            echo '<div class="alert alert-success">Subcategory Deletion Failed</div>';
           }
         }
         ?>
@@ -80,7 +80,7 @@
                          <td><?php echo $row['created_at']; ?></td>
                          <td>
                            <a class="btn btn-primary btn-sm" href="./subcat_form.php?id=<?php echo $row['subcat_id']; ?>"><i class="fa-solid fa-pen"></i></a>
-                           <a class="btn btn-danger btn-sm" href="./handlers/category/delete.php?id=<?php echo $row['subcat_id']; ?>"><i class="fa-solid fa-trash"></i></a>
+                           <a class="btn btn-danger btn-sm" href="./handlers/subcategory/delete.php?id=<?php echo $row['subcat_id']; ?>"><i class="fa-solid fa-trash"></i></a>
                          </td>
                        </tr>
                      <?php } ?>

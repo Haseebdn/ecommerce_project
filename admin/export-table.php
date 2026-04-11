@@ -52,7 +52,7 @@
                    </thead>
                    <tbody>
                      <?php
-                      $query = "SELECT subcat*,cat.cat_name AS parent_name FROM categories AS subcat LEFT JOIN categories AS cat ON subcat.parent_id=cat.cat_id WHERE `parent_id` IS NULL";
+                      $query = "SELECT * FROM categories WHERE `parent_id` IS NULL";
                       $sql = mysqli_query($conn, $query);
 
                       while ($row = mysqli_fetch_assoc($sql)) {

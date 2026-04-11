@@ -25,10 +25,10 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
-                            <h4><?php  echo isset($_GET['id']) ? 'Update Subcategory' : 'Add Category'    ?></h4>
+                            <h4><?php echo isset($_GET['id']) ? 'Update Subcategory' : 'Add Subcategory'    ?></h4>
                             <a href="./subcat_table.php" class="btn btn-primary">Subcategories</a>
                         </div>
-                        <form action="<?php echo isset($_GET['id']) ? './handlers/subcategory/update.php' : './handlers/subcategory/add.php'?>" method="POST">
+                        <form action="<?php echo isset($_GET['id']) ? './handlers/subcategory/update.php' : './handlers/subcategory/add.php' ?>" method="POST">
                             <div class="card-body">
                                 <input type="hidden" name='edit_index' value="<?php echo isset($record['cat_id']) ? $record['cat_id'] : '' ?>">
 
@@ -48,7 +48,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                                 <?php echo (isset($record['parent_id']) && $record['parent_id'] == $row['cat_id']) ? 'selected' : '' ?>>
                                                 <?php echo $row['cat_name'] ?>
                                             </option>
-                                            
+
                                         <?php
                                         }
                                         ?>
