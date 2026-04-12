@@ -23,29 +23,42 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
       <div class="row  justify-content-center">
         <div class="col-12 col-md-6 col-lg-6">
           <div class="card">
+            <!-- heading -->
             <div class="card-header d-flex justify-content-between">
-              <h4><?php echo isset($_GET['id']) ? 'Update Category' : 'Add Category'?></h4>
-              <a href="./export-table.php" class="btn btn-primary">Categories</a>
+              <h4><?php echo isset($_GET['id']) ? 'Update Category' : 'Add Category' ?></h4>
+              <a href="./cat_table.php" class="btn btn-primary">Categories</a>
             </div>
-            <form action="<?php echo isset($_GET['id']) ? './handlers/category/update.php' : './handlers/category/add.php'?>" method="POST">
+            <!-- heading -->
+            <!-- form -->
+            <form action="<?php echo isset($_GET['id']) ? './handlers/category/update.php' : './handlers/category/add.php' ?>" method="POST">
+
               <div class="card-body">
-                <input type="hidden" name='edit_index' value="<?php echo isset($record['cat_id']) ? $record['cat_id'] : '' ?>" >
+                <!-- index to edit -->
+                <input type="hidden" name='edit_index' value="<?php echo isset($record['cat_id']) ? $record['cat_id'] : '' ?>">
+                <!-- index to edit -->
+                <!-- category name -->
                 <div class="form-group">
                   <label>Category Name</label>
                   <input name="cat_name" type="text" id="cat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>">
                 </div>
+                <!-- category name -->
+                <!-- description -->
                 <div>
                   <label for="">
                     Description
                   </label>
                   <textarea class="form-control" name="cat_description" id="cat_description"><?php echo isset($record['cat_description']) ? $record['cat_description'] : '' ?></textarea>
                 </div>
+                <!-- description -->
               </div>
+              <!-- buttons -->
               <div class="card-footer text-right">
-                <button id="cat_submit" class="btn btn-primary mr-1" type="submit"><?php  echo isset($_GET['id']) ? 'Update' : 'Add'   ?></button>
+                <button id="cat_submit" class="btn btn-primary mr-1" type="submit"><?php echo isset($_GET['id']) ? 'Update' : 'Add'   ?></button>
                 <button class="btn btn-secondary" type="reset">Reset</button>
               </div>
+              <!-- buttons -->
             </form>
+            <!-- form -->
           </div>
         </div>
       </div>
