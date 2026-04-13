@@ -24,4 +24,5 @@ if (isset($_GET) && !empty($_GET)) {
 
     $is_success = $response['success'] ? 1 : 0;
     header("location:../../subcat_table.php?delete-progress=$is_success");
+    exit();
 }

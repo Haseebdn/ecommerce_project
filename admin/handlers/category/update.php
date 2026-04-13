@@ -13,7 +13,7 @@ if (isset($_POST) && !empty($_POST)) {
     // variables
 
     // validation
-    if ($cat_name == '' || $cat_description == '') {
+    if ($cat_name == '' || $cat_description == '' || $id == '') {
         $response = ['msg' => "Please fillout values correctly", "success" => false];
         header("location:../../cat_table.php?success=0");
         exit();

@@ -8,13 +8,35 @@
  <div class="main-content">
    <section class="section">
      <div class="section-body">
+       <!-- alert -->
+       <?php
+        if (isset($_GET['supp'])) {
+          if ($_GET['supp'] == 1) {
+        ?>
+           <div class="alert text-center alert-success">Data saved successfully</div>
+         <?php
+          } else {
+          ?>
+           <div class="alert text-center alert-danger">Data save failed</div>
+       <?php
+          }
+        }
+        if (isset($_GET['delete-supp'])) {
+          if ($_GET['delete-supp'] == 1) {
+            echo '<div class="alert alert-success">Subcategory Deleted successfully</div>';
+          } else {
+            echo '<div class="alert alert-success">Subcategory Deletion Failed</div>';
+          }
+        }
+        ?>
+       <!-- alert -->
        <div class="row">
          <div class="col-12">
            <div class="card">
              <!-- heading -->
              <div class="card-header d-flex justify-content-between">
-               <h4>Subcategory Table</h4>
-               <a href="./subcat_form.php" class="btn btn-primary">Add Subcategory</a>
+               <h4>Supplier Table</h4>
+               <a href="./supplier_form.php" class="btn btn-primary">Add Supplier</a>
              </div>
              <!-- heading -->
              <div class="card-body">
@@ -60,8 +82,8 @@
                          <td><?php echo $row['created_at']    ?></td>
                          <!-- buttons -->
                          <td>
-                           <a class="btn btn-primary btn-sm" href=""><i class="fa-solid fa-pen"></i></a>
-                           <a class="btn btn-danger btn-sm" href=""><i class="fa-solid fa-trash"></i></a>
+                           <a class="btn btn-primary btn-sm" href="./supplier_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                           <a class="btn btn-danger btn-sm" href="./handlers/supplier/delete.php?id=<?php echo $row['id']  ?>"><i class="fa-solid fa-trash"></i></a>
                          </td>
                          <!-- buttons -->
                        </tr>

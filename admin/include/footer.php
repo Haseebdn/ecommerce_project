@@ -25,7 +25,7 @@
 <script src="assets/js/custom.js"></script>
 <script>
     let alert = document.querySelector('.alert');
-
+    // category
     setTimeout(() => {
         let params = new URLSearchParams(window.location.search);
 
@@ -34,7 +34,9 @@
         if (success)
             window.location.assign("/admin/cat_table.php");
     }, 2000);
+    // category
 
+    // subcategoty
     setTimeout(() => {
         let params = new URLSearchParams(window.location.search);
 
@@ -43,6 +45,18 @@
         if (progress)
             window.location.assign("/admin/subcat_table.php");
     }, 2000);
+    // subcategoty
+
+    // supplier
+    setTimeout(() => {
+        let params = new URLSearchParams(window.location.search);
+
+        let progress = params.get("supp") || params.get("delete-supp");
+
+        if (progress)
+            window.location.assign("/admin/supplier_table.php");
+    }, 2000);
+    // supplier
 </script>
 
 </body>

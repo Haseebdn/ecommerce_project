@@ -24,4 +24,5 @@ if (isset($_GET) && !empty($_GET)) {
 
     $is_success = $response['success'] ? 1 : 0;
     header("location:../../cat_table.php?delete-success=$is_success");
+    exit();
 }
