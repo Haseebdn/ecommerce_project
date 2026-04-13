@@ -6,7 +6,7 @@ include "../../sql/conn.php";
 
 if (isset($_POST) && !empty($_POST)) {
     // variables
-    $reponse = [];
+    $response = [];
     $parent_id = $_POST['category_id'];
     $subcat_name = $_POST['cat_name'];
     $description = $_POST['cat_description'];
@@ -35,7 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
     }
     // response
 
-    $is_success = $response['success'] ? 1 : 0;
+    $is_success = $response['progress'] ? 1 : 0;
     header("location:../../subcat_table.php?progress=$is_success");
     exit();
 }

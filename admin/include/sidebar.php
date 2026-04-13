@@ -18,13 +18,12 @@ print_r($page);
             <li class="menu-header">Main</li>
             <!-- Dashboard -->
             <li class="dropdown active">
-                <a href="index.php" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+                <a href="index.php" class="nav-link"><i class="fa-solid fa-display"></i><span>Dashboard</span></a>
             </li>
             <!-- Dashboard -->
             <!-- category -->
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="briefcase"></i><span>Category</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-layer-group"></i><span>Category</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="cat_form.php">Add Category</a></li>
                     <li><a class="nav-link" href="cat_table.php">View Categories</a></li>
@@ -33,14 +32,22 @@ print_r($page);
             <!-- category -->
             <!-- subcategory -->
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="briefcase"></i><span>Subcategory</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-layer-group"></i><span>Subcategory</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="subcat_form.php">Add Subcategory</a></li>
                     <li><a class="nav-link" href="subcat_table.php">View Subategories</a></li>
                 </ul>
             </li>
             <!-- subcategory -->
+            <!-- Supplier -->
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-box"></i></i><span>Supplier</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="supplier_form.php">Add Supplier</a></li>
+                    <li><a class="nav-link" href="supplier_table.php">View Supplier</a></li>
+                </ul>
+            </li>
+            <!-- Supplier -->
         </ul>
     </aside>
 </div>

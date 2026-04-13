@@ -21,7 +21,7 @@ if (isset($_POST) && !empty($_POST)) {
     // validation
 
     // query
-    $query = "UPDATE categories SET `cat_name`='$cat_name',`cat_description`='$cat_description' WHERE `cat_id`=$id";
+    $query = "UPDATE categories SET `cat_name`='$cat_name',`cat_description`='$cat_description' WHERE `id`=$id";
     $run = mysqli_query($conn, $query);
     // query
 

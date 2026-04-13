@@ -64,10 +64,10 @@
                    <tbody>
 
                      <?php
-                      $query = "SELECT subcat.*,subcat.cat_id AS subcat_id,cat.cat_id AS cat_id, cat.cat_name AS parent_name 
+                      $query = "SELECT subcat.*,subcat.id AS subcat_id,cat.id AS cat_id, cat.cat_name AS parent_name 
                                            FROM categories AS subcat 
                                            LEFT JOIN categories AS cat 
-                                             ON subcat.parent_id = cat.cat_id 
+                                             ON subcat.parent_id = cat.id 
                                            WHERE subcat.parent_id IS NOT NULL";
                       $sql = mysqli_query($conn, $query);
 

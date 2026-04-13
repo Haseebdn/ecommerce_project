@@ -7,7 +7,7 @@ include "./sql/conn.php";
 if (isset($_GET['id']) && $_GET['id'] != "") {
     $id = $_GET['id'];
 
-    $query = "SELECT * FROM `categories` WHERE `cat_id` = '$id'";
+    $query = "SELECT * FROM `categories` WHERE `id` = '$id'";
 
     $sql = mysqli_query($conn, $query);
 
@@ -34,7 +34,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                         <form action="<?php echo isset($_GET['id']) ? './handlers/subcategory/update.php' : './handlers/subcategory/add.php' ?>" method="POST">
                             <div class="card-body">
                                 <!-- input to edit -->
-                                <input type="hidden" name='edit_index' value="<?php echo isset($record['cat_id']) ? $record['cat_id'] : '' ?>">
+                                <input type="hidden" name='edit_index' value="<?php echo isset($record['id']) ? $record['id'] : '' ?>">
                                 <!-- input to edit -->
                                 <!-- query -->
                                 <?php
@@ -50,8 +50,8 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                         <?php
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
-                                            <option value="<?php echo $row['cat_id'] ?>"
-                                                <?php echo (isset($record['parent_id']) && $record['parent_id'] == $row['cat_id']) ? 'selected' : '' ?>>
+                                            <option value="<?php echo $row['id'] ?>"
+                                                <?php echo (isset($record['parent_id']) && $record['parent_id'] == $row['id']) ? 'selected' : '' ?>>
                                                 <?php echo $row['cat_name'] ?>
                                             </option>
 

@@ -8,7 +8,7 @@ if (isset($_POST) && !empty($_POST)) {
 
     // query
     $query = "UPDATE $table SET is_active = IF(is_active = 1, 0, 1) 
-                  WHERE cat_id = '$category'";
+                  WHERE id = '$category' ";
 
     $sql = mysqli_query($conn, $query);
     // query

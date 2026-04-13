@@ -9,7 +9,7 @@ if (isset($_GET) && !empty($_GET)) {
     // variables
 
     // query
-    $query = "DELETE FROM `categories` WHERE `cat_id`='$id'";
+    $query = "DELETE FROM `categories` WHERE `id`='$id'";
     $run = mysqli_query($conn, $query);
     // query
     

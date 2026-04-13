@@ -7,7 +7,7 @@ include "./sql/conn.php";
 if (isset($_GET['id']) && $_GET['id'] != "") {
   $id = $_GET['id'];
 
-  $query = "SELECT * FROM `categories` WHERE `cat_id` = '$id'";
+  $query = "SELECT * FROM `categories` WHERE `id` = '$id'";
 
   $sql = mysqli_query($conn, $query);
 
@@ -34,7 +34,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
 
               <div class="card-body">
                 <!-- index to edit -->
-                <input type="hidden" name='edit_index' value="<?php echo isset($record['cat_id']) ? $record['cat_id'] : '' ?>">
+                <input type="hidden" name='edit_index' value="<?php echo isset($record['id']) ? $record['id'] : '' ?>">
                 <!-- index to edit -->
                 <!-- category name -->
                 <div class="form-group">

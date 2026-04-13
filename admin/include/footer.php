@@ -32,7 +32,7 @@
         let success = params.get("success") || params.get("delete-success");
 
         if (success)
-            window.location.assign("/admin/export-table.php");
+            window.location.assign("/admin/cat_table.php");
     }, 2000);
 
     setTimeout(() => {
