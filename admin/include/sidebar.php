@@ -48,6 +48,13 @@ print_r($page);
                 </ul>
             </li>
             <!-- Supplier -->
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-box"></i></i><span>Quantity Units</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="qtyUnit_form.php">Add Units</a></li>
+                    <li><a class="nav-link" href="qtyUnit_table.php">View Units</a></li>
+                </ul>
+            </li>
         </ul>
     </aside>
 </div>

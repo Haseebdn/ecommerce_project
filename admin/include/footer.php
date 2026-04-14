@@ -57,6 +57,16 @@
             window.location.assign("/admin/supplier_table.php");
     }, 2000);
     // supplier
+    // qty
+    setTimeout(() => {
+        let params = new URLSearchParams(window.location.search);
+
+        let progress = params.get("qty") || params.get("qty-delete");
+
+        if (progress)
+            window.location.assign("/admin/qtyUnit_table.php");
+    }, 2000);
+    // qty
 </script>
 
 </body>
