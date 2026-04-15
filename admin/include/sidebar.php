@@ -23,7 +23,7 @@ print_r($page);
             <!-- Dashboard -->
             <!-- category -->
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-layer-group"></i><span>Category</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-layer-group"></i><span>Categories</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="cat_form.php">Add Category</a></li>
                     <li><a class="nav-link" href="cat_table.php">View Categories</a></li>
@@ -32,7 +32,7 @@ print_r($page);
             <!-- category -->
             <!-- subcategory -->
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-layer-group"></i><span>Subcategory</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-layer-group"></i><span>Subcategories</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="subcat_form.php">Add Subcategory</a></li>
                     <li><a class="nav-link" href="subcat_table.php">View Subategories</a></li>
@@ -41,20 +41,31 @@ print_r($page);
             <!-- subcategory -->
             <!-- Supplier -->
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-box"></i></i><span>Supplier</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-box"></i></i><span>Suppliers</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="supplier_form.php">Add Supplier</a></li>
-                    <li><a class="nav-link" href="supplier_table.php">View Supplier</a></li>
+                    <li><a class="nav-link" href="supplier_table.php">View Suppliers</a></li>
                 </ul>
             </li>
             <!-- Supplier -->
+            <!-- units -->
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-box"></i></i><span>Quantity Units</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="qtyUnit_form.php">Add Units</a></li>
+                    <li><a class="nav-link" href="qtyUnit_form.php">Add Unit</a></li>
                     <li><a class="nav-link" href="qtyUnit_table.php">View Units</a></li>
                 </ul>
             </li>
+            <!-- units -->
+            <!-- product -->
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fa-solid fa-box"></i></i><span>Products</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="product_form.php">Add Product</a></li>
+                    <li><a class="nav-link" href="product_table.php">View Products</a></li>
+                </ul>
+            </li>
+            <!-- product -->
         </ul>
     </aside>
 </div>

@@ -106,12 +106,9 @@
  </div>
 
 
-
-
-
-
-
-
  <?php
     include "./include/footer.php";
     ?>
+ <script src="assets/bundles/datatables/datatables.min.js"></script>
+
+ <script src="assets/js/page/datatables.js"></script>
