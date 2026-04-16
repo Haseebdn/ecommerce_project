@@ -76,7 +76,9 @@
                                                  <td>
                                                      <a class="btn btn-primary btn-sm" href="./product_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
                                                      <a class="btn btn-danger btn-sm" href="./handlers/product/delete.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash"></i></a>
-                                                     <a class="btn btn-dark btn-sm" href=""><i class="fa-solid fa-display"></i></a>
+                                                     <a class="btn btn-dark btn-sm" href="./product_preview.php?id=<?php echo $row['id'] ?>">
+                                                         <i class="fa-solid fa-display"></i>
+                                                     </a>
                                                  </td>
                                              </tr>
                                          <?php

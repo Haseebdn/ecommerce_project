@@ -1,6 +1,5 @@
 <?php
 include "../../sql/conn.php";
-session_start();
 
 if (isset($_POST) && !empty($_POST)) {
 
