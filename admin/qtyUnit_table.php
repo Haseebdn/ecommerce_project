@@ -1,7 +1,7 @@
  <?php
+    include "./sql/conn.php";
     include "./include/header.php";
     include "./include/sidebar.php";
-    include "./sql/conn.php";
     ?>
 
 
@@ -9,29 +9,19 @@
      <section class="section">
          <div class="section-body">
              <!-- alert -->
-             <?php
-                if (isset($_GET['qty'])) {
+             <?php if (isset($_SESSION['success'])) { ?>
+                 <div class="alert text-center alert-success">
+                     <?php echo $_SESSION['success']; ?>
+                 </div>
+             <?php unset($_SESSION['success']);
+                } ?>
 
-                    if ($_GET['qty'] == 1) {
-                ?>
-                     <div class="alert text-center alert-success">Data saved successfully</div>
-                 <?php
-                    } else {
-                    ?>
-                     <div class="alert text-center alert-danger">Data save failed</div>
-
-             <?php
-                    }
-                }
-
-                if (isset($_GET['qty-delete'])) {
-                    if ($_GET['qty-delete'] == 1) {
-                        echo '<div class="alert text-center alert-success">Data saved successfully</div>';
-                    } else {
-                        echo '<div class="alert text-center alert-danger">Data save failed</div>';
-                    }
-                }
-                ?>
+             <?php if (isset($_SESSION['error'])) { ?>
+                 <div class="alert text-center alert-danger">
+                     <?php echo $_SESSION['error']; ?>
+                 </div>
+             <?php unset($_SESSION['error']);
+                } ?>
 
              <!-- alert -->
              <div class="row">

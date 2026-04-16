@@ -1,28 +1,29 @@
 <?php
 include "../../sql/conn.php";
-// print_r($_GET);
-// die();
-if (isset($_GET) && !empty($_GET)) {
-    // variables
-    $response = [];
+
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    // id
     $id = $_GET['id'];
-    // variables
+    // id
 
     // query
     $query = "DELETE FROM `categories` WHERE `id`='$id'";
-    $run = mysqli_query($conn, $query);
     // query
-    
+
     // response
-    if ($run) {
-        $response = ['msg' => "Data Deleted Successfully", "success" => true];
-    } else {
-        $error = mysqli_error($conn);
-        $response = ['msg' => "Data Deletion failed. Error: $error", "success" => false];
+    try {
+        $run = mysqli_query($conn, $query);
+
+        if ($run && mysqli_affected_rows($conn) > 0) {
+            $_SESSION['success'] = "Data deleted successfully";
+        } else {
+            $_SESSION['error'] = "Data deletion failed";
+        }
+    } catch (mysqli_sql_exception $e) {
+        $_SESSION['error'] = "Data deletion failed";
     }
     // response
 
-    $is_success = $response['success'] ? 1 : 0;
-    header("location:../../cat_table.php?delete-success=$is_success");
+    header("location:../../cat_table.php");
     exit();
 }

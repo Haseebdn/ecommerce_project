@@ -1,7 +1,7 @@
  <?php
+    include "./sql/conn.php";
     include "./include/header.php";
     include "./include/sidebar.php";
-    include "./sql/conn.php";
     ?>
 
 
@@ -9,7 +9,19 @@
      <section class="section">
          <div class="section-body">
              <!-- alert -->
+             <?php if (isset($_SESSION['success'])) { ?>
+                 <div class="alert text-center alert-success">
+                     <?php echo $_SESSION['success']; ?>
+                 </div>
+             <?php unset($_SESSION['success']);
+                } ?>
 
+             <?php if (isset($_SESSION['error'])) { ?>
+                 <div class="alert text-center alert-danger">
+                     <?php echo $_SESSION['error']; ?>
+                 </div>
+             <?php unset($_SESSION['error']);
+                } ?>
              <!-- alert -->
              <div class="row">
                  <div class="col-12">
@@ -40,26 +52,36 @@
 
                                      <!-- table body -->
                                      <tbody>
-                                         <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td>
-                                                 <label class="custom-switch pl-0">
-                                                     <input onchange=""
-                                                         id="" type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                                     <span class="custom-switch-indicator"></span>
-                                                     <span class="custom-switch-description">Active</span>
-                                                 </label>
-                                             </td>
-                                             <td>
-                                                 <a class="btn btn-primary btn-sm" href=""><i class="fa-solid fa-pen"></i></a>
-                                                 <a class="btn btn-danger btn-sm" href=""><i class="fa-solid fa-trash"></i></a>
-                                                 <a class="btn btn-dark btn-sm" href=""><i class="fa-solid fa-display"></i></a>
-                                             </td>
-                                         </tr>
+                                         <?php
+                                            $query = "SELECT p.*,cat.cat_name AS category_name,subcat.cat_name AS subcat_name FROM products AS p 
+                                            INNER JOIN categories AS cat ON p.cat_id=cat.id
+                                            INNER JOIN categories AS subcat ON p.subcat_id=subcat.id";
+                                            $sql = mysqli_query($conn, $query);
+                                            while ($row = mysqli_fetch_assoc($sql)) {
+                                            ?>
+                                             <tr>
+                                                 <td><img src="./uploads/thumbnail/<?php echo $row['p_thumbnail'] ?? '' ?>" alt="image" width="50"></td>
+                                                 <td><?php echo $row['category_name']    ?></td>
+                                                 <td><?php echo $row['subcat_name']    ?></td>
+                                                 <td><?php echo $row['p_name']    ?></td>
+                                                 <td><?php echo $row['qty']    ?></td>
+                                                 <td class="pt-3">
+                                                     <label class="custom-switch pl-0">
+                                                         <input onchange="fetchstatus(<?php echo $row['id'] ?>, 'products')"
+                                                             id="switch_<?php echo $row['id']; ?>" <?php echo ($row['is_active'] == 1) ? 'checked' : '' ?> type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                                                         <span class="custom-switch-indicator"></span>
+                                                         <span class="custom-switch-description">Active</span>
+                                                     </label>
+                                                 </td>
+                                                 <td>
+                                                     <a class="btn btn-primary btn-sm" href="./product_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                                     <a class="btn btn-danger btn-sm" href="./handlers/product/delete.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                                     <a class="btn btn-dark btn-sm" href=""><i class="fa-solid fa-display"></i></a>
+                                                 </td>
+                                             </tr>
+                                         <?php
+                                            }
+                                            ?>
                                      </tbody>
                                      <!-- table body -->
                                  </table>

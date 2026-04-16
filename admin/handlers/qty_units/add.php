@@ -4,26 +4,36 @@ include "../../sql/conn.php";
 // print_r($_POST);
 // die();
 if (isset($_POST) && !empty($_POST)) {
-    $response = [];
+    // variables
     $unit_name = mysqli_real_escape_string($conn, $_POST['unit_name']);
-    $unit_description = mysqli_real_escape_string($conn,$_POST['unit_description']);
+    $unit_description = mysqli_real_escape_string($conn, $_POST['unit_description']);
+    // variables
 
-    if ($unit_name == '') {
-        $response = ['msg' => "Please fill all fields correctly", 'qty' => false];
-        header("location:../../qtyUnit_table?qty=0");
+    // validation
+    if (empty($unit_name)) {
+        $_SESSION['error'] = "Please Fill All Fields Correctly";
+        header("location:../../qtyUnit_table");
         exit();
     }
+    // validation
 
+    // query
     $query = "INSERT INTO `qty_units`(`unit_name`,`unit_description`) VALUE ('$unit_name','$unit_description')";
-    $run = mysqli_query($conn, $query);
+    // query
 
-    if ($run) {
-        $response = ['msg' => "Data added successfully", 'qty' => true];
-    } else {
-        $error = mysqli_error($conn);
-        $response = ['msg' => 'Data insertion failed', 'qty' => false];
+    // response
+    try {
+        $run = mysqli_query($conn, $query);
+        if ($run) {
+            $_SESSION['success'] = "Data Inserted Successfully";
+        } else {
+            $_SESSION['error'] = "Data Insertion Failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data Insertion Failed";
     }
-    $is_success = $response['qty'] ? 1 : 0;
-    header("location:../../qtyUnit_table.php?qty=$is_success");
+    // response
+    
+    header("location:../../qtyUnit_table.php");
     exit();
 }

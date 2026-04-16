@@ -5,35 +5,37 @@ include "../../sql/conn.php";
 // die();
 if (isset($_POST) && !empty($_POST)) {
     // variables
-    $response = [];
     $supp_name = mysqli_real_escape_string($conn, $_POST['supp_name']);
     $supp_email = mysqli_real_escape_string($conn, $_POST['supp_email']);
     $supp_telno = mysqli_real_escape_string($conn, $_POST['supp_telno']);
     // variables
 
     // validation
-    if ($supp_name == '' || $supp_email == '' || $supp_telno == '') {
-        $response = ['msg' => "Please fill out all fields correctly", 'success' => false];
-        header('location:../../supplier_table.php?supp=0');
+    if (empty($supp_name) || empty($supp_email) || empty($supp_telno)) {
+        $_SESSION['error'] = "Please fill all fields correctly";
+        header('location:../../supplier_table.php');
         exit();
     }
     //validation 
 
     //query
     $query = "INSERT INTO `suppliers`(`supp_name`,`supp_email`,`supp_telno`)VALUES('$supp_name','$supp_email',$supp_telno)";
-    $sql = mysqli_query($conn, $query);
     //query
-    
+
     // response
-    if ($sql) {
-        $response = ['msg' => "Data added successfully", 'success' => true];
-    } else {
-        $error = mysqli_errno($conn);
-        $response = ['msg' => "Data insertion failed", 'success' => false];
+    try {
+        $run = mysqli_query($conn, $query);
+
+        if ($run) {
+            $_SESSION['success'] = "Data Inserted Successfully";
+        } else {
+            $_SESSION['error'] = "Data insertion failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data insertion failed ";
     }
     // response
 
-    $is_success = $response['success'] ? 1 : 0;
-    header("location:../../supplier_table.php?supp=$is_success");
+    header("location:../../supplier_table.php");
     exit();
 }

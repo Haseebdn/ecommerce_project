@@ -1,41 +1,40 @@
 <?php
 include "../../sql/conn.php";
 
+if (!empty($_POST)) {
 
-
-if (isset($_POST) && !empty($_POST)) {
     // variables
-    $response = [];
-    $cat_name = $_POST['cat_name'];
-    $cat_description = $_POST['cat_description'];
+    $cat_name = trim(mysqli_real_escape_string($conn, $_POST['cat_name']));
+    $cat_description = trim(mysqli_real_escape_string($conn, $_POST['cat_description']));
     // variables
 
-    // validation
-    if ($cat_name == '' || $cat_description == '') {
-        $response = ['msg' => "Please fillout values correctly", "success" => false];
-        header("location:../../cat_table.php?success=0");
+    //validation
+    if (empty($cat_name) || empty($cat_description)) {
+        $_SESSION['error'] = "Please fill all fields correctly";
+        header("location:../../cat_table.php");
         exit();
     }
-    // validation
+    //validation
 
-    // query
-    $query = "INSERT INTO categories (cat_name, cat_description) 
-              VALUES ('$cat_name', '$cat_description')";
-
-    $run = mysqli_query($conn, $query);
-    // query
+    //query
+    $query = "INSERT INTO  categories (cat_name, cat_description) 
+              VALUES ('$cat_name','$cat_description')";
+    //query
     
     // response
-    if ($run) {
-        $response = ['msg' => "Category Inserted Successfully", "success" => true];
-    } else {
-        $error = mysqli_error($conn);
-        $response = ['msg' => "Data Insertion failed. Error: $error", "success" => false];
+    try {
+        $run = mysqli_query($conn, $query);
+
+        if ($run) {
+            $_SESSION['success'] = "Data Inserted Successfully";
+        } else {
+            $_SESSION['error'] = "Data insertion failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data insertion failed ";
     }
     // response
 
-
-    $is_success = $response['success'] ? 1 : 0;
-    header("location:../../cat_table.php?success=$is_success");
+    header("location:../../cat_table.php");
     exit();
 }

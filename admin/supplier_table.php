@@ -1,7 +1,7 @@
  <?php
+  include "./sql/conn.php";
   include "./include/header.php";
   include "./include/sidebar.php";
-  include "./sql/conn.php";
 
   ?>
 
@@ -9,26 +9,19 @@
    <section class="section">
      <div class="section-body">
        <!-- alert -->
-       <?php
-        if (isset($_GET['supp'])) {
-          if ($_GET['supp'] == 1) {
-        ?>
-           <div class="alert text-center alert-success">Data saved successfully</div>
-         <?php
-          } else {
-          ?>
-           <div class="alert text-center alert-danger">Data save failed</div>
-       <?php
-          }
-        }
-        if (isset($_GET['delete-supp'])) {
-          if ($_GET['delete-supp'] == 1) {
-            echo '<div class="alert alert-success">Subcategory Deleted successfully</div>';
-          } else {
-            echo '<div class="alert alert-success">Subcategory Deletion Failed</div>';
-          }
-        }
-        ?>
+       <?php if (isset($_SESSION['success'])) { ?>
+         <div class="alert text-center alert-success">
+           <?php echo $_SESSION['success']; ?>
+         </div>
+       <?php unset($_SESSION['success']);
+        } ?>
+
+       <?php if (isset($_SESSION['error'])) { ?>
+         <div class="alert text-center alert-danger">
+           <?php echo $_SESSION['error']; ?>
+         </div>
+       <?php unset($_SESSION['error']);
+        } ?>
        <!-- alert -->
        <div class="row">
          <div class="col-12">

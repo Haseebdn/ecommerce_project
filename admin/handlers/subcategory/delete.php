@@ -4,25 +4,26 @@ include "../../sql/conn.php";
 if (isset($_GET) && !empty($_GET)) {
     // variables
     $id = $_GET['id'];
-    $response = [];
     // variables
 
     // query
     $query = "DELETE FROM `categories` WHERE `id`=$id";
 
-    $run = mysqli_query($conn, $query);
     // query
 
     // response
-    if ($run) {
-        $response = ['msg' => "Subcategory deleted successfully", 'success' => true];
-    } else {
-        $error = mysqli_error($conn);
-        $response = ['msg' => "Subcategory deletion failed. Error: $error", 'success' => false];
+    try {
+        $run = mysqli_query($conn, $query);
+        if ($run) {
+            $_SESSION['success'] = "Data Deleted Successfully";
+        } else {
+            $_SESSION['error'] = "Data Deletion Failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data Deletion Failed";
     }
     // response
 
-    $is_success = $response['success'] ? 1 : 0;
-    header("location:../../subcat_table.php?delete-progress=$is_success");
+    header("location:../../subcat_table.php");
     exit();
 }

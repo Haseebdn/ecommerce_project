@@ -1,13 +1,13 @@
 <?php
 include "../../sql/conn.php";
-
+// echo '<pre>';
 // print_r($_POST);
 // print_r($_FILES);
+// echo '</pre>';
 // die();
 
 if (isset($_POST) && !empty($_POST)) {
     // variables
-    $response = [];
     $cat_id = mysqli_real_escape_string($conn, $_POST['cat_id']);
     $subcat_id = mysqli_real_escape_string($conn, $_POST['subcat_id']);
     $supp_id = mysqli_real_escape_string($conn, $_POST['supp_id']);
@@ -18,16 +18,31 @@ if (isset($_POST) && !empty($_POST)) {
     $sale_price = mysqli_real_escape_string($conn, $_POST['sale_price']);
     $qty = mysqli_real_escape_string($conn, $_POST['qty']);
     $stock = mysqli_real_escape_string($conn, $_POST['stock']);
+    $p_thumbnail = $_FILES['p_thumbnail']['name'];
+    $p_tmp = $_FILES['p_thumbnail']['tmp_name'];
     $p_imgs = $_FILES['p_imgs']['name'];
     // variables
 
     // validation
-    if ($cat_id == '' || $subcat_id == '' || $supp_id == '' || $p_code == '' || $p_name == '' || $unit_price == '' || $stock == '' || empty($p_imgs)) {
-        $response = ['msg' => "Please fill all fields correctly", 'p' => false];
-        header('location:../../product_table.php?p=0');
+    if (empty($cat_id) || empty($subcat_id) || empty($supp_id) || empty($p_code) || empty($p_name) || empty($unit_price) || empty($stock) || empty($p_thumbnail)) {
+        $_SESSION['error'] = "Please Fill All Fields Correctly";
+        header("location:../../product_table.php");
         exit();
     }
     // validation
+
+    // thumbnail
+    if (!empty($p_thumbnail)) {
+        $ext = strtolower(pathinfo($p_thumbnail, PATHINFO_EXTENSION));
+        if (!in_array($ext, ['jpg', 'jpeg', 'png'])) {
+            $_SESSION['error'] = "Invalid File Format";
+            header("location:../../product_table.php");
+            exit();
+        }
+        $thumbnail_name = time() . rand(1, 10000) . '.' . $ext;
+        move_uploaded_file($p_tmp, '../../uploads/thumbnail/' . $thumbnail_name);
+    }
+    // thumbnail
 
     //images
     $pImgs_tmp = $_FILES['p_imgs']['tmp_name'];
@@ -38,8 +53,8 @@ if (isset($_POST) && !empty($_POST)) {
         foreach ($p_imgs as $item) {
             $ext = strtolower(pathinfo($item, PATHINFO_EXTENSION));
             if (!in_array($ext, ['jpg', 'jpeg', 'png'])) {
-                $response = ['msg' => "Data Insertion failed. Error: Invalid file format", "p" => false];
-                header("location:../../product_table.php?p=0");
+                $_SESSION['error'] = "Invalid File Format";
+                header("location:../../product_table.php");
                 exit();
             }
             $pImgs_ext[] = $ext;
@@ -52,19 +67,27 @@ if (isset($_POST) && !empty($_POST)) {
     }
     $newNameP = '';
     $newNameP = implode(',', $pImgs_newName);
+    // images
 
+    //query
+    $query = "INSERT INTO `products` (`cat_id`,`subcat_id`,`supp_id`,`p_code`,`p_name`,`p_description`,`unit_price`,`sale_price`,`qty`,`stock`,`p_thumbnail`,`p_imgs`) VALUES ('$cat_id','$subcat_id','$supp_id','$p_code','$p_name','$p_description','$unit_price','$sale_price','$qty','$stock','$thumbnail_name','$newNameP')";
+    //query
 
-    $query = "INSERT INTO `products` (`cat_id`,`subcat_id`,`supp_id`,`p_code`,`p_name`,`p_description`,`unit_price`,`sale_price`,`qty`,`stock`,`p_imgs`) VALUES ('$cat_id','$subcat_id','$supp_id','$p_code','$p_name','$p_description','$unit_price','$sale_price','$qty','$stock','$newNameP')";
-    $sql = mysqli_query($conn, $query);
-
-    if ($sql) {
-        $response = ['msg' => "Data added successfully", 'p' => true];
-    } else {
-        $error = mysqli_error($conn);
-        $response = ['msg' => "Data insertion failed  Error:$error", 'p' => false];
+    // response
+    try {
+        $run = mysqli_query($conn, $query);
+        if ($run) {
+            $_SESSION['success'] = "Data Inserted Successfully";
+        } else {
+            $_SESSION['error'] = "Date Insertion Failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data Insertion Failed";
     }
+    // response
 
-    $is_success = $response['p'] ? 1 : 0;
-    header("location:../../product_table.php?p=$is_success");
+
+
+    header("location:../../product_table.php");
     exit();
 }

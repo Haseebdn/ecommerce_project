@@ -6,7 +6,6 @@ include "../../sql/conn.php";
 
 if (isset($_POST) && !empty($_POST)) {
     // variables
-    $response = [];
     $subcat_id = $_POST['edit_index'];
     $parent_id = $_POST['category_id'];
     $subcat_name = $_POST['cat_name'];
@@ -14,9 +13,9 @@ if (isset($_POST) && !empty($_POST)) {
     // variables
 
     // validation
-    if ($parent_id == '' || $subcat_id == '' || $subcat_name == '' || $description == '') {
-        $response = ['msg' => "Please fill out all field correctly", "success" => false];
-        header("location:../../subcat_table.php?progress=0");
+    if (empty($parent_id) || empty($subcat_id) || empty($subcat_name) || empty($description)) {
+        $_SESSION['error'] = "Please Fill All Fields Correctly";
+        header("location:../../subcat_table.php");
         exit();
     }
     // validation
@@ -24,19 +23,23 @@ if (isset($_POST) && !empty($_POST)) {
     // query
     $query = "UPDATE `categories` SET  `cat_name`='$subcat_name',`cat_description`='$description',`parent_id`='$parent_id' WHERE `id`='$subcat_id'";
 
-    $run = mysqli_query($conn, $query);
     // query
 
     // response
-    if ($run) {
-        $response = ['msg' => "Subcategory Updated Successfully", "success" => true];
-    } else {
-        $error = mysqli_errno($conn);
-        $response = ['msg' => "Subcategory Updation Failed  Error:$error", "success" => false];
+    try {
+        $run = mysqli_query($conn, $query);
+        if ($run) {
+            $_SESSION['success'] = "Data Updated Successfully";
+        } else {
+            $_SESSION['error'] = "Data Updation Failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data Updation Failed";
     }
+
     // response
 
-    $is_success = $response['success'] ? 1 : 0;
-    header("location:../../subcat_table.php?progress=$is_success");
+
+    header("location:../../subcat_table.php");
     exit();
 }

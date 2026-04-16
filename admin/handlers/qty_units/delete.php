@@ -4,20 +4,27 @@ include "../../sql/conn.php";
 // print_r($_POST);
 // die();
 if (isset($_GET) && !empty($_GET)) {
-    $response = [];
-    $id=$_GET['id'];
+    // id
+    $id = $_GET['id'];
+    // id
 
+    // auery
     $query = "DELETE FROM `qty_units` WHERE `id`=$id ";
-    $run = mysqli_query($conn, $query);
+    // auery
 
-    if ($run) {
-        $response = ['msg' => "Data added successfully", 'qty' => true];
-    } else {
-        $error = mysqli_error($conn);
-        $response = ['msg' => 'Data insertion failed', 'qty' => false];
+    try {
+        $run = mysqli_query($conn, $query);
+
+        if ($run && mysqli_affected_rows($conn) > 0) {
+            $_SESSION['success'] = "Data deleted successfully";
+        } else {
+            $_SESSION['error'] = "Data deletion failed";
+        }
+    } catch (mysqli_sql_exception $e) {
+        $_SESSION['error'] = "Data deletion failed";
     }
-    
-    $is_success = $response['qty'] ? 1 : 0;
-    header("location:../../qtyUnit_table.php?qty-delete=$is_success");
+
+
+    header("location:../../qtyUnit_table.php");
     exit();
 }

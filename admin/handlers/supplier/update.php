@@ -5,7 +5,6 @@ include "../../sql/conn.php";
 // die();
 if (isset($_POST) && !empty($_POST)) {
     // variables
-    $response = [];
     $id = mysqli_real_escape_string($conn, $_POST['edit_index']);
     $supp_name = mysqli_real_escape_string($conn, $_POST['supp_name']);
     $supp_email = mysqli_real_escape_string($conn, $_POST['supp_email']);
@@ -13,9 +12,9 @@ if (isset($_POST) && !empty($_POST)) {
     // variables
 
     // validation
-    if ($supp_name == '' || $supp_email == '' || $supp_telno == '' || $id == '') {
-        $response = ['msg' => "Please fill out all fields correctly", 'success' => false];
-        header('location:../../supplier_table.php?supp=0');
+    if (empty($supp_name) || empty($supp_email) || empty($supp_telno) || empty($id)) {
+        $_SESSION['error'] = "Please fill all fields correctly";
+        header('location:../../supplier_table.php');
         exit();
     }
     // validation
@@ -23,19 +22,22 @@ if (isset($_POST) && !empty($_POST)) {
     // query
     $query = "UPDATE `suppliers` SET `supp_name`='$supp_name',`supp_email`='$supp_email',`supp_telno`='$supp_telno' WHERE `id`='$id'";
 
-    $sql = mysqli_query($conn, $query);
     // query
 
     // response
-    if ($sql) {
-        $response = ['msg' => "Data updated successfully", 'success' => true];
-    } else {
-        $error = mysqli_errno($conn);
-        $response = ['msg' => "Data updation failed", 'success' => false];
+    try {
+        $run = mysqli_query($conn, $query);
+
+        if ($run) {
+            $_SESSION['success'] = "Data Updated Successfully";
+        } else {
+            $_SESSION['error'] = "Data Updation Failed";
+        }
+    } catch (mysqli_sql_exception) {
+        $_SESSION['error'] = "Data Updation Failed ";
     }
     // response
 
-    $is_success = $response['success'] ? 1 : 0;
-    header("location:../../supplier_table.php?supp=$is_success");
+    header("location:../../supplier_table.php");
     exit();
 }

@@ -1,11 +1,8 @@
  <?php
+  include "./sql/conn.php";
   include "./include/header.php";
   include "./include/sidebar.php";
-  include "./sql/conn.php";
-
   ?>
-
-
 
 
  <!-- Main Content -->
@@ -13,26 +10,19 @@
    <section class="section">
      <div class="section-body">
        <!-- alert -->
-       <?php
-        if (isset($_GET['success'])) {
-          if ($_GET['success'] == 1) {
-        ?>
-           <div class="alert text-center alert-success">Date saved successfully</div>
-         <?php
-          } else {
-          ?>
-           <div class="alert text-center alert-danger">Date save failed</div>
-       <?php
-          }
-        }
-        if (isset($_GET['delete-success'])) {
-          if ($_GET['delete-success'] == 1) {
-            echo '<div class="alert alert-success">Category Deleted successfully</div>';
-          } else {
-            echo '<div class="alert alert-success">Category Deletion Failed</div>';
-          }
-        }
-        ?>
+       <?php if (isset($_SESSION['success'])) { ?>
+         <div class="alert text-center alert-success">
+           <?php echo $_SESSION['success']; ?>
+         </div>
+       <?php unset($_SESSION['success']);
+        } ?>
+
+       <?php if (isset($_SESSION['error'])) { ?>
+         <div class="alert text-center alert-danger">
+           <?php echo $_SESSION['error']; ?>
+         </div>
+       <?php unset($_SESSION['error']);
+        } ?>
        <!-- alert -->
        <div class="row">
          <div class="col-12">
