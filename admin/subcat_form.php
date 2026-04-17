@@ -1,7 +1,7 @@
 <?php
+include "./sql/conn.php";
 include "./include/header.php";
 include "./include/sidebar.php";
-include "./sql/conn.php";
 
 
 if (isset($_GET['id']) && $_GET['id'] != "") {

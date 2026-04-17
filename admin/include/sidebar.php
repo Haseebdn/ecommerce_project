@@ -23,8 +23,8 @@ function isActive($pages, $current)
             <li class="menu-header">Main</li>
 
             <!-- Dashboard -->
-            <li class="dropdown <?php echo ($page == 'index.php') ? 'active' : ''; ?>">
-                <a href="index.php" class="nav-link">
+            <li class="dropdown <?php echo ($page == 'home.php') ? 'active' : ''; ?>">
+                <a href="home.php" class="nav-link">
                     <i class="fa-solid fa-display"></i><span>Dashboard</span>
                 </a>
             </li>

@@ -1,3 +1,8 @@
+<?php
+if (!(@$_SESSION['admin_email'])) {
+    header("location:./index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
