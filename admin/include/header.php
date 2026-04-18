@@ -1,6 +1,7 @@
 <?php
-if (!(@$_SESSION['admin_email'])) {
-    header("location:./index.php");
+if (!isset($_SESSION['admin_email'])) {
+    header("Location: index.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>

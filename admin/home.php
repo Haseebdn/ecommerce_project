@@ -1,7 +1,8 @@
 <?php
+include "./sql/conn.php";
 include "./include/header.php";
 include "./include/sidebar.php";
-include "./sql/conn.php";
+
 ?>
 <!-- Main Content -->
 <div class="main-content">

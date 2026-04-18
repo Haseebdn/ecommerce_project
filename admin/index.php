@@ -2,7 +2,7 @@
 include "./sql/conn.php";
 
 if(isset($_SESSION['admin_email'])){
-    header("location: ./home.php");
+    header("location: /admin/home.php");
     exit();
 }
 ?>
