@@ -1,7 +1,7 @@
 <?php
+include "./sql/conn.php";
 include "./include/header.php";
 include "./include/sidebar.php";
-include "./sql/conn.php";
 
 
 if (isset($_GET['id']) && $_GET['id'] != "") {
@@ -30,20 +30,21 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
             </div>
             <!-- heading -->
             <!-- form -->
-            <form action="<?php echo isset($_GET['id']) ? './handlers/category/update.php' : './handlers/category/add.php' ?>" method="POST">
+            <form id="cat_form" action="<?php echo isset($_GET['id']) ? './handlers/category/update.php' : './handlers/category/add.php' ?>" method="POST">
 
               <div class="card-body">
                 <!-- index to edit -->
                 <input type="hidden" name='edit_index' value="<?php echo isset($record['id']) ? $record['id'] : '' ?>">
                 <!-- index to edit -->
                 <!-- category name -->
-                <div class="form-group">
+                <div class="">
                   <label>Category Name</label>
-                  <input name="cat_name" type="text" id="cat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>">
+                  <input name="cat_name" type="text" id="cat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>" required>
                 </div>
+                <div id="nameError" class="text-danger mt-1"></div>
                 <!-- category name -->
                 <!-- description -->
-                <div>
+                <div class="mt-4">
                   <label for="">
                     Description
                   </label>
@@ -71,3 +72,30 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
 <?php
 include "./include/footer.php";
 ?>
+
+<script>
+  $(document).ready(function() {
+
+    $("#cat_name").on("input", function() {
+      let name = $(this).val();
+      let error = "";
+
+      if (name.length < 3) {
+        error = "Too Short";
+      }
+      
+      else if (!/^[a-zA-Z\s]+$/.test(name)) {
+        error = "Numbers and special characters not allowed";
+      }
+
+      $("#nameError").text(error);
+    });
+
+    $("#cat_form").on("submit", function(e) {
+      if ($("#nameError").text() !== "") {
+        e.preventDefault();
+      }
+    });
+
+  });
+</script>

@@ -34,24 +34,25 @@
                          <form action="<?php echo isset($_GET['id']) ? './handlers/product/update.php' : './handlers/product/add.php' ?>" method="POST" enctype="multipart/form-data">
                              <div class="card-body">
                                  <!-- input to edit -->
-                                 <input type="hidden" name='edit_index' value="<?php echo $_GET['id'] ?>">
+                                 <input type="hidden" name='edit_index' value="<?php echo $_GET['id'] ?? '' ?>">
                                  <!-- input to edit -->
                                  <!-- query -->
-
+                                 <?php
+                                    $query = "SELECT * FROM `categories` WHERE `parent_id` IS NULL";
+                                    $sql = mysqli_query($conn, $query);
+                                    ?>
                                  <!-- query -->
                                  <!-- category -->
                                  <div class="form-group">
-                                     <?php
-                                        $query = "SELECT * FROM `categories` WHERE `parent_id` IS NULL";
-                                        $sql = mysqli_query($conn, $query);
-                                        ?>
+
                                      <label> Category</label>
                                      <select id="cat_name" name="cat_id" class="form-control">
                                          <option>Select Category</option>
                                          <?php
                                             while ($cat = mysqli_fetch_assoc($sql)) {
                                             ?>
-                                             <option value="<?php echo $cat['id'] ?>" <?php echo (isset($record['cat_id']) && $record['cat_id'] == $cat['id']) ? 'selected' : ''; ?>>
+                                             <option value="<?php echo $cat['id'] ?>" <?php echo (isset($record['cat_id']) && $record['cat_id'] == $cat['id']) ? 'selected' : '' ?>>
+
                                                  <?php echo $cat['cat_name'] ?>
                                              </option>
                                          <?php
@@ -82,7 +83,8 @@
                                          <option>Select Supplier</option>
                                          <?php while ($supp = mysqli_fetch_assoc($sql)) {
                                             ?>
-                                             <option value="<?php echo $supp['id'] ?>" <?php echo isset($record['supp_id']) == $supp['id'] ? 'Selected' : '' ?>><?php echo $supp['supp_name']   ?></option>
+                                             <option value="<?php echo $supp['id'] ?>"
+                                                 <?php echo (isset($record['supp_id']) && $record['supp_id'] == $supp['id']) ? 'selected' : '' ?>><?php echo $supp['supp_name']   ?></option>
                                          <?php
                                             }
                                             ?>
@@ -141,7 +143,7 @@
                                  <!-- thumbnail -->
                                  <label>Product Thumbnail</label>
                                  <div class="custom-file mb-4">
-                                     <input type="file" class="custom-file-input" id="customFile" name="p_thumbnail">
+                                     <input type="file" class="custom-file-input" id="p_thumbnail" name="p_thumbnail">
                                      <label class="custom-file-label" for="">Choose file</label>
                                  </div>
                                  <?php if (!empty($record['p_thumbnail'])) { ?>
@@ -151,7 +153,7 @@
                                  <!-- Product Images -->
                                  <label>Product Images</label>
                                  <div class="custom-file">
-                                     <input type="file" class="custom-file-input" id="customFile" name="p_imgs[]" multiple>
+                                     <input type="file" class="custom-file-input" id="imgs" name="p_imgs[]" multiple>
                                      <label class="custom-file-label" for="">Choose file</label>
                                  </div>
                                  <!-- Product Images -->
