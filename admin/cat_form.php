@@ -38,10 +38,10 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                 <!-- index to edit -->
                 <!-- category name -->
                 <div class="">
-                  <label>Category Name</label>
+                  <label>Category Name </label><span class=""> *</span>
                   <input name="cat_name" type="text" id="cat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>" required>
                 </div>
-                <div id="nameError" class="text-danger mt-1"></div>
+                <div id="name_error" class="text-danger mt-1"></div>
                 <!-- category name -->
                 <!-- description -->
                 <div class="mt-4">
@@ -50,6 +50,8 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                   </label>
                   <textarea class="form-control" name="cat_description" id="cat_description"><?php echo isset($record['cat_description']) ? $record['cat_description'] : '' ?></textarea>
                 </div>
+                <div id="description_error" class="text-danger mt-1"></div>
+
                 <!-- description -->
               </div>
               <!-- buttons -->
@@ -76,26 +78,53 @@ include "./include/footer.php";
 <script>
   $(document).ready(function() {
 
-    $("#cat_name").on("input", function() {
-      let name = $(this).val();
+    function validateName() {
+      let name = $("#cat_name").val().trim();
       let error = "";
 
-      if (name.length < 3) {
-        error = "Too Short";
-      }
-      
-      else if (!/^[a-zA-Z\s]+$/.test(name)) {
-        error = "Numbers and special characters not allowed";
+      if (name !== "") { 
+        if (name.length < 3) {
+          error = "Too Short";
+        } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+          error = "Numbers and special characters not allowed";
+        }
       }
 
-      $("#nameError").text(error);
-    });
+      $("#subcat_error").text(error);
+      return error === "";
+    }
+
+
+    function validateDescription() {
+      let description = $("#cat_description").val().trim();
+      let error = "";
+
+      if (description !== "") {
+        let wordCount = description.split(/\s+/).length;
+
+        if (wordCount < 3) {
+          error = "Description must be at least 3 words";
+        }
+      }
+
+      $("#description_error").text(error);
+      return error === "";
+    }
+
+    $("#cat_name").on("input", validateName);
+    $("#cat_description").on("input", validateDescription);
 
     $("#cat_form").on("submit", function(e) {
-      if ($("#nameError").text() !== "") {
+      let isNameValid = validateName();
+      let isDescValid = validateDescription();
+
+      if (!isNameValid || !isDescValid) {
         e.preventDefault();
       }
     });
+
+    validateName();
+    validateDescription();
 
   });
 </script>

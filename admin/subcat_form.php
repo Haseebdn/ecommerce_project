@@ -31,7 +31,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                         </div>
                         <!-- heading -->
                         <!-- form -->
-                        <form action="<?php echo isset($_GET['id']) ? './handlers/subcategory/update.php' : './handlers/subcategory/add.php' ?>" method="POST">
+                        <form id="subcat_form" action="<?php echo isset($_GET['id']) ? './handlers/subcategory/update.php' : './handlers/subcategory/add.php' ?>" method="POST">
                             <div class="card-body">
                                 <!-- input to edit -->
                                 <input type="hidden" name='edit_index' value="<?php echo isset($record['id']) ? $record['id'] : '' ?>">
@@ -45,8 +45,9 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                 <!-- query -->
                                 <!-- category -->
                                 <div class="form-group">
-                                    <label>Select Category</label>
+                                    <label>Category </label><span> *</span>
                                     <select id="category_name" name="category_id" class="form-control">
+                                        <option value="">Select Category</option>
                                         <?php
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
@@ -64,18 +65,20 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                 <!-- category -->
 
                                 <!-- subcategory -->
-                                <div class="form-group">
-                                    <label>Subcategory Name</label>
-                                    <input name="cat_name" type="text" id="cat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>">
+                                <div class="">
+                                    <label>Subcategory Name </label><span> *</span>
+                                    <input name="subcat_name" type="text" id="subcat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>" required>
                                 </div>
+                                <div id="subcat_error" class="text-danger mt-1"></div>
                                 <!-- subcategory -->
                                 <!-- description -->
-                                <div>
+                                <div class="mt-4">
                                     <label for="">
                                         Description
                                     </label>
-                                    <textarea class="form-control" name="cat_description" id="cat_description"><?php echo isset($record['cat_description']) ? $record['cat_description'] : '' ?></textarea>
+                                    <textarea class="form-control" name="subcat_desc" id="subcat_desc"><?php echo isset($record['cat_description']) ? $record['cat_description'] : '' ?></textarea>
                                 </div>
+                                <div id="desc_error" class="text-danger mt-1"></div>
                                 <!-- description -->
                             </div>
                             <!-- buttons -->
@@ -98,3 +101,47 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
 <?php
 include "./include/footer.php";
 ?>
+
+<script>
+    $(document).ready(function() {
+        function validateName() {
+            let name = $('#subcat_name').val().trim();
+            let error = '';
+            if (name !== "") {
+                if (name.length < 3) {
+                    error = "Too short";
+                } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+                    error = "Numbers and special characters not allowed";
+                }
+                $('#subcat_error').text(error);
+                return error === "";
+            }
+        }
+
+        function validateDesc() {
+            let desc = $('#subcat_desc').val().trim();
+            let error = '';
+            if (desc !== "") {
+                let wordcount = desc.split(/\s+/).length;
+                if (wordcount < 3) {
+                    error = "Description should be minimum 3 words";
+                }
+            }
+            $('#desc_error').text(error);
+            return error === "";
+        }
+        $('#subcat_name').on('input', validateName);
+        $('#subcat_desc').on('input', validateDesc);
+
+        $("#subcat_form").on('submit', function(e) {
+            let validName = validateName();
+            let validDesc = validateDesc();
+
+            if(!validName||!validDesc){
+                e.preventDefault();
+            }
+        })
+        validateName();
+        validateDesc();
+    })
+</script>

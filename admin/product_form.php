@@ -93,65 +93,69 @@
                                  <!-- supplier -->
 
                                  <!-- code -->
-                                 <div class="form-group">
+                                 <div class="">
                                      <label>Product Code</label>
-                                     <input type="text" class="form-control" name="p_code" value="<?php echo @$record['p_code'] ?>" required>
+                                     <input id="p_code" type="text" class="form-control" name="p_code" value="<?php echo @$record['p_code'] ?>" required>
                                  </div>
+                                 <div id="code_error" class="text-danger mt-1"></div>
                                  <!-- code -->
 
                                  <!-- name -->
-                                 <div class="form-group">
+                                 <div class="mt-4">
                                      <label>Product Name</label>
-                                     <input type="text" class="form-control" name="p_name" value="<?php echo @$record['p_name'] ?>" required>
+                                     <input type="text" id="p_name" class="form-control" name="p_name" value="<?php echo @$record['p_name'] ?>" required>
                                  </div>
+                                 <div id="name_error" class="text-danger mt-1"></div>
                                  <!-- name -->
 
                                  <!-- description -->
                                  <div>
-                                     <label for="">Description</label>
-                                     <textarea class="form-control mb-4" name="p_description" id="p_description"><?php echo @$record['p_description'] ?></textarea>
+                                     <label class="mt-4">Description</label>
+                                     <textarea class="form-control" name="p_description" id="p_description"><?php echo @$record['p_description'] ?></textarea>
                                  </div>
+                                 <div id="desc_error" class="text-danger mt-1"></div>
                                  <!-- description -->
 
                                  <!-- unit price -->
-                                 <div class="form-group">
+                                 <div class="mt-4">
                                      <label>Unit Price</label>
-                                     <input type="number" class="form-control" name="unit_price" value="<?php echo @$record['unit_price'] ?>" required>
+                                     <input id="unit_price" type="number" class="form-control" name="unit_price" value="<?php echo @$record['unit_price'] ?>" required>
                                  </div>
+                                 <div id="unit_error" class="text-danger mt-1"></div>
                                  <!-- unit price -->
 
                                  <!-- sale price -->
-                                 <div class="form-group">
+                                 <div class="mt-4">
                                      <label>Sale Price</label>
                                      <input type="number" class="form-control" name="sale_price" value="<?php echo @$record['sale_price'] ?>">
                                  </div>
                                  <!-- sale price -->
 
                                  <!-- Quantity -->
-                                 <div class="form-group">
+                                 <div class="mt-4">
                                      <label>Quantity</label>
                                      <input type="number" class="form-control" name="qty" value="<?php echo @$record['qty'] ?>">
                                  </div>
                                  <!-- Quantity -->
 
                                  <!-- Stock -->
-                                 <div class="form-group">
+                                 <div class="mt-4">
                                      <label class="fs-6">Stock</label>
                                      <input type="number" class="form-control" name="stock" value="<?php echo @$record['stock'] ?>" required>
                                  </div>
                                  <!-- Stock -->
                                  <!-- thumbnail -->
-                                 <label>Product Thumbnail</label>
-                                 <div class="custom-file mb-4">
-                                     <input type="file" class="custom-file-input" id="p_thumbnail" name="p_thumbnail">
+                                 <label class="mt-4">Product Thumbnail</label>
+                                 <div class="custom-file">
+                                     <input type="file" class="custom-file-input" id="p_thumbnail" name="p_thumbnail" required>
                                      <label class="custom-file-label" for="">Choose file</label>
                                  </div>
                                  <?php if (!empty($record['p_thumbnail'])) { ?>
-                                     <div class="mb-4"><img class=" rounded rounded-2" src="./uploads/thumbnail/<?php echo @$record['p_thumbnail']; ?>" width="60"></div>
+                                     <div class="mt-2"><img class=" rounded rounded-2" src="./uploads/thumbnail/<?php echo @$record['p_thumbnail']; ?>" width="60" required></div>
                                  <?php } ?>
                                  <!-- thumbnail -->
                                  <!-- Product Images -->
-                                 <label>Product Images</label>
+                                 <label class="mt-4">Product Images</label>
                                  <div class="custom-file">
                                      <input type="file" class="custom-file-input" id="imgs" name="p_imgs[]" multiple>
                                      <label class="custom-file-label" for="">Choose file</label>
@@ -216,6 +220,68 @@
                  }
              }
          });
+
+         function validateCode() {
+             let p_code = $('#p_code').val().trim();
+             let error = "";
+             if (!p_code == "") {
+                 if (p_code.length < 3) {
+                     error = "Too short";
+                 } else if (!/^[a-zA-Z0-9_-]+$/.test(p_code)) {
+                     error = "Spaces and special characters not allowed";
+                 }
+             }
+             $('#code_error').text(error);
+         }
+
+         function validateName() {
+             let name = $("#p_name").val().trim();
+             let error = "";
+
+             if (name !== "") {
+                 if (name.length < 3) {
+                     error = "Too Short";
+                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+                     error = "Numbers and special characters not allowed";
+                 }
+             }
+
+             $("#name_error").text(error);
+             return error === "";
+         }
+
+         function validateDescription() {
+             let description = $("#p_description").val().trim();
+             let error = "";
+
+             if (description !== "") {
+                 let wordCount = description.split(/\s+/).length;
+
+                 if (wordCount < 3) {
+                     error = "Description must be at least 3 words";
+                 }
+             }
+
+             $("#desc_error").text(error);
+             return error === "";
+         }
+
+         $('#p_code').on('input', validateCode);
+         $("#p_name").on("input", validateName);
+         $('#p_description').on("input", validateDescription);
+
+         $('#product_form').on('submit', function(e) {
+             let codeValid = validateCode();
+             let nameValid = validateName();
+             let descValid = validateDescription();
+             if (!codeValid || !nameValid || !descValid) {
+                 e.preventDefault();
+             }
+         })
+
+         validateName();
+         validateCode();
+         validateDescription();
      }
 
      $('#cat_name').on('change', function() {

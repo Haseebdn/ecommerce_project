@@ -22,12 +22,12 @@
                          <!-- head -->
                          <div class="card-header  d-flex justify-content-between">
                              <h4><?php echo isset($_GET['id']) ? 'Update Units' : 'Add Units'    ?></h4>
-                            <a href="./qtyUnit_table.php" class="btn btn-primary">Units</a>
+                             <a href="./qtyUnit_table.php" class="btn btn-primary">Units</a>
                          </div>
                          <!-- head -->
 
                          <!-- form -->
-                         <form action="<?php echo isset($_GET['id']) ? './handlers/qty_units/update.php' : './handlers/qty_units/add.php' ?>" method="POST">
+                         <form id="unit_form" action="<?php echo isset($_GET['id']) ? './handlers/qty_units/update.php' : './handlers/qty_units/add.php' ?>" method="POST">
                              <div class="card-body">
                                  <input type="hidden" name="edit_index" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>">
                                  <!-- unit name -->
@@ -40,8 +40,9 @@
                                  <!-- description -->
                                  <div class="form-group">
                                      <label>Description</label>
-                                     <textarea type="text" name="unit_description" class="form-control"><?php echo isset($row['unit_description']) ? $row['unit_description'] : '' ?></textarea>
+                                     <textarea id="unit_description" type="text" name="unit_description" class="form-control"><?php echo isset($row['unit_description']) ? $row['unit_description'] : '' ?></textarea>
                                  </div>
+                                 <div id="desc_error" class="text-danger mt-1"></div>
                                  <!-- description -->
                                  <!-- buttons -->
                                  <div class="card-footer text-right">
@@ -66,3 +67,32 @@
  <?php
     include "./include/footer.php";
     ?>
+
+ <script>
+     $(document).ready(function() {
+         function validateDesc() {
+             let desc = $('#unit_description').val().trim();
+             let error = '';
+             if (desc !== "") {
+                 let wordcount = desc.split(/\s+/).length;
+                 if (wordcount < 3) {
+                     error = "Description should be minimum 3 words";
+                 }
+             }
+             $('#desc_error').text(error);
+             return error === "";
+         }
+
+         $('#unit_description').on('input', validateDesc);
+
+         $("#unit_form").on('submit', function(e) {
+             let validDesc = validateDesc();
+
+             if (!validDesc) {
+                 e.preventDefault();
+             }
+         })
+         validateDesc();
+
+     });
+ </script>

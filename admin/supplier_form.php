@@ -26,29 +26,32 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         </div>
                         <!-- heading -->
                         <!-- form -->
-                        <form action="<?php echo isset($_GET['id']) ? './handlers/supplier/update.php' : './handlers/supplier/add.php'; ?>" method="POST">
+                        <form id="supp_form" action="<?php echo isset($_GET['id']) ? './handlers/supplier/update.php' : './handlers/supplier/add.php'; ?>" method="POST">
                             <div class="card-body">
 
                                 <input type="hidden" name="edit_index" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>">
                                 <!-- supplier -->
-                                <div class="form-group">
-                                    <label>Supplier Name</label>
-                                    <input type="text" name="supp_name" class="form-control" value="<?php echo isset($row['supp_name']) ? $row['supp_name'] : '' ?>">
+                                <div class="">
+                                    <label>Supplier Name </label><span> *</span>
+                                    <input type="text" id="supp_name" name="supp_name" class="form-control" value="<?php echo isset($row['supp_name']) ? $row['supp_name'] : '' ?>" required>
                                 </div>
+                                <div id="supp_error" class="text-danger mt-1"></div>
                                 <!-- supplier -->
 
                                 <!-- email -->
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" name="supp_email" class="form-control" value="<?php echo isset($row['supp_email']) ? $row['supp_email'] : '' ?>">
+                                <div class="mt-4">
+                                    <label>Email </label><span> *</span>
+                                    <input id="supp_email" type="email" name="supp_email" class="form-control" value="<?php echo isset($row['supp_email']) ? $row['supp_email'] : '' ?>" required>
                                 </div>
+                                <div id="email_error" class="text-danger mt-1"></div>
                                 <!-- email -->
 
                                 <!-- phone no -->
-                                <div class="form-group">
-                                    <label>TEL</label>
-                                    <input type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>">
+                                <div class="mt-4">
+                                    <label>TEL </label><span> *</span>
+                                    <input id="supp_telno" type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>" required>
                                 </div>
+                                <div id="telno_error" class="text-danger mt-1"></div>
                                 <!-- phone no -->
 
                             </div>
@@ -80,3 +83,70 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 <?php
 include "./include/footer.php";
 ?>
+
+<script>
+    $(document).ready(function() {
+
+        function validateName() {
+            let name = $('#supp_name').val().trim();
+            let error = '';
+
+            if (name !== "") {
+                if (name.length < 3) {
+                    error = "Too short";
+                } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+                    error = "Numbers and special letters not allowed";
+                }
+            }
+
+            $('#supp_error').text(error);
+            return error === '';
+        }
+
+        function validateEmail() {
+            let email = $('#supp_email').val().trim();
+            let error = '';
+
+            if (email !== "") {
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    error = "Invalid Email";
+                }
+            }
+            $('#email_error').text(error);
+            return error === '';
+        }
+
+        function validatePhone() {
+            let phone = $('#supp_telno').val().trim();
+            let error = '';
+
+            if (phone !== "") {
+                if (!/^(\+92|0)?3[0-9]{9}$/.test(phone)) {
+                    error = "Invalid phone number";
+                }
+            }
+
+            $('#tel_error').text(error);
+            return error === '';
+        }
+
+
+        $('#supp_name').on('input', validateName);
+        $('#supp_email').on('input', validateEmail);
+        $('#supp_telno').on('input', validatePhone);
+
+        $('#supp_form').on('submit', function(e) {
+            let isValid = validateName();
+            let emailValid = validateEmail();
+            let phoneValid = validatePhone();
+
+            if (!isValid || !emailValid || !phoneValid) {
+                e.preventDefault();
+            }
+        });
+
+        validateName();
+        validateEmail();
+        validatePhone()
+    });
+</script>
