@@ -104,6 +104,36 @@ include "./include/footer.php";
 
 <script>
     $(document).ready(function() {
+
+        $('#subcat_name').on('input', function() {
+            let input = this;
+            let start = input.selectionStart;
+            let end = input.selectionEnd;
+
+            let value = input.value;
+
+            let capitalized = value.replace(/\b\w/g, c => c.toUpperCase());
+
+            input.value = capitalized;
+
+            input.setSelectionRange(start, end);
+        });
+
+        $('#subcat_desc').on('input', function() {
+             let input = this;
+             let start = input.selectionStart;
+             let end = input.selectionEnd;
+
+             let value = input.value.toLowerCase();
+
+             let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
+                 return char.toUpperCase();
+             });
+
+             input.value = result;
+             input.setSelectionRange(start, end);
+         });
+
         function validateName() {
             let name = $('#subcat_name').val().trim();
             let error = '';
@@ -137,7 +167,7 @@ include "./include/footer.php";
             let validName = validateName();
             let validDesc = validateDesc();
 
-            if(!validName||!validDesc){
+            if (!validName || !validDesc) {
                 e.preventDefault();
             }
         })

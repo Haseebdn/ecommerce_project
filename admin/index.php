@@ -1,7 +1,7 @@
 <?php
 include "./sql/conn.php";
 
-if(isset($_SESSION['admin_email'])){
+if (isset($_SESSION['admin_email'])) {
     header("location: /admin/home.php");
     exit();
 }
@@ -40,7 +40,7 @@ if(isset($_SESSION['admin_email'])){
                                 <h4>Login</h4>
                             </div>
                             <div class="card-body ">
-                                <form method="POST" action="./handlers/login.php" class="needs-validation" novalidate="">
+                                <form id="login_form" method="POST" action="./handlers/login.php" class="needs-validation" novalidate="">
                                     <?php
                                     if (isset($_SESSION['error'])) {
                                     ?>
@@ -49,17 +49,16 @@ if(isset($_SESSION['admin_email'])){
                                         unset($_SESSION['error']);
                                     }
                                     ?>
-                        
+
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input id="email" type="email" class="form-control" name="adm_email" tabindex="1" required autofocus>
-                                        <div class="invalid-feedback">
-                                            Please fill in your email
+                                        <div id="email_error" class="text-danger mt-1">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="d-block">
-                                            <label for="password" class="control-label" name="password">Password</label>
+                                            <label for="password" id="password" class="control-label" name="password">Password</label>
                                             <div class="float-right">
                                                 <a href="auth-forgot-password.html" class="text-small">
                                                     Forgot Password?
@@ -67,8 +66,7 @@ if(isset($_SESSION['admin_email'])){
                                             </div>
                                         </div>
                                         <input id="password" type="password" class="form-control" name="adm_pass" tabindex="2" required>
-                                        <div class="invalid-feedback">
-                                            please fill in your password
+                                        <div id="pass_error" class="text-danger mt-1">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -91,6 +89,9 @@ if(isset($_SESSION['admin_email'])){
             </div>
         </section>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- General JS Scripts -->
     <script src="assets/js/app.min.js"></script>
     <!-- JS Libraies -->
@@ -107,6 +108,56 @@ if(isset($_SESSION['admin_email'])){
                 $alert.fadeOut();
             }
         }, 2000);
+
+        $('#email').on('input', function() {
+            let value = $(this).val().toLowerCase();
+            $(this).val(value);
+        });
+
+        function validateEmail() {
+            let email = $('#email').val().trim();
+            let error = '';
+
+            if (email == "") {
+                error = "Please fill in your email"
+            } else
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                error = "Invalid Email";
+            }
+            $('#email_error').text(error);
+            return error === '';
+        }
+
+        function validatePassword() {
+            let password = $('#password').val().trim();
+            let error = '';
+
+
+            let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (password === "") {
+                error = "Password is required";
+            } else if (!regex.test(password)) {
+                error = "Min 8 chars, include upper, lower, number & special char";
+            }
+
+            $('#pass_error').text(error);
+
+            return error === '';
+        }
+
+        $('#email').on('submit', validateEmail);
+        $('#password').on('input', validatePassword);
+
+
+        $('#login_form').on('submit', function(e) {
+            let emailValid = validateEmail();
+            let passValid = validatePassword();
+
+            if (!passValid || !emailValid) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 

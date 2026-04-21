@@ -221,6 +221,35 @@
              }
          });
 
+         $('#p_name').on('input', function() {
+             let input = this;
+             let start = input.selectionStart;
+             let end = input.selectionEnd;
+
+             let value = input.value;
+
+             let capitalized = value.replace(/\b\w/g, c => c.toUpperCase());
+
+             input.value = capitalized;
+
+             input.setSelectionRange(start, end);
+         });
+
+         $('#p_description').on('input', function() {
+             let input = this;
+             let start = input.selectionStart;
+             let end = input.selectionEnd;
+
+             let value = input.value.toLowerCase();
+
+             let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
+                 return char.toUpperCase();
+             });
+
+             input.value = result;
+             input.setSelectionRange(start, end);
+         });
+
          function validateCode() {
              let p_code = $('#p_code').val().trim();
              let error = "";

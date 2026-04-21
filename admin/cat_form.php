@@ -78,11 +78,40 @@ include "./include/footer.php";
 <script>
   $(document).ready(function() {
 
+    $('#cat_name').on('input', function() {
+      let input = this;
+      let start = input.selectionStart;
+      let end = input.selectionEnd;
+
+      let value = input.value;
+
+      let capitalized = value.replace(/\b\w/g, c => c.toUpperCase());
+
+      input.value = capitalized;
+
+      input.setSelectionRange(start, end);
+    });
+
+    $('#cat_description').on('input', function() {
+             let input = this;
+             let start = input.selectionStart;
+             let end = input.selectionEnd;
+
+             let value = input.value.toLowerCase();
+
+             let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
+                 return char.toUpperCase();
+             });
+
+             input.value = result;
+             input.setSelectionRange(start, end);
+         });
+
     function validateName() {
       let name = $("#cat_name").val().trim();
       let error = "";
 
-      if (name !== "") { 
+      if (name !== "") {
         if (name.length < 3) {
           error = "Too Short";
         } else if (!/^[a-zA-Z\s]+$/.test(name)) {
@@ -90,7 +119,7 @@ include "./include/footer.php";
         }
       }
 
-      $("#subcat_error").text(error);
+      $("#name_error").text(error);
       return error === "";
     }
 

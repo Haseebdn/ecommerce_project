@@ -87,6 +87,25 @@ include "./include/footer.php";
 <script>
     $(document).ready(function() {
 
+        $('#supp_name').on('input', function() {
+            let input = this;
+            let start = input.selectionStart;
+            let end = input.selectionEnd;
+
+            let value = input.value;
+
+            let capitalized = value.replace(/\b\w/g, c => c.toUpperCase());
+
+            input.value = capitalized;
+
+            input.setSelectionRange(start, end);
+        });
+
+        $('#supp_email').on('input', function() {
+            let value = $(this).val().toLowerCase();
+            $(this).val(value);
+        });
+
         function validateName() {
             let name = $('#supp_name').val().trim();
             let error = '';
