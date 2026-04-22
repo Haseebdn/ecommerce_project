@@ -58,7 +58,7 @@ if (isset($_SESSION['admin_email'])) {
                                     </div>
                                     <div class="form-group">
                                         <div class="d-block">
-                                            <label for="password" id="password" class="control-label" name="password">Password</label>
+                                            <label for="password"  class="control-label" name="password">Password</label>
                                             <div class="float-right">
                                                 <a href="auth-forgot-password.html" class="text-small">
                                                     Forgot Password?
@@ -135,7 +135,7 @@ if (isset($_SESSION['admin_email'])) {
 
             let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-            if (password === "") {
+            if (password == "") {
                 error = "Password is required";
             } else if (!regex.test(password)) {
                 error = "Min 8 chars, include upper, lower, number & special char";

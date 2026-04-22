@@ -44,6 +44,7 @@ function isActive($pages, $current)
                     </li>
                 </ul>
             </li>
+            <!-- Categories -->
 
             <!-- Subcategories -->
             <?php $subcatPages = ['subcat_form.php', 'subcat_table.php']; ?>
@@ -60,6 +61,7 @@ function isActive($pages, $current)
                     </li>
                 </ul>
             </li>
+            <!-- Subcategories -->
 
             <!-- Suppliers -->
             <?php $suppPages = ['supplier_form.php', 'supplier_table.php']; ?>
@@ -76,6 +78,7 @@ function isActive($pages, $current)
                     </li>
                 </ul>
             </li>
+            <!-- Suppliers -->
 
             <!-- Quantity Units -->
             <?php $qtyPages = ['qtyUnit_form.php', 'qtyUnit_table.php']; ?>
@@ -92,6 +95,7 @@ function isActive($pages, $current)
                     </li>
                 </ul>
             </li>
+            <!-- Quantity Units -->
 
             <!-- Products -->
             <?php $productPages = ['product_form.php', 'product_table.php']; ?>
@@ -108,6 +112,30 @@ function isActive($pages, $current)
                     </li>
                 </ul>
             </li>
+            <!-- Products -->
+
+            <!-- user management -->
+            <?php $userPages = ['role_form.php', 'role_table.php', 'user_form.php', 'user_table.php']; ?>
+            <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i class="fa-solid fa-box"></i><span>Admin Management</span>
+                </a>
+                <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
+                    <li class="<?php echo ($page == 'role_form.php') ? 'active' : ''; ?>">
+                        <a class="nav-link" href="role_form.php">Add Role</a>
+                    </li>
+                    <li class="<?php echo ($page == 'role_table.php') ? 'active' : ''; ?>">
+                        <a class="nav-link" href="role_table.php">View Roles</a>
+                    </li>
+                    <li class="<?php echo ($page == 'user_form.php') ? 'active' : ''; ?>">
+                        <a class="nav-link" href="user_form.php">Add Admin</a>
+                    </li>
+                    <li class="<?php echo ($page == 'user_table.php') ? 'active' : ''; ?>">
+                        <a class="nav-link" href="user_table.php">View Admins</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- user management -->
 
         </ul>
     </aside>
