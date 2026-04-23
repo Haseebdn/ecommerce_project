@@ -50,7 +50,7 @@ function isActive($pages, $current)
             <?php $subcatPages = ['subcat_form.php', 'subcat_table.php']; ?>
             <li class="dropdown <?php echo isActive($subcatPages, $page) ? 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <i class="fa-solid fa-layer-group"></i><span>Subcategories</span>
+                    <i class="fa-solid fa-object-group"></i><span>Subcategories</span>
                 </a>
                 <ul class="dropdown-menu" style="<?php echo isActive($subcatPages, $page) ? 'display:block;' : ''; ?>">
                     <li class="<?php echo ($page == 'subcat_form.php') ? 'active' : ''; ?>">
@@ -67,7 +67,7 @@ function isActive($pages, $current)
             <?php $suppPages = ['supplier_form.php', 'supplier_table.php']; ?>
             <li class="dropdown <?php echo isActive($suppPages, $page) ? 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <i class="fa-solid fa-box"></i><span>Suppliers</span>
+                    <i class="fa-solid fa-truck"></i><span>Suppliers</span>
                 </a>
                 <ul class="dropdown-menu" style="<?php echo isActive($suppPages, $page) ? 'display:block;' : ''; ?>">
                     <li class="<?php echo ($page == 'supplier_form.php') ? 'active' : ''; ?>">
@@ -84,7 +84,7 @@ function isActive($pages, $current)
             <?php $qtyPages = ['qtyUnit_form.php', 'qtyUnit_table.php']; ?>
             <li class="dropdown <?php echo isActive($qtyPages, $page) ? 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <i class="fa-solid fa-box"></i><span>Quantity Units</span>
+                    <i class="fa-solid fa-dollar-sign"></i><span>Quantity Units</span>
                 </a>
                 <ul class="dropdown-menu" style="<?php echo isActive($qtyPages, $page) ? 'display:block;' : ''; ?>">
                     <li class="<?php echo ($page == 'qtyUnit_form.php') ? 'active' : ''; ?>">
@@ -118,7 +118,7 @@ function isActive($pages, $current)
             <?php $userPages = ['role_form.php', 'role_table.php', 'user_form.php', 'user_table.php']; ?>
             <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <i class="fa-solid fa-box"></i><span>Admin Management</span>
+                    <i class="fa-solid fa-user"></i><span>Admin Management</span>
                 </a>
                 <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
                     <li class="<?php echo ($page == 'role_form.php') ? 'active' : ''; ?>">
