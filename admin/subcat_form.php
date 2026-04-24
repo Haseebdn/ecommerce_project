@@ -45,7 +45,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                 <!-- query -->
                                 <!-- category -->
                                 <div class="form-group">
-                                    <label>Category </label><span> *</span>
+                                    <label>Category</label><span class="text-danger ml-1">*</span>
                                     <select id="category_name" name="category_id" class="form-control">
                                         <option value="">Select Category</option>
                                         <?php

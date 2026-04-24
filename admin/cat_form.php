@@ -38,7 +38,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                 <!-- index to edit -->
                 <!-- category name -->
                 <div class="">
-                  <label>Category Name </label><span class=""> *</span>
+                  <label>Category Name</label><span class="text-danger ml-1">*</span>
                   <input name="cat_name" type="text" id="cat_name" class="form-control" value="<?php echo isset($record['cat_name']) ? $record['cat_name'] : '' ?>" required>
                 </div>
                 <div id="name_error" class="text-danger mt-1"></div>

@@ -32,7 +32,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 <input type="hidden" name="edit_index" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>">
                                 <!-- supplier -->
                                 <div class="">
-                                    <label>Supplier Name </label><span> *</span>
+                                    <label>Supplier Name</label><span class="text-danger ml-1">*</span>
                                     <input type="text" id="supp_name" name="supp_name" class="form-control" value="<?php echo isset($row['supp_name']) ? $row['supp_name'] : '' ?>" required>
                                 </div>
                                 <div id="supp_error" class="text-danger mt-1"></div>
@@ -40,7 +40,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                                 <!-- email -->
                                 <div class="mt-4">
-                                    <label>Email </label><span> *</span>
+                                    <label>Email</label><span class="text-danger ml-1">*</span>
                                     <input id="supp_email" type="email" name="supp_email" class="form-control" value="<?php echo isset($row['supp_email']) ? $row['supp_email'] : '' ?>" required>
                                 </div>
                                 <div id="email_error" class="text-danger mt-1"></div>
@@ -48,7 +48,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                                 <!-- phone no -->
                                 <div class="mt-4">
-                                    <label>TEL </label><span> *</span>
+                                    <label>TEL</label><span class="text-danger ml-1">*</span>
                                     <input id="supp_telno" type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>" required>
                                 </div>
                                 <div id="telno_error" class="text-danger mt-1"></div>

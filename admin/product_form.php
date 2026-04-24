@@ -45,7 +45,7 @@
                                  <!-- category -->
                                  <div class="form-group">
 
-                                     <label> Category</label>
+                                     <label> Category</label><span class="text-danger ml-1">*</span>
                                      <select id="cat_name" name="cat_id" class="form-control">
                                          <option>Select Category</option>
                                          <?php
@@ -64,7 +64,7 @@
 
                                  <!-- subcategory -->
                                  <div class="form-group">
-                                     <label>Subcategory</label>
+                                     <label>Subcategory</label><span class="text-danger ml-1">*</span>
                                      <select id="subcat_name" name="subcat_id" class="form-control">
                                          <option>Select Subcategory</option>
 
@@ -78,7 +78,7 @@
                                     $sql = mysqli_query($conn, $query);
                                     ?>
                                  <div class="form-group">
-                                     <label>Supplier</label>
+                                     <label>Supplier</label><span class="text-danger ml-1">*</span>
                                      <select id="supp_name" name="supp_id" class="form-control">
                                          <option>Select Supplier</option>
                                          <?php while ($supp = mysqli_fetch_assoc($sql)) {
@@ -94,7 +94,7 @@
 
                                  <!-- code -->
                                  <div class="">
-                                     <label>Product Code</label>
+                                     <label>Product Code</label><span class="text-danger ml-1">*</span>
                                      <input id="p_code" type="text" class="form-control" name="p_code" value="<?php echo @$record['p_code'] ?>" required>
                                  </div>
                                  <div id="code_error" class="text-danger mt-1"></div>
@@ -102,7 +102,7 @@
 
                                  <!-- name -->
                                  <div class="mt-4">
-                                     <label>Product Name</label>
+                                     <label>Product Name</label><span class="text-danger ml-1">*</span>
                                      <input type="text" id="p_name" class="form-control" name="p_name" value="<?php echo @$record['p_name'] ?>" required>
                                  </div>
                                  <div id="name_error" class="text-danger mt-1"></div>
@@ -118,7 +118,7 @@
 
                                  <!-- unit price -->
                                  <div class="mt-4">
-                                     <label>Unit Price</label>
+                                     <label>Unit Price</label><span class="text-danger ml-1">*</span>
                                      <input id="unit_price" type="number" class="form-control" name="unit_price" value="<?php echo @$record['unit_price'] ?>" required>
                                  </div>
                                  <div id="unit_error" class="text-danger mt-1"></div>
@@ -140,12 +140,12 @@
 
                                  <!-- Stock -->
                                  <div class="mt-4">
-                                     <label class="fs-6">Stock</label>
+                                     <label class="fs-6">Stock</label><span class="text-danger ml-1">*</span>
                                      <input type="number" class="form-control" name="stock" value="<?php echo @$record['stock'] ?>" required>
                                  </div>
                                  <!-- Stock -->
                                  <!-- thumbnail -->
-                                 <label class="mt-4">Product Thumbnail</label>
+                                 <label class="mt-4">Product Thumbnail</label><span class="text-danger ml-1">*</span>
                                  <div class="custom-file">
                                      <input type="file" class="custom-file-input" id="p_thumbnail" name="p_thumbnail" required>
                                      <label class="custom-file-label" for="">Choose file</label>

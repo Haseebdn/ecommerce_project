@@ -26,7 +26,7 @@ include "./include/sidebar.php";
 
                                 <!-- User name -->
                                 <div class="">
-                                    <label>User Name </label><span> *</span>
+                                    <label>User Name</label><span class="text-danger ml-1">*</span>
                                     <input name="user_name" type="text" id="user_name" class="form-control" value="" required>
                                 </div>
                                 <div id="user_error" class="text-danger mt-1"></div>
@@ -34,7 +34,7 @@ include "./include/sidebar.php";
 
                                 <!-- email -->
                                 <div class="mt-4">
-                                    <label>Email </label><span> *</span>
+                                    <label>Email</label><span class="text-danger ml-1">*</span>
                                     <input id="user_email" type="email" name="user_email" class="form-control" value="" required>
                                 </div>
                                 <div id="email_error" class="text-danger mt-1"></div>
@@ -42,18 +42,36 @@ include "./include/sidebar.php";
 
                                 <!-- password -->
                                 <div class="mt-4">
-                                    <label for="">Password </label> <span> *</span>
+                                    <label for="">Password</label> <span class="text-danger ml-1">*</span>
                                     <input id="user_pass" type="password" class="form-control" name="user_pass" required>
 
                                 </div>
                                 <div id="pass_error" class="text-danger mt-1"></div>
                                 <!-- password -->
 
+                                <!-- confirm password -->
+                                <div class="mt-4">
+                                    <label for="">Confirm Password</label><span class="text-danger ml-1">*</span>
+                                    <input id="con_pass" type="password" class="form-control" name="con_pass" required>
+
+                                </div>
+                                <div id="con_error" class="text-danger mt-1"></div>
+                                <!-- confirm password -->
+
                                 <!-- Role -->
                                 <div class="mt-4">
-                                    <label>Role </label><span> *</span>
+                                    <label>Role</label><span class="text-danger ml-1">*</span>
                                     <select id="role_name" name="role_id" class="form-control">
                                         <option value="">Select Role</option>
+                                        <?php
+                                        $query = "SELECT * FROM `admin_role`";
+                                        $sql = mysqli_query($conn, $query);
+                                        while ($row = mysqli_fetch_assoc($sql)) {
+                                        ?>
+                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['role_name']    ?></option>
+                                        <?php
+                                        }
+                                        ?>
 
                                     </select>
                                 </div>
@@ -149,16 +167,32 @@ include "./include/footer.php";
             return error === '';
         }
 
+        function confirmPassword() {
+            let pass = $('#user_pass').val().trim();
+            let con_pass = $('#con_pass').val().trim();
+            let error = '';
+
+            if (con_pass == '') {
+                error = "Please Confirm Password";
+            } else if (pass !== con_pass) {
+                error = "Password Not Matched";
+            }
+
+            $('#con_error').text(error);
+            return error === '';
+        }
+
         $('#user_name').on('input', validateName);
         $('#user_email').on('input', validateEmail);
         $('#user_pass').on('input', validatePassword);
+        $('#con_pass').on('input', confirmPassword);
 
         $("#user_form").on('submit', function(e) {
             let validName = validateName();
             let validEmail = validateEmail();
             let passValid = validatePassword();
-
-            if (!validName || !validEmail || !passValid) {
+            let conValid = confirmPassword();
+            if (!validName || !validEmail || !passValid || !conValid) {
                 e.preventDefault();
             }
         })

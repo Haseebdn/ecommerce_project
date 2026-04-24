@@ -32,7 +32,7 @@
                                  <input type="hidden" name="edit_index" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>">
                                  <!-- unit name -->
                                  <div class="">
-                                     <label>Unit Name </label><span> *</span>
+                                     <label>Unit Name</label><span class="text-danger ml-1">*</span>
                                      <input type="text" id="unit_name" name="unit_name" class="form-control" value="<?php echo isset($row['unit_name']) ? $row['unit_name'] : '' ?>" required>
                                  </div>
                                  <div id="name_error" class="text-danger mt-1"></div>

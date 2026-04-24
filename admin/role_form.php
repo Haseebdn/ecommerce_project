@@ -35,7 +35,7 @@ if (isset($_GET) && !empty($_GET)) {
 
                                 <!-- Role -->
                                 <div class="">
-                                    <label>Role Name </label><span> *</span>
+                                    <label>Role Name</label><span class="text-danger ml-1">*</span>
                                     <input name="role_name" type="text" id="role_name" class="form-control" value="<?php echo @$record['role_name'] ?>" required>
                                 </div>
                                 <div id="role_error" class="text-danger mt-1"></div>
@@ -43,7 +43,7 @@ if (isset($_GET) && !empty($_GET)) {
 
                                 <!-- Role -->
                                 <div class="mt-4">
-                                    <label>Role Type </label><span> *</span>
+                                    <label>Role Type</label><span class="text-danger ml-1">*</span>
                                     <select id="role_type" name="role_type" class="form-control">
                                         <option value="">Select Role Type</option>
                                         <option value="All" <?php echo (isset($record['role_type']) && $record['role_type'] == 'All') ? 'selected' : '' ?>>All</option>

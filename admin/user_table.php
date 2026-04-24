@@ -50,13 +50,33 @@
 
                                      <!-- table body -->
                                      <tbody>
-                                         <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                         </tr>
+                                         <?php
+                                            $query = "SELECT adm.*,admR.role_name AS role_name,admR.id AS role_id FROM `admin` AS adm LEFT JOIN `admin_role` AS admR ON adm.adm_role=admR.id";
+                                            $sql   = mysqli_query($conn, $query);
+                                            while ($row = mysqli_fetch_assoc($sql)) {
+                                               
+                                            ?>
+
+                                             <tr>
+                                                 <td><?php echo $row['adm_name'] ?? '' ?></td>
+                                                 <td><?php echo $row['adm_email'] ?? '' ?></td>
+                                                 <td><?php echo $row['role_name'] ?? ''    ?></td>
+                                                 <td>
+                                                     <label class="custom-switch pl-0">
+                                                         <input onchange="fetchstatus(<?php echo $row['id'] ?>, 'admin')"
+                                                             id="switch_<?php echo $row['id']; ?>"
+                                                             <?php echo ($row['is_active'] == 1) ? 'checked' : '' ?> type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                                                         <span class="custom-switch-indicator"></span>
+                                                         <span class="custom-switch-description">Active</span>
+                                                     </label>
+                                                 </td>
+                                                 <td><a class="btn btn-primary btn-sm" href="./supplier_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                                     <a class="btn btn-danger btn-sm" href="./handlers/supplier/delete.php?id=<?php echo $row['id']  ?>"><i class="fa-solid fa-trash"></i></a>
+                                                 </td>
+                                             </tr>
+                                         <?php
+                                            }
+                                            ?>
 
                                      </tbody>
                                      <!-- table body -->
