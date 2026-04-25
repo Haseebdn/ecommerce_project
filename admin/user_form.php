@@ -3,6 +3,13 @@ include "./sql/conn.php";
 include "./include/header.php";
 include "./include/sidebar.php";
 
+if (isset($_GET) && !empty($_GET['id'])) {
+    $id = $_GET['id'];
+    $query = "SELECT * FROM `admin` WHERE `id`=$id";
+    $sql = mysqli_query($conn, $query);
+    $record = mysqli_fetch_assoc($sql);
+}
+
 ?>
 <!-- Main Content -->
 <div class="main-content">
@@ -13,21 +20,21 @@ include "./include/sidebar.php";
                     <div class="card">
                         <!-- heading -->
                         <div class="card-header d-flex justify-content-between">
-                            <h4>Add User</h4>
+                            <h4><?php echo isset($_GET['id']) ? 'Update User' : 'Add User'   ?></h4>
                             <a href="./user_table.php" class="btn btn-primary">Users</a>
                         </div>
                         <!-- heading -->
                         <!-- form -->
-                        <form id="user_form" action="" method="POST">
+                        <form id="user_form" action="<?php echo isset($_GET['id']) ? './handlers/adm_user/update.php' : './handlers/adm_user/add.php' ?>" method="POST">
                             <div class="card-body">
                                 <!-- input to edit -->
-                                <input type="hidden" name='edit_index' value="">
+                                <input type="hidden" name='edit_index' value="<?php echo $_GET['id'] ?? '' ?>">
                                 <!-- input to edit -->
 
                                 <!-- User name -->
                                 <div class="">
                                     <label>User Name</label><span class="text-danger ml-1">*</span>
-                                    <input name="user_name" type="text" id="user_name" class="form-control" value="" required>
+                                    <input name="user_name" type="text" id="user_name" class="form-control" value="<?php echo isset($record['adm_name']) ? $record['adm_name'] : '' ?>" required>
                                 </div>
                                 <div id="user_error" class="text-danger mt-1"></div>
                                 <!-- User name -->
@@ -35,7 +42,7 @@ include "./include/sidebar.php";
                                 <!-- email -->
                                 <div class="mt-4">
                                     <label>Email</label><span class="text-danger ml-1">*</span>
-                                    <input id="user_email" type="email" name="user_email" class="form-control" value="" required>
+                                    <input id="user_email" type="email" name="user_email" class="form-control" value="<?php echo isset($record['adm_email']) ? $record['adm_email'] : '' ?>" required>
                                 </div>
                                 <div id="email_error" class="text-danger mt-1"></div>
                                 <!-- email -->
@@ -43,7 +50,7 @@ include "./include/sidebar.php";
                                 <!-- password -->
                                 <div class="mt-4">
                                     <label for="">Password</label> <span class="text-danger ml-1">*</span>
-                                    <input id="user_pass" type="password" class="form-control" name="user_pass" required>
+                                    <input id="user_pass" type="password" class="form-control" name="user_pass" value="<?php echo isset($record['adm_pass']) ? $record['adm_pass'] : '' ?>" required>
 
                                 </div>
                                 <div id="pass_error" class="text-danger mt-1"></div>
@@ -52,7 +59,7 @@ include "./include/sidebar.php";
                                 <!-- confirm password -->
                                 <div class="mt-4">
                                     <label for="">Confirm Password</label><span class="text-danger ml-1">*</span>
-                                    <input id="con_pass" type="password" class="form-control" name="con_pass" required>
+                                    <input id="con_pass" type="password" class="form-control" name="con_pass" value="<?php echo isset($record['adm_pass']) ? $record['adm_pass'] : '' ?>" required>
 
                                 </div>
                                 <div id="con_error" class="text-danger mt-1"></div>
@@ -68,7 +75,7 @@ include "./include/sidebar.php";
                                         $sql = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
-                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['role_name']    ?></option>
+                                            <option value="<?php echo $row['id'] ?>" <?php echo (isset($record['adm_role']) && $record['adm_role'] == $row['id']) ? 'selected' : '' ?>><?php echo $row['role_name']    ?></option>
                                         <?php
                                         }
                                         ?>
@@ -81,7 +88,7 @@ include "./include/sidebar.php";
                             </div>
                             <!-- buttons -->
                             <div class="card-footer text-right">
-                                <button id="cat_submit" class="btn btn-primary mr-1" type="submit">Add</button>
+                                <button id="cat_submit" class="btn btn-primary mr-1" type="submit"><?php echo isset($_GET['id']) ? 'Update' : 'Add'    ?></button>
                                 <button class="btn btn-secondary" type="reset">Reset</button>
                             </div>
                             <!-- buttons -->

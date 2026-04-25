@@ -70,8 +70,8 @@
                                                          <span class="custom-switch-description">Active</span>
                                                      </label>
                                                  </td>
-                                                 <td><a class="btn btn-primary btn-sm" href="./supplier_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
-                                                     <a class="btn btn-danger btn-sm" href="./handlers/supplier/delete.php?id=<?php echo $row['id']  ?>"><i class="fa-solid fa-trash"></i></a>
+                                                 <td><a class="btn btn-primary btn-sm" href="./user_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                                     <a class="btn btn-danger btn-sm" href="./handlers/adm_user/delete.php?id=<?php echo $row['id']  ?>"><i class="fa-solid fa-trash"></i></a>
                                                  </td>
                                              </tr>
                                          <?php
