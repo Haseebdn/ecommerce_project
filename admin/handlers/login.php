@@ -16,7 +16,7 @@ if (isset($_POST) && !empty($_POST)) {
 
     try {
         // query
-        $query = "SELECT * FROM admin WHERE adm_email='$adm_email' LIMIT 1";
+        $query = "SELECT * FROM `admin` WHERE adm_email='$adm_email' LIMIT 1";
         $result = mysqli_query($conn, $query);
         // query
 
@@ -25,12 +25,18 @@ if (isset($_POST) && !empty($_POST)) {
             $admin = mysqli_fetch_assoc($result);
 
             if ($adm_pass == $admin['adm_pass']) {
+                if (!$admin['is_active'] == 1) {
+                    $_SESSION['error'] = "Your access blocked";
+                    header("Location: /admin/home.php");
+                    exit();
+                } else {
 
-                $_SESSION['admin_id'] = $admin['id'];
-                $_SESSION['admin_email'] = $admin['adm_email'];
+                    $_SESSION['role_id'] = $admin['adm_role'];
+                    $_SESSION['admin_email'] = $admin['adm_email'];
 
-                header("Location: /admin/home.php");
-                exit();
+                    header("Location: /admin/home.php");
+                    exit();
+                }
             } else {
                 $_SESSION['error'] = "Wrong password";
             }

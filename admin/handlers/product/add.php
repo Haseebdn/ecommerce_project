@@ -32,9 +32,10 @@ if (isset($_POST) && !empty($_POST)) {
     // validation
 
     // thumbnail
+    $thumbnail_name = '';
     if (!empty($p_thumbnail)) {
         $ext = strtolower(pathinfo($p_thumbnail, PATHINFO_EXTENSION));
-        if (!in_array($ext, ['jpg', 'jpeg', 'png'])) {
+        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
             $_SESSION['error'] = "Invalid File Format";
             header("location:../../product_table.php");
             exit();
@@ -52,7 +53,7 @@ if (isset($_POST) && !empty($_POST)) {
     if (!empty($p_imgs)) {
         foreach ($p_imgs as $item) {
             $ext = strtolower(pathinfo($item, PATHINFO_EXTENSION));
-            if (!in_array($ext, ['jpg', 'jpeg', 'png'])) {
+            if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
                 $_SESSION['error'] = "Invalid File Format";
                 header("location:../../product_table.php");
                 exit();

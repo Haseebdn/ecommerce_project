@@ -38,7 +38,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                 <!-- input to edit -->
                                 <!-- query -->
                                 <?php
-                                $query = "SELECT * FROM `categories` WHERE `parent_id` IS NULL ";
+                                $query = "SELECT * FROM `categories` WHERE `parent_id` IS NULL AND `is_active`=1 ";
                                 $sql = mysqli_query($conn, $query);
 
                                 ?>
@@ -120,19 +120,19 @@ include "./include/footer.php";
         });
 
         $('#subcat_desc').on('input', function() {
-             let input = this;
-             let start = input.selectionStart;
-             let end = input.selectionEnd;
+            let input = this;
+            let start = input.selectionStart;
+            let end = input.selectionEnd;
 
-             let value = input.value.toLowerCase();
+            let value = input.value.toLowerCase();
 
-             let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
-                 return char.toUpperCase();
-             });
+            let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
+                return char.toUpperCase();
+            });
 
-             input.value = result;
-             input.setSelectionRange(start, end);
-         });
+            input.value = result;
+            input.setSelectionRange(start, end);
+        });
 
         function validateName() {
             let name = $('#subcat_name').val().trim();

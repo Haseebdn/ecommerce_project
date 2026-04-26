@@ -38,7 +38,7 @@
                                  <!-- input to edit -->
                                  <!-- query -->
                                  <?php
-                                    $query = "SELECT * FROM `categories` WHERE `parent_id` IS NULL";
+                                    $query = "SELECT * FROM `categories` WHERE `parent_id` IS NULL AND `is_active`=1";
                                     $sql = mysqli_query($conn, $query);
                                     ?>
                                  <!-- query -->
@@ -74,7 +74,7 @@
 
                                  <!-- supplier -->
                                  <?php
-                                    $query = "SELECT * FROM `suppliers`";
+                                    $query = "SELECT * FROM `suppliers` WHERE `is_active`=1";
                                     $sql = mysqli_query($conn, $query);
                                     ?>
                                  <div class="form-group">

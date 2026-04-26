@@ -71,7 +71,7 @@ if (isset($_GET) && !empty($_GET['id'])) {
                                     <select id="role_name" name="role_id" class="form-control">
                                         <option value="">Select Role</option>
                                         <?php
-                                        $query = "SELECT * FROM `admin_role`";
+                                        $query = "SELECT * FROM `admin_role` WHERE `is_active`=1";
                                         $sql = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
