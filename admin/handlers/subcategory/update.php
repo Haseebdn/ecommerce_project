@@ -8,8 +8,8 @@ if (isset($_POST) && !empty($_POST)) {
     // variables
     $subcat_id = $_POST['edit_index'];
     $parent_id = $_POST['category_id'];
-    $subcat_name = $_POST['cat_name'];
-    $description = $_POST['cat_description'];
+    $subcat_name = $_POST['subcat_name'];
+    $description = $_POST['subcat_desc'];
     // variables
 
     // validation
