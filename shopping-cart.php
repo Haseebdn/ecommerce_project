@@ -1,5 +1,6 @@
 <?php
 include "./includes/header.php";
+
 ?>
 
 <!-- Breadcrumb Section Begin -->
@@ -22,100 +23,30 @@ include "./includes/header.php";
 <!-- Breadcrumb Section End -->
 
 <!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
+<section class="shopping-cart spad table-responsive">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12 p-0">
                 <div class="shopping__cart__table">
                     <table>
                         <thead>
                             <tr>
+                                <th>Picture</th>
                                 <th>Product</th>
+                                <th>Code</th>
                                 <th>Quantity</th>
-                                <th>Total</th>
-                                <th></th>
+                                <th>Price</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-1.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>T-shirt Contrast Pocket</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-2.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Diagonal Textured Cap</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 32.50</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-3.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 47.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-4.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td class=" col-1 p-2"><img class="rounded" src="./admin/uploads/thumbnail/17780418455403.jpg" width="50" alt=""></td>
+                                <td class="col-2 p-2">Gents Olive Green Textured Blazer</td>
+                                <td class="col-1 p-2">ma-001</td>
+                                <td class="col-2 p-2"><span class="h2 pr-3">-</span><input class="w-50 text-center" type="text"><span class="h2 pl-3">+</span></td>
+                                <td class="col-1 p-2">3455 pkr</td>
+                                <td class="col-1 p-2"><a class="btn btn-danger" href=""><i class=" fa fa-trash" aria-hidden="true"></i></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -133,15 +64,17 @@ include "./includes/header.php";
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="cart__discount">
-                    <h6>Discount codes</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Coupon code">
-                        <button type="submit">Apply</button>
-                    </form>
-                </div>
-                <div class="cart__total">
+        </div>
+        <div class="row mt-5 pt-5 justify-content-between">
+            <div class="cart__discount w-25">
+                <h6>Discount codes</h6>
+                <form action="#">
+                    <input type="text" placeholder="Coupon code">
+                    <button type="submit">Apply</button>
+                </form>
+            </div>
+            <div class="w-50">
+                <div class="cart__total ml-auto w-75">
                     <h6>Cart total</h6>
                     <ul>
                         <li>Subtotal <span>$ 169.50</span></li>
