@@ -20,7 +20,7 @@ include "./includes/header.php";
             <a type="submit" class="btn btn-dark w-25" href="">Login</a>
             </div>
             <div class="w-50">
-            <a class="btn btn-danger w-25" href="">Signup</a>
+            <a class="btn btn-danger w-25" href="./signup.php">Signup</a>
             </div>
         </div>
         

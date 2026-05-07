@@ -74,7 +74,7 @@
                         <div class="header__top__right">
                             <div class="header__top__links">
                                 <a href="#">Admin</a>
-                                <a href="#">My Accout</a>
+                                <a href="../profile.php">My Account</a>
                             </div>
                             <div class="header__top__hover">
                                 <a href="#" class="text-white">Logout</a>
@@ -105,7 +105,7 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="../shopping-cart.php" ><img src="img/icon/cart.png"  alt=""> <span>0</span></a>
+                        <a href="../shopping_cart.php" ><img src="img/icon/cart.png"  alt=""> <span>0</span></a>
                         <div class="price">0.00<span> PKR</span></div>
                     </div>
                 </div>

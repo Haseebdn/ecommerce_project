@@ -2,9 +2,27 @@
 include "./includes/header.php";
 ?>
 
-<div class="container mt-5">
-    <h2 class="px-5">Signup</h2>
-    <form id="signup_form" action="./handlers/signup.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Update Profile</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>Edit Profile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<div class="container my-5">
+    <h2 class="px-5">Edit Profile</h2>
+    <form id="edit_form" action="./handlers/signup.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
         <div class="d-flex justify-content-between">
             <div class="w-50">
                 <label for="">First Name</label><span class="text-danger"> *</span>
@@ -20,7 +38,7 @@ include "./includes/header.php";
         <div class="d-flex justify-content-between mt-4">
             <div class="w-50">
                 <label for="">Email</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="u_email" name="u_email" type="email" required>
+                <input class=" w-75 form-control" id="u_email" name="u_email" type="email" required readonly>
                 <div id="email_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
@@ -69,13 +87,7 @@ include "./includes/header.php";
                 <div id="address_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
-                <label for="">Profile Picture</label><span class="text-danger"> *</span>
-                <input id="p_pic" name="p_pic" class=" w-75 form-control" type="file">
-            </div>
-        </div>
 
-        <div class="d-flex justify-content-between mt-4">
-            <div class="w-50">
                 <label for="">Gender</label><span class="text-danger"> *</span><br>
                 <select id="gender" name="gender" class="w-75 custom-select" required>
                     <option value="">Select Gender</option>
@@ -85,26 +97,23 @@ include "./includes/header.php";
                 </select>
                 <div id="gender_error" class="text-danger mt-1"></div>
             </div>
+
         </div>
-        <div class="d-flex justify-content-between mt-4">
+
+
+        <div class="d-flex justify-content-between mt-5">
             <div class="w-50">
-                <label for="">Password</label><span class="text-danger"> *</span>
-                <input id="password" name="password" class=" w-75 form-control" type="password" required>
-                <div id="pass_error" class="text-danger mt-1"></div>
+                <button type="submit" class="btn btn-dark w-50">Update Profile</button>
             </div>
             <div class="w-50">
-                <label for="">Confirm Password</label><span class="text-danger"> *</span>
-                <input id="con_password" name="con_password" class=" w-75 form-control" type="password" required>
-                <div id="con_error" class="text-danger mt-1"></div>
+                <a class="btn btn-danger w-50" href="./profile.php">Cancel</a>
             </div>
         </div>
-        <div class="d-flex justify-content-between mt-4">
+        <div class="d-flex justify-content-center mt-5">
             <div class="w-50">
-                <button type="submit" class="btn btn-dark w-50">Signup</button>
+                <button type="reset" class="btn btn-secondary w-50">Reset</button>
             </div>
-            <div class="w-50">
-                <a class="btn btn-danger w-50" href="./login.php">Back to Login</a>
-            </div>
+
         </div>
 
     </form>
@@ -291,38 +300,7 @@ include "./includes/footer.php"
             return error === '';
         }
 
-        function validatePassword() {
-            let password = $('#password').val().trim();
-            let error = '';
 
-
-            let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-            if (password == "") {
-                error = "Password is required";
-            } else if (!regex.test(password)) {
-                error = "Min 8 chars, include upper, lower, number & special char";
-            }
-
-            $('#pass_error').text(error);
-
-            return error === '';
-        }
-
-        function confirmPassword() {
-            let pass = $('#password').val().trim();
-            let con_pass = $('#con_pass').val().trim();
-            let error = '';
-
-            if (con_pass == '') {
-                error = "Please Confirm Password";
-            } else if (pass !== con_pass) {
-                error = "Password Not Matched";
-            }
-
-            $('#con_error').text(error);
-            return error === '';
-        }
 
         $('#f_name').on('input', validateFName);
         $('#last_name').on('input', validateLastName);
@@ -334,10 +312,8 @@ include "./includes/footer.php"
         $('#postal_code').on('input', validateCode);
         $('#address').on('input', validateAddress);
         $('#gender').on('input', validateGender);
-        $('#password').on('input', validatePassword);
-        $('#con_pass').on('input', confirmPassword);
 
-        $('#signup_form').on('submit', function(e) {
+        $('#edit_form').on('submit', function(e) {
             let validFName = validateFName();
             let validLastName = validateLastName();
             let validEmail = validateEmail();
@@ -348,10 +324,9 @@ include "./includes/footer.php"
             let validCode = validateCode();
             let validAddress = validateAddress();
             let validGender = validateGender();
-            let validPassword = validatePassword();
-            let validCon = confirmPassword();
 
-            if (!validFName || !validLastName || !validEmail || !validPhone || !validCountry || !validState || !validCity || !validCode || !validAddress || !validGender || !validPassword || !confirmPassword) {
+
+            if (!validFName || !validLastName || !validEmail || !validPhone || !validCountry || !validState || !validCity || !validCode || !validAddress || !validGender) {
                 e.preventDefault();
             }
         })
