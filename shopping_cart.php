@@ -1,54 +1,5 @@
 <?php
 include "./sql/conn.php";
-
-
-if (isset($_GET['add'])) {
-
-    $productId = intval($_GET['add']);
-
-    $query = "SELECT * FROM products WHERE id='$productId'";
-    $sql = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($sql) > 0) {
-
-        $product = mysqli_fetch_assoc($sql);
-
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-
-        if (isset($_SESSION['cart'][$productId])) {
-
-            $_SESSION['cart'][$productId]['quantity']++;
-        } else {
-
-            $_SESSION['cart'][$productId] = [
-                'id' => $product['id'],
-                'name' => $product['p_name'],
-                'price' => $product['sale_price'],
-                'image' => $product['p_thumbnail'],
-                'code' => $product['p_code'],
-                'quantity' => 1
-            ];
-        }
-    }
-
-    header("Location: shopping_cart.php");
-    exit();
-}
-
-
-if (isset($_GET['remove'])) {
-
-    $removeId = intval($_GET['remove']);
-
-    unset($_SESSION['cart'][$removeId]);
-
-    header("Location: shopping_cart.php");
-    exit();
-}
-
-
 include "./includes/header.php";
 ?>
 
@@ -90,64 +41,47 @@ include "./includes/header.php";
                         </thead>
                         <tbody>
 
-                            <?php
 
-                            $total = 0;
+                            <tr>
 
-                            if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+                                <td class="col-1 p-2">
+                                    <img class="rounded"
+                                        src="./admin/uploads/thumbnail/"
+                                        width="50">
+                                </td>
 
-                                foreach ($_SESSION['cart'] as $item) {
+                                <td class="col-2 p-2">
 
-                                    $subtotal = $item['price'] * $item['quantity'];
-                                    $total += $subtotal;
+                                </td>
 
-                            ?>
+                                <td class="col-1 p-2">
 
-                                    <tr>
+                                </td>
 
-                                        <td class="col-1 p-2">
-                                            <img class="rounded"
-                                                src="./admin/uploads/thumbnail/<?php echo $item['image'] ?>"
-                                                width="50">
-                                        </td>
+                                <td class="col-2 p-2">
 
-                                        <td class="col-2 p-2">
-                                            <?php echo $item['name'] ?>
-                                        </td>
+                                </td>
 
-                                        <td class="col-1 p-2">
-                                            <?php echo $item['code'] ?>
-                                        </td>
+                                <td class="col-1 p-2">
 
-                                        <td class="col-2 p-2">
-                                            <?php echo $item['quantity'] ?>
-                                        </td>
+                                </td>
 
-                                        <td class="col-1 p-2">
-                                            <?php echo $subtotal ?> PKR
-                                        </td>
+                                <td class="col-1 p-2">
+                                    <a class="btn btn-danger"
+                                        href="shopping_cart.php?remove=?>">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
 
-                                        <td class="col-1 p-2">
-                                            <a class="btn btn-danger"
-                                                href="shopping_cart.php?remove=<?php echo $item['id'] ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
+                            </tr>
 
-                                    </tr>
 
-                                <?php
-                                }
-                            } else {
-                                ?>
+                            <!-- <tr>
+                                <td colspan="6" class="text-center">
+                                    Cart is Empty
+                                </td>
+                            </tr> -->
 
-                                <tr>
-                                    <td colspan="6" class="text-center">
-                                        Cart is Empty
-                                    </td>
-                                </tr>
-
-                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -177,8 +111,8 @@ include "./includes/header.php";
                 <div class="cart__total ml-auto w-75">
                     <h6>Cart total</h6>
                     <ul>
-                        <li>Subtotal <span><?php echo $total ?> PKR</span></li>
-                        <li>Total <span><?php echo $total ?> PKR</span></li>
+                        <li>Subtotal <span></span></li>
+                        <li>Total <span></span></li>
                     </ul>
                     <a href="#" class="primary-btn">Proceed to checkout</a>
                 </div>

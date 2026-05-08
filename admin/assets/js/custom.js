@@ -26,9 +26,6 @@ function fetchstatus(cat_id, table) {
                     timer: 1500
                 });
             }
-
         }
-
-
     })
 }

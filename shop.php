@@ -2,25 +2,34 @@
 include "./sql/conn.php";
 include "./includes/header.php";
 
+
+// ========== pagination fetch ============
 $limit = 9;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-if ($page < 1) $page = 1;
+if ($page < 1) {
+    $page = 1;
+}
 
+//offset 9 => 10-18
 $offset = ($page - 1) * $limit;
+// ========== pagination fetch ============
+
 
 $totalProducts = '';
 $catId = null;
 
+//  ========== category fetch (from subcategory or directly)===========
 if (isset($_GET['scId'])) {
-    $subcatId = intval($_GET['scId']);
-    $query = "SELECT parent_id FROM categories WHERE id='$subcatId'";
+    $subcatId = intval($_GET['scId']); //typecasting to int
+    $query = "SELECT parent_id FROM categories WHERE id='$subcatId'"; //subcategory query
     $run = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($run);
-    $catId = $row['parent_id'] ?? null;
+    $catId = $row['parent_id'] ?? null; // get main category with help of subcategory
 } elseif (isset($_GET['cid'])) {
-    $catId = $_GET['cid'];
+    $catId = $_GET['cid'];   // fetch category directly from url
 }
+//  ========== category fetch (from subcategory or directly)===========
 ?>
 
 <!-- Breadcrumb Section Begin -->
@@ -48,10 +57,12 @@ if (isset($_GET['scId'])) {
             <div class="col-lg-3">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
+                        <!-- ================ search field ================= -->
                         <form action="#">
                             <input type="text" placeholder="Search...">
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
+                        <!-- ================ search field ================= -->
                     </div>
                     <div class="shop__sidebar__accordion">
                         <div class="accordion" id="accordionExample">
@@ -64,7 +75,7 @@ if (isset($_GET['scId'])) {
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
                                                 <?php
-
+                                                // ========= query to show all category =========
                                                 $query = "SELECT id,cat_name FROM `categories` WHERE parent_id IS NULL";
                                                 $sql = mysqli_query($conn, $query);
                                                 while ($cat = mysqli_fetch_assoc($sql)) {
@@ -72,8 +83,9 @@ if (isset($_GET['scId'])) {
 
                                                     <li><a href="shop.php?cid=<?php echo $cat['id'] ?? '' ?>"><?php echo $cat['cat_name'] ?? '';    ?></a></li>
                                                 <?php
-
                                                 }
+
+                                                // ========= query to show all category =========
                                                 ?>
                                             </ul>
                                         </div>
@@ -89,6 +101,8 @@ if (isset($_GET['scId'])) {
                                         <div class="shop__sidebar__brand">
                                             <ul>
                                                 <?php
+
+                                                // ========= query to show all subcategories with category dependency or with dependency=========
                                                 if (isset($catId)) {
                                                     $query = "SELECT id,cat_name FROM `categories` WHERE `parent_id`='$catId'";
                                                     $sql = mysqli_query($conn, $query);
@@ -112,10 +126,42 @@ if (isset($_GET['scId'])) {
                     </div>
                 </div>
             </div>
+            <?php
+            if (isset($_GET['scId'])) {
+                $subcatId = intval($_GET['scId']);
+
+                $countQuery = "SELECT COUNT(*) as total FROM products WHERE subcat_id = '$subcatId'";
+                $countResult = mysqli_query($conn, $countQuery);
+                $totalData = mysqli_fetch_assoc($countResult);
+                $totalProducts = $totalData['total'];
+
+                $query = "SELECT * FROM products WHERE subcat_id = '$subcatId' LIMIT $limit OFFSET $offset";
+            } elseif (isset($_GET['cid'])) {
+                $catId = intval($_GET['cid']);
+
+                $countQuery = "SELECT COUNT(*) as total FROM products WHERE cat_id = '$catId'";
+                $countResult = mysqli_query($conn, $countQuery);
+                $totalData = mysqli_fetch_assoc($countResult);
+                $totalProducts = $totalData['total'];
+
+                $query = "SELECT * FROM products WHERE cat_id = '$catId' LIMIT $limit OFFSET $offset";
+            } else {
+                $countQuery = "SELECT COUNT(*) as total FROM products";
+                $countResult = mysqli_query($conn, $countQuery);
+                $totalData = mysqli_fetch_assoc($countResult);
+                $totalProducts = $totalData['total'];
+
+                $query = "SELECT * FROM products LIMIT $limit OFFSET $offset";
+            }
+
+            $sql = mysqli_query($conn, $query);
+            $totalPages = ceil($totalProducts / $limit);
+            ?>
+
             <div class="col-lg-9">
                 <div class="shop__product__option">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-12">
                             <div class="shop__product__option__left">
                                 <?php
                                 $start = $offset + 1;
@@ -124,49 +170,10 @@ if (isset($_GET['scId'])) {
                                 <p>Showing <?php echo $start ?>–<?php echo $end ?> of <?php echo $totalProducts ?> results</p>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__product__option__right">
-                                <p>Sort by Price:</p>
-                                <select>
-                                    <option value="">Low To High</option>
-                                    <option value="">$0 - $55</option>
-                                    <option value="">$55 - $100</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <?php
-                    if (isset($_GET['scId'])) {
-                        $subcatId = intval($_GET['scId']);
-
-                        $countQuery = "SELECT COUNT(*) as total FROM products WHERE subcat_id = '$subcatId'";
-                        $countResult = mysqli_query($conn, $countQuery);
-                        $totalData = mysqli_fetch_assoc($countResult);
-                        $totalProducts = $totalData['total'];
-
-                        $query = "SELECT * FROM products WHERE subcat_id = '$subcatId' LIMIT $limit OFFSET $offset";
-                    } elseif (isset($_GET['cid'])) {
-                        $catId = intval($_GET['cid']);
-
-                        $countQuery = "SELECT COUNT(*) as total FROM products WHERE cat_id = '$catId'";
-                        $countResult = mysqli_query($conn, $countQuery);
-                        $totalData = mysqli_fetch_assoc($countResult);
-                        $totalProducts = $totalData['total'];
-
-                        $query = "SELECT * FROM products WHERE cat_id = '$catId' LIMIT $limit OFFSET $offset";
-                    } else {
-                        $countQuery = "SELECT COUNT(*) as total FROM products";
-                        $countResult = mysqli_query($conn, $countQuery);
-                        $totalData = mysqli_fetch_assoc($countResult);
-                        $totalProducts = $totalData['total'];
-
-                        $query = "SELECT * FROM products LIMIT $limit OFFSET $offset";
-                    }
-
-                    $sql = mysqli_query($conn, $query);
-                    $totalPages = ceil($totalProducts / $limit);
                     while ($product = mysqli_fetch_assoc($sql)) {
                     ?>
                         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -182,7 +189,7 @@ if (isset($_GET['scId'])) {
 
                                 <div class="product__item__text">
                                     <h6><?php echo $product['p_name']    ?></h6>
-                                    <a href="./shopping_cart.php?add=<?php echo $product['id'] ?? '' ?>" class="add-cart">+ Add To Cart</a>
+                                    <a href="" class="add-cart" data-pid=<?php echo  $product['id'] ?>>+ Add To Cart</a>
                                     <div class="rating">
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>
@@ -239,3 +246,18 @@ if (isset($_GET['scId'])) {
 <?php
 include "./includes/footer.php";
 ?>
+
+
+<script>
+    $(".add-cart").on("click", function(e) {
+        e.preventDefault();
+
+        const pid = $(this).data("pid");
+        $.ajax({
+            url:"https://ecommerce-project.test/handlers/add_cart.php",
+            method:'POST',
+            data: {'id':pid},
+            
+        })
+    });
+</script>
