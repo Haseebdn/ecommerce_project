@@ -29,7 +29,7 @@ include "./includes/header.php";
                 <label for="">
                     Old Email
                 </label>
-                <input id="old_email" class="form-control" type="email" name="old_email">
+                <input id="old_email" class="form-control" type="email" name="old_email" value="<?php echo $_SESSION['user_email'] ?>" readonly>
             </div>
             <div class="my-4">
                 <label for="">

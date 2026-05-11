@@ -74,6 +74,7 @@ if (isset($_GET['scId'])) {
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
+                                                <li><a href="shop.php">All</a></li>
                                                 <?php
                                                 // ========= query to show all category =========
                                                 $query = "SELECT id,cat_name FROM `categories` WHERE parent_id IS NULL";
@@ -101,7 +102,6 @@ if (isset($_GET['scId'])) {
                                         <div class="shop__sidebar__brand">
                                             <ul>
                                                 <?php
-
                                                 // ========= query to show all subcategories with category dependency or with dependency=========
                                                 if (isset($catId)) {
                                                     $query = "SELECT id,cat_name FROM `categories` WHERE `parent_id`='$catId'";
@@ -189,7 +189,7 @@ if (isset($_GET['scId'])) {
 
                                 <div class="product__item__text">
                                     <h6><?php echo $product['p_name']    ?></h6>
-                                    <a href="" class="add-cart" data-pid=<?php echo  $product['id'] ?>>+ Add To Cart</a>
+                                    <a href="javascript:void(0)" class="add-cart" data-pid="<?php echo $product['id'] ?>">+ Add To Cart</a>
                                     <div class="rating">
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>
@@ -250,14 +250,43 @@ include "./includes/footer.php";
 
 <script>
     $(".add-cart").on("click", function(e) {
+
         e.preventDefault();
 
         const pid = $(this).data("pid");
+
         $.ajax({
-            url:"https://ecommerce-project.test/handlers/add_cart.php",
-            method:'POST',
-            data: {'id':pid},
-            
-        })
+            url: "https://ecommerce-project.test/handlers/cart/add_cart.php",
+            method: "POST",
+            data: {
+                id: pid
+            },
+
+            success: function(res) {
+
+                let response = JSON.parse(res);
+
+                if (response.status == 200) {
+
+                    Swal.fire({
+                        icon: "success",
+                        title: response.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                } else if (response.status == 409) {
+
+                    Swal.fire({
+                        icon: "warning",
+                        title: response.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+                location.reload();
+
+            }
+        });
     });
 </script>

@@ -1,4 +1,5 @@
 <?php
+include "./sql/conn.php";
 include "./includes/header.php";
 ?>
 
@@ -19,31 +20,36 @@ include "./includes/header.php";
     </div>
 </section>
 <!-- Breadcrumb Section End -->
-
+<?php
+$email = $_SESSION['user_email'];
+$query = "SELECT * FROM `user` WHERE `u_email`='$email'";
+$sql = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($sql);
+?>
 <div class="container my-5">
     <h2 class="px-5">Edit Profile</h2>
     <form id="edit_form" action="./handlers/signup.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
         <div class="d-flex justify-content-between">
             <div class="w-50">
                 <label for="">First Name</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" name="f_name" id="f_name" type="text" required>
+                <input class=" w-75 form-control" name="f_name" id="f_name" type="text" value="<?php echo $row['f_name'] ?>" required>
                 <div id="f_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
                 <label for="">Last Name</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="last_name" name="last_name" type="text" required>
+                <input class=" w-75 form-control" id="last_name" name="last_name" type="text" value="<?php echo $row['last_name'] ?>" required>
                 <div id="last_error" class="text-danger mt-1"></div>
             </div>
         </div>
         <div class="d-flex justify-content-between mt-4">
             <div class="w-50">
                 <label for="">Email</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="u_email" name="u_email" type="email" required readonly>
+                <input class=" w-75 form-control" id="u_email" name="u_email" type="email" value="<?php echo $row['u_email'] ?>" required readonly>
                 <div id="email_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
                 <label for="">Phone No.</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="p_number" name="p_number" type="tel" required>
+                <input class=" w-75 form-control" id="p_number" name="p_number" type="tel" value="<?php echo $row['p_number'] ?>" required>
                 <div id="number_error" class="text-danger mt-1"></div>
             </div>
         </div>
@@ -51,19 +57,43 @@ include "./includes/header.php";
             <div class="w-50">
                 <label for="">Country</label><span class="text-danger"> *</span><br>
                 <select id="country" name="country" class="w-75 custom-select" required>
+
                     <option value="">Select Country</option>
-                    <option value="Pakistan">Pakistan</option>
+
+                    <option value="Pakistan"
+                        <?php echo ($row['country'] == 'Pakistan') ? 'selected' : '' ?>>
+                        Pakistan
+                    </option>
+
                 </select>
                 <div id="country_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
                 <label for="">State</label><span class="text-danger"> *</span><br>
                 <select id="state" name="state" class="w-75 custom-select" required>
+
                     <option value="">Select State</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="KPK">KPK</option>
-                    <option value="Balochistan">Balochistan</option>
-                    <option value="Sindh">Sindh</option>
+
+                    <option value="Punjab"
+                        <?php echo ($row['state'] == 'Punjab') ? 'selected' : '' ?>>
+                        Punjab
+                    </option>
+
+                    <option value="KPK"
+                        <?php echo ($row['state'] == 'KPK') ? 'selected' : '' ?>>
+                        KPK
+                    </option>
+
+                    <option value="Balochistan"
+                        <?php echo ($row['state'] == 'Balochistan') ? 'selected' : '' ?>>
+                        Balochistan
+                    </option>
+
+                    <option value="Sindh"
+                        <?php echo ($row['state'] == 'Sindh') ? 'selected' : '' ?>>
+                        Sindh
+                    </option>
+
                 </select>
                 <div id="state_error" class="text-danger mt-1"></div>
             </div>
@@ -71,29 +101,43 @@ include "./includes/header.php";
         <div class="d-flex justify-content-between mt-4">
             <div class="w-50">
                 <label for="">City</label><span class="text-danger"> *</span>
-                <input id="city" name="city" class=" w-75 form-control" type="text" required>
+                <input id="city" name="city" class=" w-75 form-control" type="text" value="<?php echo $row['city'] ?>" required>
                 <div id="city_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
                 <label for="">Postal Code</label><span class="text-danger"> *</span>
-                <input id="postal_code" name="postal_code" class=" w-75 form-control" type="text" required>
+                <input id="postal_code" name="postal_code" class=" w-75 form-control" type="text" value="<?php echo $row['postal_code'] ?>" required>
                 <div id="code_error" class="text-danger mt-1"></div>
             </div>
         </div>
         <div class="d-flex justify-content-between mt-4">
             <div class="w-50">
                 <label for="">Address</label><span class="text-danger"> *</span>
-                <input id="address" name="address" class=" w-75 form-control" type="text" required>
+                <input id="address" name="address" class=" w-75 form-control" type="text" value="<?php echo $row['address'] ?>" required>
                 <div id="address_error" class="text-danger mt-1"></div>
             </div>
             <div class="w-50">
 
                 <label for="">Gender</label><span class="text-danger"> *</span><br>
                 <select id="gender" name="gender" class="w-75 custom-select" required>
+
                     <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Others">Others</option>
+
+                    <option value="Male"
+                        <?php echo ($row['gender'] == 'Male') ? 'selected' : '' ?>>
+                        Male
+                    </option>
+
+                    <option value="Female"
+                        <?php echo ($row['gender'] == 'Female') ? 'selected' : '' ?>>
+                        Female
+                    </option>
+
+                    <option value="Others"
+                        <?php echo ($row['gender'] == 'Others') ? 'selected' : '' ?>>
+                        Others
+                    </option>
+
                 </select>
                 <div id="gender_error" class="text-danger mt-1"></div>
             </div>
@@ -223,7 +267,7 @@ include "./includes/footer.php"
             let country = $('#country').val().trim();
             let error = '';
 
-            if (country = '') {
+            if (country == '') {
                 error = "Please Select Country Name";
             }
 
@@ -235,7 +279,7 @@ include "./includes/footer.php"
             let state = $('#state').val().trim();
             let error = '';
 
-            if (state = '') {
+            if (state == '') {
                 error = "Please Select State Name";
             }
 
@@ -292,7 +336,7 @@ include "./includes/footer.php"
             let gender = $('#gender').val().trim();
             let error = '';
 
-            if (gender = '') {
+            if (gender == '') {
                 error = "Please Enter State Name";
             }
 

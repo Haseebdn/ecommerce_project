@@ -1,3 +1,10 @@
+<?php
+if (!isset($_SESSION['user_email'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="eng">
 
@@ -11,7 +18,7 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -77,7 +84,7 @@
                                 <a href="../profile.php">My Account</a>
                             </div>
                             <div class="header__top__hover">
-                                <a href="#" class="text-white">Logout</a>
+                                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
                             </div>
                         </div>
                     </div>
@@ -102,11 +109,51 @@
                         </ul>
                     </nav>
                 </div>
+                <?php
+
+                $cart_count = 0;
+                $grand_total = 0;
+
+                if (isset($_SESSION['user_email'])) {
+
+                    $email = $_SESSION['user_email'];
+
+                    $cartQuery = "SELECT 
+                    COUNT(id) as total_items,
+                    SUM(total_price) as total_price
+                  FROM cart
+                  WHERE u_email='$email'";
+
+                    $cartRun = mysqli_query($conn, $cartQuery);
+
+                    if ($cartRun && mysqli_num_rows($cartRun) > 0) {
+
+                        $cartData = mysqli_fetch_assoc($cartRun);
+
+                        $cart_count = $cartData['total_items'] ?? 0;
+                        $grand_total = $cartData['total_price'] ?? 0;
+                    }
+                }
+
+                ?>
+
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="../shopping_cart.php" ><img src="img/icon/cart.png"  alt=""> <span>0</span></a>
-                        <div class="price">0.00<span> PKR</span></div>
+
+                        <a href="#" class="search-switch">
+                            <img src="img/icon/search.png" alt="">
+                        </a>
+
+                        <a href="./shopping_cart.php">
+                            <img src="img/icon/cart.png" alt="">
+                            <span class="font-weight-bold h1"><?php echo $cart_count; ?></span>
+                        </a>
+
+                        <div class="price">
+                            <?php echo number_format($grand_total); ?>
+                            <span> PKR</span>
+                        </div>
+
                     </div>
                 </div>
             </div>

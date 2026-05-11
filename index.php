@@ -1,5 +1,6 @@
 <?php
-include "./includes/header.php"
+include "sql/conn.php";
+include "./includes/header.php";
 ?>
 
 <!-- Hero Section Begin -->

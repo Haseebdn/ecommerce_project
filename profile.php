@@ -24,13 +24,19 @@ include "./includes/header.php";
 
 <div class="container my-5">
     <div class="row py-4">
+        <?php  
+        $email=$_SESSION['user_email'];
+        $query="SELECT * FROM `user` WHERE `u_email`='$email'";
+        $sql=mysqli_query($conn,$query);
+        $row=mysqli_fetch_assoc($sql);
+        ?>
         <div class="col col-md-3 p-4 d-flex flex-column align-items-center">
             <div class="img">
                 <img class="p_pic" src="./img/default.jpg" alt="">
             </div>
             <a href="">Remove Profile Picture</a>
-            <span class=" h5 mt-3 mb-0">Name</span>
-            <span>@gmail.com</span>
+            <span class=" h5 mt-3 mb-0"><?php  echo $row ['last_name']    ?></span>
+            <span><?php  echo $row ['u_email']    ?></span>
         </div>
 
         <div class="col profile col-md-6  p-4">
@@ -38,40 +44,40 @@ include "./includes/header.php";
             <div class="name mt-4 d-flex justify-content-between ">
                 <div id="f_name">
                     <h5 class="text-danger">First Name</h5>
-                    <span class="h5">myna</span>
+                    <span class="h5"><?php  echo $row ['f_name']    ?></span>
                 </div>
                 <div id="last_name">
                     <h5 class="text-danger">Last Name</h5>
-                    <span class="h5">mfa</span>
+                    <span class="h5"><?php  echo $row ['last_name']    ?></span>
                 </div>
             </div>
             <div class="email mt-4">
                 <h5 class="text-danger">Email</h5>
-                <span class="h5">@gmail.com</span>
+                <span class="h5"><?php  echo $row ['u_email']    ?></span>
             </div>
             <div class="phone mt-4">
                 <h5 class="text-danger">Phone Number</h5>
-                <span class="h5">035353535</span>
+                <span class="h5"><?php  echo $row ['p_number']    ?></span>
             </div>
             <div class="country mt-4">
                 <h5 class="text-danger">Country</h5>
-                <span class="h5">Pakistan</span>
+                <span class="h5"><?php  echo $row ['country']    ?></span>
             </div>
             <div class="state mt-4">
                 <h5 class="text-danger">State</h5>
-                <span class="h5">Punjab</span>
+                <span class="h5"><?php  echo $row ['state']    ?></span>
             </div>
             <div class="city mt-4">
                 <h5 class="text-danger">City</h5>
-                <span class="h5">Shahkot</span>
+                <span class="h5"><?php  echo $row ['city']    ?></span>
             </div>
             <div class="postal_code mt-4">
                 <h5 class="text-danger">Postal Code</h5>
-                <span class="h5">36430</span>
+                <span class="h5"><?php  echo $row ['postal_code']    ?></span>
             </div>
             <div class="address mt-4">
                 <h5 class="text-danger">Address</h5>
-                <span class="h5">Shahkot</span>
+                <span class="h5"><?php  echo $row ['address']    ?></span>
             </div>
         </div>
 

@@ -1,6 +1,7 @@
 <?php
 include "./sql/conn.php";
 include "./includes/header.php";
+$email = $_SESSION['user_email'];
 ?>
 
 <!-- Breadcrumb Section Begin -->
@@ -39,41 +40,69 @@ include "./includes/header.php";
                                 <th>Action</th>
                             </tr>
                         </thead>
+
+                        <?php
+                        $query = "SELECT * FROM `cart` where `u_email`='$email'";
+                        $sql = mysqli_query($conn, $query);
+
+                        ?>
                         <tbody>
 
+                            <?php
+                            while ($row = mysqli_fetch_assoc($sql)) {
+                            ?>
+                                <tr>
 
-                            <tr>
+                                    <td class="col-1 p-2">
+                                        <img class="rounded"
+                                            src="./admin/uploads/thumbnail/<?php echo $row['p_thumbnail'] ?>"
+                                            width="50">
+                                    </td>
 
-                                <td class="col-1 p-2">
-                                    <img class="rounded"
-                                        src="./admin/uploads/thumbnail/"
-                                        width="50">
-                                </td>
+                                    <td class="col-2 p-2">
+                                        <?php echo $row['p_name']    ?>
+                                    </td>
 
-                                <td class="col-2 p-2">
+                                    <td class="col-1 p-2">
+                                        <?php echo $row['p_code']    ?>
+                                    </td>
 
-                                </td>
+                                    <td class="col-2 p-2">
 
-                                <td class="col-1 p-2">
+                                        <button type="button"
+                                            class="qty-plus btn btn-sm btn-dark"
+                                            data-id="<?php echo $row['id'] ?>">
+                                            +
+                                        </button>
 
-                                </td>
+                                        <input type="text"
+                                            class="w-25 text-center qty-input"
+                                            value="<?php echo $row['qty'] ?>"
+                                            readonly>
 
-                                <td class="col-2 p-2">
+                                        <button type="button"
+                                            class="qty-minus btn btn-sm btn-danger"
+                                            data-id="<?php echo $row['id'] ?>">
+                                            -
+                                        </button>
 
-                                </td>
+                                    </td>
 
-                                <td class="col-1 p-2">
+                                    <td class="col-1 p-2">
+                                        <?php echo $row['total_price']    ?>
+                                    </td>
 
-                                </td>
+                                    <td class="col-1 p-2">
+                                        <a class="btn btn-danger"
+                                            href="./handlers/cart/delete_row.php?remove= <?php echo $row['id'] ?>">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
 
-                                <td class="col-1 p-2">
-                                    <a class="btn btn-danger"
-                                        href="shopping_cart.php?remove=?>">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-
-                            </tr>
+                                </tr>
+                            <?php
+                            }
+                            ?>
 
 
                             <!-- <tr>
@@ -92,8 +121,8 @@ include "./includes/header.php";
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="continue__btn update__btn">
-                            <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                        <div class="d-flex justify-content-end">
+                            <a class="rounded btn-danger mr-5 p-2" href="./handlers/cart/delete_all.php"><i class="mr-2 fa fa-trash"></i>Remove All</a>
                         </div>
                     </div>
                 </div>
@@ -107,14 +136,38 @@ include "./includes/header.php";
                     <button type="submit">Apply</button>
                 </form>
             </div>
+            <?php
+
+            $totalQuery = "SELECT SUM(total_price) as grand_total 
+               FROM cart 
+               WHERE u_email='$email'";
+
+            $totalRun = mysqli_query($conn, $totalQuery);
+
+            $totalData = mysqli_fetch_assoc($totalRun);
+
+            $grand_total = $totalData['grand_total'] ?? 0;
+
+            ?>
             <div class="w-50">
                 <div class="cart__total ml-auto w-75">
                     <h6>Cart total</h6>
                     <ul>
-                        <li>Subtotal <span></span></li>
-                        <li>Total <span></span></li>
+                        <li>
+                            Subtotal
+                            <span>
+                                <?php echo number_format($grand_total); ?> PKR
+                            </span>
+                        </li>
+
+                        <li>
+                            Total
+                            <span>
+                                <?php echo number_format($grand_total); ?> PKR
+                            </span>
+                        </li>
                     </ul>
-                    <a href="#" class="primary-btn">Proceed to checkout</a>
+                    <a href="./checkout.php" class="primary-btn">Proceed to checkout</a>
                 </div>
             </div>
         </div>
@@ -125,3 +178,37 @@ include "./includes/header.php";
 <?php
 include "./includes/footer.php";
 ?>
+
+<script>
+    $(document).ready(function() {
+
+        // increase qty
+        $(".qty-plus").click(function() {
+
+            let input = $(this).siblings(".qty-input");
+
+            let qty = parseInt(input.val());
+
+            qty++;
+
+            input.val(qty);
+
+        });
+
+        // decrease qty
+        $(".qty-minus").click(function() {
+
+            let input = $(this).siblings(".qty-input");
+
+            let qty = parseInt(input.val());
+
+            if (qty > 1) {
+                qty--;
+                input.val(qty);
+            }
+
+        });
+
+
+    });
+</script>
