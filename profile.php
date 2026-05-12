@@ -86,11 +86,11 @@ include "./includes/header.php";
                 <input type="hidden" name="profile_edit" value="">
                 <button type="submit" class="btn btn-dark w-100">Edit Profile Data</button>
             </form>
-            <form class="w-100 pt-3 " action="./change_email.php">
+            <form method="POST" class="w-100 pt-3 " action="./change_email.php">
                 <input type="hidden" name="email_change" value="">
                 <button type="submit" class="btn btn-warning w-100">Change Email</button>
             </form>
-            <form class="w-100 pt-3 " action="./change_password.php">
+            <form method="POST" class="w-100 pt-3 " action="./change_password.php">
                 <input type="hidden" name="password_change" value="">
                 <button type="submit" class="btn btn-danger w-100">Change Password</button>
             </form>

@@ -28,7 +28,7 @@ $row = mysqli_fetch_assoc($sql);
 ?>
 <div class="container my-5">
     <h2 class="px-5">Edit Profile</h2>
-    <form id="edit_form" action="./handlers/signup.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
+    <form id="edit_form" action="./handlers/edit_profile.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
         <div class="d-flex justify-content-between">
             <div class="w-50">
                 <label for="">First Name</label><span class="text-danger"> *</span>

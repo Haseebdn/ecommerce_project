@@ -22,10 +22,12 @@ include "./includes/header.php";
 <!-- Breadcrumb Section End -->
 
 <div class="container mt-5 d-flex justify-content-center">
-    <div class="w-50">
-        <h2>Change Email</h2>
-        <form id="email_form" class="w-75 pb-3" action="">
-            <div class="my-4">
+    <div class="w-50 d-flex flex-column align-items-center">
+        <div class="w-75">
+            <h2>Change Email</h2>
+        </div>
+        <form id="email_form" class=" w-75 pb-3" action="./handlers/change_email.php">
+            <div class="my-4 w-100">
                 <label for="">
                     Old Email
                 </label>

@@ -33,9 +33,9 @@ $email = $_SESSION['user_email'];
                         <thead>
                             <tr>
                                 <th>Picture</th>
-                                <th>Product</th>
+                                <th class="col-2">Product</th>
                                 <th>Code</th>
-                                <th>Quantity</th>
+                                <th class="col-2">Quantity</th>
                                 <th>Price</th>
                                 <th>Action</th>
                             </tr>
@@ -76,9 +76,9 @@ $email = $_SESSION['user_email'];
                                         </button>
 
                                         <input type="text"
-                                            class="w-25 text-center qty-input"
-                                            value="<?php echo $row['qty'] ?>"
-                                            readonly>
+                                            class="w-25 text-center quantity qty-input"
+                                            data-id="<?php echo $row['id'] ?>"
+                                            value="<?php echo $row['qty'] ?>">
 
                                         <button type="button"
                                             class="qty-minus btn btn-sm btn-danger"
@@ -184,28 +184,47 @@ include "./includes/footer.php";
 
         // increase qty
         $(".qty-plus").click(function() {
-
             let input = $(this).siblings(".qty-input");
-
             let qty = parseInt(input.val());
-
             qty++;
-
             input.val(qty);
-
+            input.trigger('change');
         });
 
         // decrease qty
         $(".qty-minus").click(function() {
-
             let input = $(this).siblings(".qty-input");
-
             let qty = parseInt(input.val());
-
             if (qty > 1) {
                 qty--;
                 input.val(qty);
+                input.trigger('change');
             }
+        });
+
+        $('.quantity').on('change', function() {
+
+            let qty = $(this).val().trim();
+
+            let cart_id = $(this).data('id');
+
+            $.ajax({
+                url: "https://ecommerce-project.test/handlers/quantity.php",
+                method: "POST",
+
+                data: {
+                    qty: qty,
+                    cart_id: cart_id
+                },
+
+                success: function(res) {
+
+                    let response = JSON.parse(res);
+
+                    // console.log(response);
+                    location.reload();
+                }
+            });
 
         });
 

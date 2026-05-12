@@ -24,7 +24,7 @@ include "./includes/header.php";
 <div class="container mt-5 d-flex justify-content-center">
     <div class="w-50">
         <h2>Provide Info</h2>
-        <form id="pass_form" class="w-75 pb-3" action="">
+        <form id="pass_form" class="w-75 pb-3" action="./handlers/change_password.php">
             <div class="my-4">
                 <label for="">
                     Email
