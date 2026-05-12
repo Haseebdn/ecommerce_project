@@ -22,9 +22,11 @@ include "./includes/header.php";
 <!-- Breadcrumb Section End -->
 
 <div class="container mt-5 d-flex justify-content-center">
-    <div class="w-50">
-        <h2>Provide Info</h2>
-        <form id="pass_form" class="w-75 pb-3" action="./handlers/change_password.php">
+    <div class="w-50 d-flex flex-column align-items-center">
+        <div>
+            <h2>Provide Info</h2>
+        </div>
+        <form id="pass_form" class="w-75 pb-3" action="./handlers/change_password.php" method="POST">
             <div class="my-4">
                 <label for="">
                     Email
@@ -54,7 +56,7 @@ include "./includes/header.php";
                 <div id="con_error" class="text-danger mt-1"></div>
             </div>
             <div class="my-4 w-100">
-                <div><a class="w-100 btn btn-dark" href="">Change Password</a></div>
+                <div><button type="submit" class="w-100 btn btn-dark">Change Password</button></div>
             </div>
             <div class="my-3 w-100">
                 <div><a class=" w-100 btn btn-danger" href="./profile.php">Cancel</a></div>

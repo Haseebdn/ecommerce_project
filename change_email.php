@@ -26,7 +26,7 @@ include "./includes/header.php";
         <div class="w-75">
             <h2>Change Email</h2>
         </div>
-        <form id="email_form" class=" w-75 pb-3" action="./handlers/change_email.php">
+        <form id="email_form" class=" w-75 pb-3" method="POST" action="./handlers/change_email.php">
             <div class="my-4 w-100">
                 <label for="">
                     Old Email
@@ -50,7 +50,7 @@ include "./includes/header.php";
 
             </div>
             <div class="my-4 w-100">
-                <div><a class="w-100 btn btn-dark" href="">Change Email</a></div>
+                <div><button type="submit" class="w-100 btn btn-dark">Change Email</button></div>
             </div>
             <div class="my-3 w-100">
                 <div><a class=" w-100 btn btn-danger" href="./profile.php">Cancel</a></div>

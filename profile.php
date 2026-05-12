@@ -35,7 +35,7 @@ include "./includes/header.php";
                 <img class="p_pic" src="./img/default.jpg" alt="">
             </div>
             <a href="">Remove Profile Picture</a>
-            <span class=" h5 mt-3 mb-0"><?php  echo $row ['last_name']    ?></span>
+            <span class=" h5 mt-3 mb-0"><?php  echo $row ['last_name']  ?></span>
             <span><?php  echo $row ['u_email']    ?></span>
         </div>
 

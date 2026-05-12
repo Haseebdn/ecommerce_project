@@ -28,7 +28,7 @@ $row = mysqli_fetch_assoc($sql);
 ?>
 <div class="container my-5">
     <h2 class="px-5">Edit Profile</h2>
-    <form id="edit_form" action="./handlers/edit_profile.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
+    <form action="./handlers/edit_profile.php" id="edit_form" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
         <div class="d-flex justify-content-between">
             <div class="w-50">
                 <label for="">First Name</label><span class="text-danger"> *</span>
@@ -306,7 +306,7 @@ include "./includes/footer.php"
         function validateCode() {
             let p_code = $('#postal_code').val().trim();
             let error = "";
-            if (!p_code == "") {
+            if (p_code !== "") {
                 if (p_code.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z0-9_-]+$/.test(p_code)) {
@@ -314,6 +314,7 @@ include "./includes/footer.php"
                 }
             }
             $('#code_error').text(error);
+            return error === '';
         }
 
         function validateAddress() {

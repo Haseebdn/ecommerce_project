@@ -1,10 +1,17 @@
 <?php
 include "../sql/conn.php";
 
-if (!empty($_POST['email'])) {
+if (isset($_POST)) {
 
-    $email = $_POST['email'];
-    $pass  = $_POST['pass'];
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $pass  = mysqli_real_escape_string($conn, $_POST['pass']);
+
+    if (empty($email) || empty($pass)) {
+
+        $_SESSION['error'] = "Please fill all fields";
+        header("Location: ../login.php");
+        exit();
+    }
 
     try {
 
@@ -18,18 +25,20 @@ if (!empty($_POST['email'])) {
 
             $User = mysqli_fetch_assoc($sql);
 
-            if ($pass == $User['password']) {
+            $hashed_password = $User['password'];
+
+            if (password_verify($pass, $hashed_password)) {
 
                 $_SESSION['user_email'] = $User['u_email'];
 
-                header("location:../index.php");
+                header("Location: ../index.php");
                 exit();
 
             } else {
 
                 $_SESSION['error'] = "Wrong password";
 
-                header("location:../login.php");
+                header("Location: ../login.php");
                 exit();
             }
 
@@ -37,15 +46,15 @@ if (!empty($_POST['email'])) {
 
             $_SESSION['error'] = "Email not found";
 
-            header("location:../login.php");
+            header("Location: ../login.php");
             exit();
         }
 
-    } catch (mysqli_sql_exception $e) {
+    } catch (mysqli_sql_exception) {
 
         $_SESSION['error'] = "Login failed";
 
-        header("location:../login.php");
+        header("Location: ../login.php");
         exit();
     }
 }
