@@ -89,7 +89,7 @@ $email = $_SESSION['user_email'];
                                     </td>
 
                                     <td class="col-1 p-2">
-                                        <?php echo $row['total_price']    ?>
+                                        <?php echo $row['total_price']    ?> PKR
                                     </td>
 
                                     <td class="col-1 p-2">
@@ -143,7 +143,6 @@ $email = $_SESSION['user_email'];
                WHERE u_email='$email'";
 
             $totalRun = mysqli_query($conn, $totalQuery);
-
             $totalData = mysqli_fetch_assoc($totalRun);
 
             $grand_total = $totalData['grand_total'] ?? 0;
@@ -167,7 +166,18 @@ $email = $_SESSION['user_email'];
                             </span>
                         </li>
                     </ul>
-                    <a href="./checkout.php" class="primary-btn">Proceed to checkout</a>
+                    <?php
+                    $cart_items = mysqli_num_rows($sql);
+                    if ($cart_items > 0) {
+                    ?>
+                        <a href="./checkout.php" class="btn primary-btn">Proceed to checkout</a>
+                    <?php
+                    } else {
+                    ?>
+                        <button class="w-100 primary-btn">Proceed to checkout</button>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>

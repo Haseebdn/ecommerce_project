@@ -36,29 +36,55 @@ if (!isset($_SESSION['user_email'])) {
     <div id="preloder">
         <div class="loader"></div>
     </div>
+    <?php
 
+    $cart_count = 0;
+    $grand_total = 0;
+
+    if (isset($_SESSION['user_email'])) {
+
+        $email = $_SESSION['user_email'];
+
+        $cartQuery = "SELECT 
+                    COUNT(id) as total_items,
+                    SUM(total_price) as total_price
+                  FROM cart
+                  WHERE u_email='$email'";
+
+        $cartRun = mysqli_query($conn, $cartQuery);
+
+        if ($cartRun && mysqli_num_rows($cartRun) > 0) {
+
+            $cartData = mysqli_fetch_assoc($cartRun);
+
+            $cart_count = $cartData['total_items'] ?? 0;
+            $grand_total = $cartData['total_price'] ?? 0;
+        }
+    }
+
+    ?>
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
-                <a href="#">FAQs</a>
+                <a href="#">Admin</a>
+                <a href="../profile.php">My Account</a>
+                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
             </div>
-            <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
-                <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                </ul>
-            </div>
+
         </div>
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <a href="./shopping_cart.php">
+                <img src="img/icon/cart.png" alt="">
+                <span class="font-weight-bold h1"><?php echo $cart_count; ?></span>
+            </a>
+
+            <div class="price">
+                <?php echo number_format($grand_total); ?>
+                <span> PKR</span>
+            </div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -66,7 +92,6 @@ if (!isset($_SESSION['user_email'])) {
         </div>
     </div>
     <!-- Offcanvas Menu End -->
-
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -109,33 +134,7 @@ if (!isset($_SESSION['user_email'])) {
                         </ul>
                     </nav>
                 </div>
-                <?php
 
-                $cart_count = 0;
-                $grand_total = 0;
-
-                if (isset($_SESSION['user_email'])) {
-
-                    $email = $_SESSION['user_email'];
-
-                    $cartQuery = "SELECT 
-                    COUNT(id) as total_items,
-                    SUM(total_price) as total_price
-                  FROM cart
-                  WHERE u_email='$email'";
-
-                    $cartRun = mysqli_query($conn, $cartQuery);
-
-                    if ($cartRun && mysqli_num_rows($cartRun) > 0) {
-
-                        $cartData = mysqli_fetch_assoc($cartRun);
-
-                        $cart_count = $cartData['total_items'] ?? 0;
-                        $grand_total = $cartData['total_price'] ?? 0;
-                    }
-                }
-
-                ?>
 
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">

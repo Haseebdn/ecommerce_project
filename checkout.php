@@ -33,7 +33,7 @@ $row = mysqli_fetch_assoc($sql);
 <section class="checkout spad">
     <div class="container">
         <div class="checkout__form">
-            <form action="">
+            <form id="checkout_form" action="">
                 <div class="row ">
                     <div class="col-lg-7 col-md-6">
                         <h6 class="checkout__title">Billing Details</h6>
@@ -210,13 +210,13 @@ $row = mysqli_fetch_assoc($sql);
                             <div>
                                 <p class="text-secondary">Please make transaction of required amount to purchase the above products </p>
                             </div>
-                            <form action="">
-                                <input class="mb-2" type="radio" name="payment[]" checked> Cash On Delivery <br>
-                                <input class="mb-5" type="radio" name="payment[]"> Paypal <br>
-                                <button class=" w-100 mb-3 btn btn-dark">Place Order</button>
-                                <button class=" w-100 mb-3 btn btn-success">Back to Cart</button>
-                                <button class=" w-100 mb-3 btn btn-danger">Continue Shopping</button>
-                            </form>
+
+                            <input class="mb-2" type="radio" name="payment" value="COD" checked> Cash On Delivery <br>
+                            <input class="mb-5" type="radio" name="payment" value="Paypal"> Paypal <br>
+                            <button id="order" type="submit" class="w-100 mb-3 btn btn-dark">Place Order</button>
+                            <a href="./shopping_cart.php" class=" w-100 mb-3 btn btn-success">Back to Cart</a>
+                            <a href="./shop.php" class=" w-100 mb-3 btn btn-danger">Continue Shopping</a>
+
                         </div>
 
                     </div>
@@ -235,6 +235,25 @@ include "./includes/footer.php";
 
 <script>
     $(document).ready(function() {
+        $('#order').on('click', function(e) {
+            e.preventDefault();
+            let form = document.querySelector('#checkout_form');
+            let formData = new FormData(form);
+            $.ajax({
+                url: "./handlers/order.php",
+                method: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(res) {
+                    let response = JSON.parse(res);
+                }
+            })
+
+        })
+
+
+
         $('#f_name').on('input', function() {
             let input = this;
             let start = input.selectionStart;
@@ -379,6 +398,7 @@ include "./includes/footer.php";
                 }
             }
             $('#code_error').text(error);
+            return error === '';
         }
 
         function validateAddress() {
@@ -422,7 +442,7 @@ include "./includes/footer.php";
         $('#address').on('input', validateAddress);
         $('#gender').on('input', validateGender);
 
-        $('#edit_form').on('submit', function(e) {
+        $('#checkout_form').on('submit', function(e) {
             let validFName = validateFName();
             let validLastName = validateLastName();
             let validEmail = validateEmail();
@@ -439,6 +459,8 @@ include "./includes/footer.php";
                 e.preventDefault();
             }
         })
+
+
 
     })
 </script>
