@@ -34,7 +34,7 @@ if (isset($_POST) && !empty($_POST)) {
             exit();
         }
         $pic_name = time() . rand(1, 10000) . '.' . $ext;
-        move_uploaded_file($p_tmp, '../../uploads/profile_pictures/' . $pic_name);
+        move_uploaded_file($p_tmp, '../uploads/profile_pictures/' . $pic_name);
     }
 
     $check_email = "SELECT `u_email`

@@ -68,7 +68,6 @@ if (!isset($_SESSION['user_email'])) {
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Admin</a>
                 <a href="../profile.php">My Account</a>
                 <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
             </div>
@@ -105,7 +104,6 @@ if (!isset($_SESSION['user_email'])) {
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Admin</a>
                                 <a href="../profile.php">My Account</a>
                             </div>
                             <div class="header__top__hover">

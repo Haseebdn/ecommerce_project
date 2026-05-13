@@ -7,8 +7,8 @@
 .container .row .col .img .p_pic {
     border: 5px solid black;
     border-radius: 50%;
-    height: 180px !important;
-    width: 183px;
+    height: 240px !important;
+    width: 237px;
 }
 
 .container .row .col a {
