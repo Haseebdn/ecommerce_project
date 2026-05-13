@@ -58,9 +58,23 @@ if (isset($_GET['scId'])) {
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <!-- ================ search field ================= -->
-                        <form action="#">
-                            <input type="text" placeholder="Search...">
+                        <form action="shop.php" method="GET">
+                            <?php if (isset($_GET['cid'])): ?>
+                                <input type="hidden" name="cid" value="<?php echo intval($_GET['cid']); ?>">
+                            <?php elseif (isset($_GET['scId'])): ?>
+                                <input type="hidden" name="scId" value="<?php echo intval($_GET['scId']); ?>">
+                            <?php endif; ?>
+
+                            <input type="text" name="search" placeholder="Search..."
+                                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                             <button type="submit"><span class="icon_search"></span></button>
+
+                            <?php if (!empty($_GET['search'])): ?>
+                                <a href="shop.php<?php
+                                                    if (isset($_GET['cid'])) echo '?cid=' . intval($_GET['cid']);
+                                                    elseif (isset($_GET['scId'])) echo '?scId=' . intval($_GET['scId']);
+                                                    ?>">✕ Clear</a>
+                            <?php endif; ?>
                         </form>
                         <!-- ================ search field ================= -->
                     </div>
@@ -127,31 +141,34 @@ if (isset($_GET['scId'])) {
                 </div>
             </div>
             <?php
+            $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+            $searchCondition = $search ? "AND p_name LIKE '%$search%'" : "";
+
             if (isset($_GET['scId'])) {
                 $subcatId = intval($_GET['scId']);
 
-                $countQuery = "SELECT COUNT(*) as total FROM products WHERE subcat_id = '$subcatId'";
+                $countQuery = "SELECT COUNT(*) as total FROM products WHERE subcat_id = '$subcatId' $searchCondition";
                 $countResult = mysqli_query($conn, $countQuery);
                 $totalData = mysqli_fetch_assoc($countResult);
                 $totalProducts = $totalData['total'];
 
-                $query = "SELECT * FROM products WHERE subcat_id = '$subcatId' LIMIT $limit OFFSET $offset";
+                $query = "SELECT * FROM products WHERE subcat_id = '$subcatId' $searchCondition LIMIT $limit OFFSET $offset";
             } elseif (isset($_GET['cid'])) {
                 $catId = intval($_GET['cid']);
 
-                $countQuery = "SELECT COUNT(*) as total FROM products WHERE cat_id = '$catId'";
+                $countQuery = "SELECT COUNT(*) as total FROM products WHERE cat_id = '$catId' $searchCondition";
                 $countResult = mysqli_query($conn, $countQuery);
                 $totalData = mysqli_fetch_assoc($countResult);
                 $totalProducts = $totalData['total'];
 
-                $query = "SELECT * FROM products WHERE cat_id = '$catId' LIMIT $limit OFFSET $offset";
+                $query = "SELECT * FROM products WHERE cat_id = '$catId' $searchCondition LIMIT $limit OFFSET $offset";
             } else {
-                $countQuery = "SELECT COUNT(*) as total FROM products";
+                $countQuery = "SELECT COUNT(*) as total FROM products WHERE 1=1 $searchCondition";
                 $countResult = mysqli_query($conn, $countQuery);
                 $totalData = mysqli_fetch_assoc($countResult);
                 $totalProducts = $totalData['total'];
 
-                $query = "SELECT * FROM products LIMIT $limit OFFSET $offset";
+                $query = "SELECT * FROM products WHERE 1=1 $searchCondition LIMIT $limit OFFSET $offset";
             }
 
             $sql = mysqli_query($conn, $query);

@@ -69,7 +69,7 @@ if (!isset($_SESSION['user_email'])) {
         <div class="offcanvas__option">
             <div class="offcanvas__links">
                 <a href="../profile.php">My Account</a>
-                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
+                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'LOGOUT' : 'LOGIN'   ?></a>
             </div>
 
         </div>
@@ -107,7 +107,7 @@ if (!isset($_SESSION['user_email'])) {
                                 <a href="../profile.php">My Account</a>
                             </div>
                             <div class="header__top__hover">
-                                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
+                                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'LOGOUT' : 'LOGIN'   ?></a>
                             </div>
                         </div>
                     </div>
