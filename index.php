@@ -17,10 +17,23 @@ include "./includes/header.php";
                                 commitment to exceptional quality.</p>
                             <a href="./shop.php" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                             <div class="hero__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <div class="hero__social">
+                                <a href="https://www.facebook.com/" target="_blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+
+                                <a href="https://x.com/" target="_blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+
+                                <a href="https://www.pinterest.com/" target="_blank">
+                                    <i class="fa fa-pinterest"></i>
+                                </a>
+
+                                <a href="https://www.instagram.com/" target="_blank">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -38,10 +51,21 @@ include "./includes/header.php";
                                 commitment to exceptional quality.</p>
                             <a href="/shop.php" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                             <div class="hero__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="https://www.facebook.com/" target="_blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+
+                                <a href="https://x.com/" target="_blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+
+                                <a href="https://www.pinterest.com/" target="_blank">
+                                    <i class="fa fa-pinterest"></i>
+                                </a>
+
+                                <a href="https://www.instagram.com/" target="_blank">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -388,7 +412,7 @@ include "./includes/header.php";
 <!-- Product Section End -->
 
 <!-- Categories Section Begin -->
-<section class="categories spad">
+<!-- <section class="categories spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -432,7 +456,7 @@ include "./includes/header.php";
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Categories Section End -->
 
 <!-- Instagram Section Begin -->
@@ -452,9 +476,8 @@ include "./includes/header.php";
             <div class="col-lg-4">
                 <div class="instagram__text">
                     <h2>Instagram</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                    <h3>#Male_Fashion</h3>
+                    <p>Enjoy the feel of luxury in budget</p>
+                    <h3>#Modraze</h3>
                 </div>
             </div>
         </div>
@@ -463,7 +486,7 @@ include "./includes/header.php";
 <!-- Instagram Section End -->
 
 <!-- Latest Blog Section Begin -->
-<section class="latest spad">
+<!-- <section class="latest spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -506,7 +529,7 @@ include "./includes/header.php";
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Latest Blog Section End -->
 
 <?php

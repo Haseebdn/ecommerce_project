@@ -35,20 +35,20 @@ $row = mysqli_fetch_assoc($sql);
         <div class="checkout__form">
             <form id="checkout_form" action="">
                 <div class="row ">
-                    <div class="col-lg-7 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <h6 class="checkout__title">Billing Details</h6>
-                        <div class="row">
+                        <div class="row gap-5">
                             <div class="col-lg-6">
                                 <div class="">
                                     <p>Fist Name<span>*</span></p>
-                                    <input class=" w-75 form-control" name="f_name" id="f_name" type="text" value="<?php echo $row['f_name'] ?>" required>
+                                    <input class=" w-100 form-control" name="f_name" id="f_name" type="text" value="<?php echo $row['f_name'] ?>" required>
                                     <div id="f_error" class="text-danger mt-1"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="">
                                     <p>Last Name<span>*</span></p>
-                                    <input class=" w-75 form-control" id="last_name" name="last_name" type="text" value="<?php echo $row['last_name'] ?>" required>
+                                    <input class=" w-100 form-control" id="last_name" name="last_name" type="text" value="<?php echo $row['last_name'] ?>" required>
                                     <div id="last_error" class="text-danger mt-1"></div>
                                 </div>
                             </div>
@@ -147,22 +147,22 @@ $row = mysqli_fetch_assoc($sql);
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="">
-                                    <p>Email<span>*</span></p>
-                                    <input class=" w-100 form-control" id="u_email" name="u_email" type="email" value="<?php echo $row['u_email'] ?>" required readonly>
-                                    <div id="email_error" class="text-danger mt-1"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="">
                                     <p>Phone Number<span>*</span></p>
                                     <input class=" w-100 form-control" id="p_number" name="p_number" type="tel" value="<?php echo $row['p_number'] ?>" required>
                                     <div id="number_error" class="text-danger mt-1"></div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="">
+                                    <p>Email<span>*</span></p>
+                                    <input class=" w-100 form-control" id="u_email" name="u_email" type="email" value="<?php echo $row['u_email'] ?>" required readonly>
+                                    <div id="email_error" class="text-danger mt-1"></div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-                    <div class="col-lg-5 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="checkout__order w-100">
                             <h4 class="order__title">Your order</h4>
                             <table class="w-100 ml-3">

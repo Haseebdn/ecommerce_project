@@ -17,6 +17,7 @@ if (!isset($_SESSION['user_email'])) {
     <title>Male-Fashion | Template</title>
 
     <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_bag" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
 
@@ -29,6 +30,7 @@ if (!isset($_SESSION['user_email'])) {
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 
 <body>
@@ -68,15 +70,15 @@ if (!isset($_SESSION['user_email'])) {
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="../profile.php">My Account</a>
-                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'LOGOUT' : 'LOGIN'   ?></a>
+                <a href="../profile.php" class="text-capitalize">My Account</a>
+                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-dark"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
             </div>
 
         </div>
         <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+            <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
             <a href="./shopping_cart.php">
-                <img src="img/icon/cart.png" alt="">
+                <img  src="img/icon/cart.png" alt="">
                 <span class="font-weight-bold h1"><?php echo $cart_count; ?></span>
             </a>
 
@@ -104,10 +106,10 @@ if (!isset($_SESSION['user_email'])) {
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="../profile.php">My Account</a>
+                                <a href="../profile.php" class="text-capitalize">My Account</a>
                             </div>
                             <div class="header__top__hover">
-                                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'LOGOUT' : 'LOGIN'   ?></a>
+                                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
                             </div>
                         </div>
                     </div>
@@ -118,7 +120,7 @@ if (!isset($_SESSION['user_email'])) {
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.php"><img src="img/logo.png" alt="" class="w-75"></a>
+                        <img src="img/logo.png" alt="" class="w-75">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -135,22 +137,18 @@ if (!isset($_SESSION['user_email'])) {
 
 
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
+                    <div id="cart_icon_div" class="header__nav__option">
 
-                        <a href="#" class="search-switch">
-                            <img src="img/icon/search.png" alt="">
+                        <a href="shopping_cart.php">
+                            <div id="icon_no_div">
+                                <i class=" text-dark material-symbols-outlined">
+                                    shopping_bag
+                                </i>
+                                <span id="cart_icon_no" class="font-weight-bold text-dark h5"><?php echo $cart_count; ?></span>
+                            </div>
                         </a>
-
-                        <a href="./shopping_cart.php">
-                            <img src="img/icon/cart.png" alt="">
-                            <span class="font-weight-bold h1"><?php echo $cart_count; ?></span>
-                        </a>
-
-                        <div class="price">
-                            <?php echo number_format($grand_total); ?>
-                            <span> PKR</span>
-                        </div>
-
+                        <span id="cart_price_header"><?php echo number_format($grand_total); ?>
+                            <span> PKR</span></span>
                     </div>
                 </div>
             </div>

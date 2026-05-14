@@ -142,6 +142,12 @@ ol {
 	padding-bottom: 100px;
 }
 
+.instagram{
+	padding-top: 0px;
+	padding-bottom: 100px !important;
+
+}
+
 .text-white h1,
 .text-white h2,
 .text-white h3,
@@ -340,9 +346,8 @@ ol {
 
 .header__top__links a {
 	color: #ffffff;
-	font-size: 13px;
-	text-transform: uppercase;
-	letter-spacing: 2px;
+	font-size: 16px;
+	letter-spacing: 2px ;
 	margin-right: 28px;
 	display: inline-block;
 }
@@ -354,6 +359,10 @@ ol {
 .header__top__hover {
 	display: inline-block;
 	position: relative;
+}
+
+.header__top__hover a{
+	letter-spacing: 2px ;
 }
 
 .header__top__hover:hover ul {
@@ -909,7 +918,7 @@ ol {
 
 .product {
 	padding-top: 0;
-	padding-bottom: 60px;
+	padding-bottom: 100px;
 }
 
 .filter__controls {

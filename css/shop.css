@@ -1,0 +1,12 @@
+#shop_form{
+    position: relative;
+}
+
+#cross_btn{
+    position: absolute;
+    top: 9px;
+    right: 18px;
+    left: auto;
+    bottom: auto;
+    color: black;
+}

@@ -3,6 +3,11 @@ include "./sql/conn.php";
 include "./includes/header.php";
 $email = $_SESSION['user_email'];
 ?>
+<style>
+    #delete_btn:hover i {
+        color: red;
+    }
+</style>
 
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
@@ -32,12 +37,12 @@ $email = $_SESSION['user_email'];
                     <table>
                         <thead>
                             <tr>
-                                <th>Picture</th>
-                                <th class="col-2">Product</th>
-                                <th>Code</th>
-                                <th class="col-2">Quantity</th>
-                                <th>Price</th>
-                                <th>Action</th>
+                                <th class="p-2">Picture</th>
+                                <th class="col-2 p-2">Product</th>
+                                <th class="p-2">Code</th>
+                                <th class="col-2 p-2">Quantity</th>
+                                <th class="p-2">Price</th>
+                                <th class="p-2">Action</th>
                             </tr>
                         </thead>
 
@@ -53,7 +58,7 @@ $email = $_SESSION['user_email'];
                             ?>
                                 <tr>
 
-                                    <td class="col-1 p-2">
+                                    <td class=" p-2">
                                         <img class="rounded"
                                             src="./admin/uploads/thumbnail/<?php echo $row['p_thumbnail'] ?>"
                                             width="50">
@@ -63,14 +68,14 @@ $email = $_SESSION['user_email'];
                                         <?php echo $row['p_name']    ?>
                                     </td>
 
-                                    <td class="col-1 p-2">
+                                    <td class=" p-2">
                                         <?php echo $row['p_code']    ?>
                                     </td>
 
                                     <td class="col-2 p-2">
 
                                         <button type="button"
-                                            class="qty-plus btn btn-sm btn-dark"
+                                            class="qty-plus btn btn-sm btn-dark font-weight-bold"
                                             data-id="<?php echo $row['id'] ?>">
                                             +
                                         </button>
@@ -81,19 +86,19 @@ $email = $_SESSION['user_email'];
                                             value="<?php echo $row['qty'] ?>">
 
                                         <button type="button"
-                                            class="qty-minus btn btn-sm btn-danger"
+                                            class="qty-minus btn btn-sm btn-dark font-weight-bold "
                                             data-id="<?php echo $row['id'] ?>">
                                             -
                                         </button>
 
                                     </td>
 
-                                    <td class="col-1 p-2">
+                                    <td class="p-2">
                                         <?php echo $row['total_price']    ?> PKR
                                     </td>
 
-                                    <td class="col-1 p-2">
-                                        <a class="btn btn-danger"
+                                    <td class=" p-2">
+                                        <a id="delete_btn" class="btn btn-dark"
                                             href="./handlers/cart/delete_row.php?remove= <?php echo $row['id'] ?>">
                                             <i class="fa fa-trash"></i>
                                         </a>
@@ -117,25 +122,19 @@ $email = $_SESSION['user_email'];
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="continue__btn">
-                            <a href="#">Continue Shopping</a>
+                            <a  href="/shop.php">Continue Shopping</a>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="d-flex justify-content-end">
-                            <a class="rounded btn-danger mr-5 p-2" href="./handlers/cart/delete_all.php"><i class="mr-2 fa fa-trash"></i>Remove All</a>
+                            <a class=" primary-btn" href="./handlers/cart/delete_all.php"></i>Remove All</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-5 pt-5 justify-content-between">
-            <div class="cart__discount w-25">
-                <h6>Discount codes</h6>
-                <form action="#">
-                    <input type="text" placeholder="Coupon code">
-                    <button type="submit">Apply</button>
-                </form>
-            </div>
+            
             <?php
 
             $totalQuery = "SELECT SUM(total_price) as grand_total 
@@ -148,7 +147,7 @@ $email = $_SESSION['user_email'];
             $grand_total = $totalData['grand_total'] ?? 0;
 
             ?>
-            <div class="w-50">
+            <div class="w-75">
                 <div class="cart__total ml-auto w-75">
                     <h6>Cart total</h6>
                     <ul>
@@ -170,7 +169,7 @@ $email = $_SESSION['user_email'];
                     $cart_items = mysqli_num_rows($sql);
                     if ($cart_items > 0) {
                     ?>
-                        <a href="./checkout.php" class="btn primary-btn">Proceed to checkout</a>
+                        <a href="./checkout.php" class="primary-btn">Proceed to checkout</a>
                     <?php
                     } else {
                     ?>

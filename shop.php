@@ -32,6 +32,7 @@ if (isset($_GET['scId'])) {
 //  ========== category fetch (from subcategory or directly)===========
 ?>
 
+<link rel="stylesheet" href="css/shop.css">
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
     <div class="container">
@@ -51,29 +52,34 @@ if (isset($_GET['scId'])) {
 <!-- Breadcrumb Section End -->
 
 <!-- Shop Section Begin -->
-<section class="shop spad">
+<section class="shop spad pt-3">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <!-- ================ search field ================= -->
-                        <form action="shop.php" method="GET">
+                        <form id="shop_form" action="shop.php" method="GET">
                             <?php if (isset($_GET['cid'])): ?>
                                 <input type="hidden" name="cid" value="<?php echo intval($_GET['cid']); ?>">
                             <?php elseif (isset($_GET['scId'])): ?>
                                 <input type="hidden" name="scId" value="<?php echo intval($_GET['scId']); ?>">
                             <?php endif; ?>
 
-                            <input type="text" name="search" placeholder="Search..."
+                            <input type="text" class="form-control" name="search" placeholder="Search..."
                                 value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                            <button type="submit"><span class="icon_search"></span></button>
-
+                            <?php
+                            if (empty($_GET['search'])) {
+                            ?>
+                                <button type="submit"><span class="icon_search"></span></button>
+                            <?php
+                            }
+                            ?>
                             <?php if (!empty($_GET['search'])): ?>
-                                <a href="shop.php<?php
+                                <a id="cross_btn" href="shop.php<?php
                                                     if (isset($_GET['cid'])) echo '?cid=' . intval($_GET['cid']);
                                                     elseif (isset($_GET['scId'])) echo '?scId=' . intval($_GET['scId']);
-                                                    ?>">✕ Clear</a>
+                                                    ?>">✕</a>
                             <?php endif; ?>
                         </form>
                         <!-- ================ search field ================= -->
@@ -88,7 +94,6 @@ if (isset($_GET['scId'])) {
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
-                                                <li><a href="shop.php">All</a></li>
                                                 <?php
                                                 // ========= query to show all category =========
                                                 $query = "SELECT id,cat_name FROM `categories` WHERE parent_id IS NULL";
@@ -96,7 +101,7 @@ if (isset($_GET['scId'])) {
                                                 while ($cat = mysqli_fetch_assoc($sql)) {
                                                 ?>
 
-                                                    <li><a href="shop.php?cid=<?php echo $cat['id'] ?? '' ?>"><?php echo $cat['cat_name'] ?? '';    ?></a></li>
+                                                    <li><a class="text-dark" href="shop.php?cid=<?php echo $cat['id'] ?? '' ?>"><?php echo $cat['cat_name'] ?? '';    ?></a></li>
                                                 <?php
                                                 }
 
@@ -126,7 +131,7 @@ if (isset($_GET['scId'])) {
                                                 }
                                                 while ($subcat = mysqli_fetch_assoc($sql)) {
                                                 ?>
-                                                    <li><a href="shop.php?scId=<?php echo $subcat['id'] ?? "" ?>"><?php echo $subcat['cat_name'] ?? '';    ?></a></li>
+                                                    <li><a class="text-dark" href="shop.php?scId=<?php echo $subcat['id'] ?? "" ?>"><?php echo $subcat['cat_name'] ?? '';    ?></a></li>
                                                 <?php
                                                 }
                                                 ?>
@@ -135,6 +140,7 @@ if (isset($_GET['scId'])) {
                                     </div>
                                 </div>
                             </div>
+                            <a href="shop.php" class="btn btn-dark w-100">Reset</a>
 
                         </div>
                     </div>
@@ -195,14 +201,17 @@ if (isset($_GET['scId'])) {
                     ?>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg rounded" data-setbg="./admin/uploads/thumbnail/<?php echo $product['p_thumbnail'] ?>">
-                                    <ul class="product__hover">
+
+                                <a href="./shop_details.php">
+                                    <div class="product__item__pic set-bg rounded" data-setbg="./admin/uploads/thumbnail/<?php echo $product['p_thumbnail'] ?>">
+                                        <!-- <ul class="product__hover">
                                         <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                         <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
                                         </li>
                                         <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                    </ul>
-                                </div>
+                                    </ul> -->
+                                    </div>
+                                </a>
 
                                 <div class="product__item__text">
                                     <h6><?php echo $product['p_name']    ?></h6>
@@ -215,7 +224,7 @@ if (isset($_GET['scId'])) {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><?php echo $product['sale_price'] ?><span class="text-danger"> PKR</span></h5>
-                                    <div class="product__color__select">
+                                    <!-- <div class="product__color__select">
                                         <label for="pc-4">
                                             <input type="radio" id="pc-4">
                                         </label>
@@ -225,7 +234,7 @@ if (isset($_GET['scId'])) {
                                         <label class="grey" for="pc-6">
                                             <input type="radio" id="pc-6">
                                         </label>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 
@@ -282,6 +291,7 @@ include "./includes/footer.php";
             success: function(res) {
 
                 let response = JSON.parse(res);
+                console.log(response);
 
                 if (response.status == 200) {
 
@@ -301,7 +311,6 @@ include "./includes/footer.php";
                         showConfirmButton: false
                     });
                 }
-                location.reload();
 
             }
         });

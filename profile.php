@@ -58,7 +58,15 @@ include "./includes/header.php";
             <?php
             }
             ?>
-            <a href="./handlers/del_pic.php" class="text-danger">Remove Profile Picture</a>
+
+            <?php
+            if (!empty($p_pic)) {
+            ?>
+                <a href="./handlers/del_pic.php" class="text-danger">Remove Profile Picture</a>
+
+            <?php
+            }
+            ?>
             <span class=" h5 mt-3 mb-0"><?php echo $row['last_name']  ?></span>
             <span><?php echo $row['u_email']    ?></span>
         </div>

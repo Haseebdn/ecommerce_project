@@ -130,7 +130,7 @@
     <!-- Counter Section End -->
 
     <!-- Team Section Begin -->
-    <section class="team spad">
+    <!-- <section class="team spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -171,11 +171,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Team Section End -->
 
     <!-- Client Section Begin -->
-    <section class="clients spad">
+    <section class="clients spad pt-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
