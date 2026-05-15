@@ -156,6 +156,27 @@ if (isset($_SESSION['role_id'])) {
             ?>
             <!-- Products -->
 
+            <!-- Mails -->
+            <?php
+            $userPages = ['contact_table.php'];
+            if (@$role['role_type'] == "All" || @$role['contact'] == 1) {
+            ?>
+                <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
+                    <a href="#" class="menu-toggle nav-link has-dropdown">
+                        <i class="fa-solid fa-envelope"></i><span>Mails</span>
+                    </a>
+                    <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
+                        <li class="<?php echo ($page == 'contact_table.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="contact_table.php">View Mails</a>
+                        </li>
+
+                    </ul>
+                </li>
+            <?php
+            }
+            ?>
+            <!-- Mails -->
+
             <!-- user management -->
             <?php
             $userPages = ['role_form.php', 'role_table.php', 'user_form.php', 'user_table.php'];

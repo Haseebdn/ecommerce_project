@@ -5,7 +5,7 @@ include "./includes/header.php";
 
 <!-- Map Begin -->
 <div class="map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111551.9926412813!2d-90.27317134641879!3d38.606612219170856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sbd!4v1597926938024!5m2!1sen!2sbd" height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13596.390152840306!2d73.468894942051!3d31.576373017855335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39189e305101b5c3%3A0x53fe21a3882b0c0d!2sShahkot%2C%20Pakistan!5e0!3m2!1sen!2s!4v1778818625965!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 <!-- Map End -->
 
@@ -23,28 +23,35 @@ include "./includes/header.php";
                     </div>
                     <ul>
                         <li>
-                            <h4>America</h4>
-                            <p>195 E Parker Square Dr, Parker, CO 801 <br />+43 982-314-0958</p>
+                            <h4>Office</h4>
+                            <p>Nankana Road Near Tariq Mart,Shahkot<br />+92 323 6745234</p>
                         </li>
                         <li>
-                            <h4>France</h4>
-                            <p>109 Avenue Léon, 63 Clermont-Ferrand <br />+12 345-423-9893</p>
+                            <h4>Postal Address</h4>
+                            <p>College Road Opposite To Gymnasium,Shahkot<br />042-57443434</p>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            <?php  
+            $email=$_SESSION['user_email'];
+            $query ="SELECT `last_name` From `user` WHERE `u_email`='$email'";
+            $sql =mysqli_query($conn,$query);
+            $row =mysqli_fetch_assoc($sql);
+            ?>
             <div class="col-lg-6 col-md-6">
                 <div class="contact__form">
-                    <form action="#">
+                    <form action="./handlers/contact.php">
                         <div class="row">
                             <div class="col-lg-6">
-                                <input type="text" placeholder="Name">
+                                <input class="form-control text-dark" type="text" placeholder="Name" value="<?php echo $row ['last_name'] ?>" readonly>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="Email">
+                                <input class="form-control text-dark" type="text" placeholder="Email" value="<?php echo $email ?>" readonly>
                             </div>
                             <div class="col-lg-12">
-                                <textarea placeholder="Message"></textarea>
+                                <textarea class="form-control text-dark" placeholder="Message"></textarea>
                                 <button type="submit" class="site-btn">Send Message</button>
                             </div>
                         </div>

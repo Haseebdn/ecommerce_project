@@ -1,0 +1,85 @@
+ <?php
+    include "./sql/conn.php";
+    include "./include/header.php";
+    include "./include/sidebar.php";
+    ?>
+
+
+ <div class="main-content">
+     <section class="section">
+         <div class="section-body">
+             <!-- alert -->
+             <!-- <?php if (isset($_SESSION['success'])) { ?>
+                 <div class="alert text-center alert-success">
+                     <?php echo $_SESSION['success']; ?>
+                 </div>
+             <?php unset($_SESSION['success']);
+                } ?>
+
+             <?php if (isset($_SESSION['error'])) { ?>
+                 <div class="alert text-center alert-danger">
+                     <?php echo $_SESSION['error']; ?>
+                 </div>
+             <?php unset($_SESSION['error']);
+                } ?> -->
+             <!-- alert -->
+             <div class="row">
+                 <div class="col-12">
+                     <div class="card">
+                         <!-- heading -->
+                         <div class="card-header d-flex justify-content-between">
+                             <h4>Mails Table</h4>
+                         </div>
+                         <!-- heading -->
+                         <div class="card-body">
+                             <div class="table-responsive">
+                                 <!-- table -->
+                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                                     <!-- table head -->
+                                     <thead>
+                                         <tr>
+                                             <th>Select</th>
+                                             <th>Name</th>
+                                             <th>Email</th>
+                                             <th>Message</th>
+                                             <th>Date</th>
+                                             <th>Action</th>
+                                         </tr>
+                                     </thead>
+                                     <!-- table head -->
+
+                                     <!-- table body -->
+                                     <tbody>
+                                        
+
+                                             <tr>
+                                                 <td><input type="checkbox"></td>
+                                                 <td></td>
+                                                 <td></td>
+                                                 <td></td>
+                                                 <td></td>
+                                                 <td><a class="btn btn-danger btn-sm" href=""><i class="fa-solid fa-trash"></i></a>
+                                                 </td>
+                                             </tr>
+                                         
+
+                                     </tbody>
+                                     <!-- table body -->
+                                 </table>
+                                 <!-- table -->
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+ </div>
+
+
+ <?php
+    include "./include/footer.php";
+    ?>
+ <script src="assets/bundles/datatables/datatables.min.js"></script>
+
+ <script src="assets/js/page/datatables.js"></script>

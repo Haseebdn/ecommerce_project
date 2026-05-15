@@ -14,11 +14,11 @@
                 <div class="footer__widget">
                     <h6>Shopping</h6>
                     <ul>
-                        <li><a href="#">Clothes</a></li>
-                        <li><a href="#">Footwear</a></li>
-                        <li><a href="#">Accessories</a></li>
-                        <li><a href="#">Jewelry And Watches</a></li>
-                        <li><a href="#">Beauty And Personal Care</a></li>
+                        <li><a href="/shop.php?cid=46">Clothes</a></li>
+                        <li><a href="/shop.php?cid=50">Footwear</a></li>
+                        <li><a href="/shop.php?cid=54">Accessories</a></li>
+                        <li><a href="/shop.php?cid=58">Jewelry And Watches</a></li>
+                        <li><a href="/shop.php?cid=62">Beauty And Personal Care</a></li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                             <a href=""><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
                             <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
                             <a href=""><i class="fa fa-phone" aria-hidden="true"></i></a>
-                            <a href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                            <a href="/contact.php"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                         </li>
                     </ul>
                 </div>
