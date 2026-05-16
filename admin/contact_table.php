@@ -14,7 +14,7 @@
                      <?php echo $_SESSION['success']; ?>
                  </div>
              <?php unset($_SESSION['success']);
-                } ?>
+                    } ?>
 
              <?php if (isset($_SESSION['error'])) { ?>
                  <div class="alert text-center alert-danger">
@@ -36,6 +36,8 @@
                                  <!-- table -->
                                  <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                      <!-- table head -->
+
+
                                      <thead>
                                          <tr>
                                              <th>Select</th>
@@ -50,18 +52,24 @@
 
                                      <!-- table body -->
                                      <tbody>
-                                        
+                                         <?php
+                                            $query = "SELECT * FROM `contact_mails`";
+                                            $sql = mysqli_query($conn, $query);
+                                            $row = mysqli_fetch_assoc($sql);
+                                            ?>
 
-                                             <tr>
-                                                 <td><input type="checkbox"></td>
-                                                 <td></td>
-                                                 <td></td>
-                                                 <td></td>
-                                                 <td></td>
-                                                 <td><a class="btn btn-danger btn-sm" href=""><i class="fa-solid fa-trash"></i></a>
-                                                 </td>
-                                             </tr>
-                                         
+                                         <tr>
+                                             <td><input type="checkbox"></td>
+                                             <td><?php echo $row['name']    ?></td>
+                                             <td><?php echo $row['u_email']    ?></td>
+                                             <td><?php echo $row['msg']    ?></td>
+                                             <td><?php echo $row['date']    ?></td>
+                                             <td>
+                                             <a class=" btn btn-primary btn-sm" href="./reply_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-reply"></i></a>   
+                                             <a class="btn btn-danger btn-sm" href=""><i class="fa-solid fa-trash"></i></a>
+                                             </td>
+                                         </tr>
+
 
                                      </tbody>
                                      <!-- table body -->

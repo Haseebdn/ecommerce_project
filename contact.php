@@ -42,16 +42,16 @@ include "./includes/header.php";
             ?>
             <div class="col-lg-6 col-md-6">
                 <div class="contact__form">
-                    <form action="./handlers/contact.php">
+                    <form action="./handlers/contact.php" method="POST">
                         <div class="row">
                             <div class="col-lg-6">
-                                <input class="form-control text-dark" type="text" placeholder="Name" value="<?php echo $row ['last_name'] ?>" readonly>
+                                <input name="last_name" class="form-control text-dark" type="text" placeholder="Name" value="<?php echo $row ['last_name'] ?>" readonly>
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control text-dark" type="text" placeholder="Email" value="<?php echo $email ?>" readonly>
+                                <input name="u_email" class="form-control text-dark" type="text" placeholder="Email" value="<?php echo $email ?>" readonly>
                             </div>
                             <div class="col-lg-12">
-                                <textarea class="form-control text-dark" placeholder="Message"></textarea>
+                                <textarea name="msg" class="form-control text-dark" placeholder="Message"></textarea>
                                 <button type="submit" class="site-btn">Send Message</button>
                             </div>
                         </div>

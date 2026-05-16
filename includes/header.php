@@ -129,8 +129,8 @@ if (!isset($_SESSION['user_email'])) {
                             <li class="active"><a href="./index.html">Home</a></li>
                             <li><a href="./shop.php">Shop</a></li>
                             <li><a href="./about.php">About Us</a></li>
-                            <li><a href="./checkout.php">Check Out</a></li>
-                            <li><a href="./contact.php">Contacts</a></li>
+                            <li><a href="./checkout.php">Checkout</a></li>
+                            <li><a href="./contact.php">Contact Us</a></li>
                         </ul>
                     </nav>
                 </div>

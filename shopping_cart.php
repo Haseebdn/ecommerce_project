@@ -230,8 +230,6 @@ include "./includes/footer.php";
 
                     let response = JSON.parse(res);
 
-                    // console.log(response);
-                    location.reload();
                 }
             });
 

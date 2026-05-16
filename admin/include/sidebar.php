@@ -166,6 +166,9 @@ if (isset($_SESSION['role_id'])) {
                         <i class="fa-solid fa-envelope"></i><span>Mails</span>
                     </a>
                     <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
+                        <li class="<?php echo ($page == 'reply_form.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="reply_form.php">Reply Mails</a>
+                        </li>
                         <li class="<?php echo ($page == 'contact_table.php') ? 'active' : ''; ?>">
                             <a class="nav-link" href="contact_table.php">View Mails</a>
                         </li>
