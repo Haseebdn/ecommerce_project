@@ -144,6 +144,7 @@
                                      <input type="number" class="form-control" name="stock" value="<?php echo @$record['stock'] ?>" required>
                                  </div>
                                  <!-- Stock -->
+
                                  <!-- thumbnail -->
                                  <label class="mt-4">Product Thumbnail</label><span class="text-danger ml-1">*</span>
                                  <div class="custom-file">
@@ -154,6 +155,7 @@
                                      <div class="mt-2"><img class=" rounded rounded-2" src="./uploads/thumbnail/<?php echo @$record['p_thumbnail']; ?>" width="60" required></div>
                                  <?php } ?>
                                  <!-- thumbnail -->
+                                  
                                  <!-- Product Images -->
                                  <label class="mt-4">Product Images</label>
                                  <div class="custom-file">

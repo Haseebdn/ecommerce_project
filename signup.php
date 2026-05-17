@@ -382,6 +382,7 @@ if (isset($_SESSION['user_email'])) {
                     }
                 }
                 $('#code_error').text(error);
+                return error === "";
             }
 
             function validateAddress() {
@@ -472,7 +473,7 @@ if (isset($_SESSION['user_email'])) {
                 let validPassword = validatePassword();
                 let validCon = confirmPassword();
 
-                if (!validFName || !validLastName || !validEmail || !validPhone || !validCountry || !validState || !validCity || !validCode || !validAddress || !validGender || !validPassword || !confirmPassword) {
+                if (!validFName || !validLastName || !validEmail || !validPhone || !validCountry || !validState || !validCity || !validCode || !validAddress || !validGender || !validPassword || !validCon) {
                     e.preventDefault();
                 }
             })
