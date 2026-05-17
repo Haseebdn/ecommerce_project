@@ -21,8 +21,8 @@ if (isset($_SESSION['role_id'])) {
         <!-- logo -->
         <div class="sidebar-brand">
             <a href="index.php">
-                <img alt="image" src="assets/img/logo.png" class="header-logo" />
-                <span class="logo-name">Guru</span>
+                <img alt="image" src="assets/img/mod.png" class="header-logo" />
+                
             </a>
         </div>
 

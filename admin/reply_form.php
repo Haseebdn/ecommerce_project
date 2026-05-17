@@ -15,13 +15,13 @@ include "include/sidebar.php";
                         </div>
                         <!-- heading -->
                         <!-- form -->
-                        <form id="reply_form" action="" method="POST">
+                        <form id="reply_form" action="./handlers/contact/reply_mails.php" method="POST">
                             <div class="card-body">
 
                                 <!-- name -->
                                 <div class="">
                                     <label>To</label><span class="text-danger ml-1">*</span>
-                                    <input type="text" id="customer_name" name="customer_name" class="form-control" value="" required>
+                                    <input type="text" id="last_name" name="last_name" class="form-control" value="" required>
                                 </div>
                                 <div id="name_error" class="text-danger mt-1"></div>
                                 <!-- name -->
@@ -29,7 +29,7 @@ include "include/sidebar.php";
                                 <!-- email -->
                                 <div class="mt-4">
                                     <label>Email</label><span class="text-danger ml-1">*</span>
-                                    <input id="customer_email" type="email" name="customer_email" class="form-control" value="" required>
+                                    <input id="u_email" type="email" name="u_email" class="form-control" value="" required>
                                 </div>
                                 <div id="email_error" class="text-danger mt-1"></div>
                                 <!-- email -->
