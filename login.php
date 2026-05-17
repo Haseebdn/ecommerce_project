@@ -18,6 +18,7 @@ if (isset($_SESSION['user_email'])) {
     <title>Male-Fashion | Template</title>
 
     <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_bag" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
 
@@ -30,6 +31,7 @@ if (isset($_SESSION['user_email'])) {
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 
 <body>
@@ -37,29 +39,54 @@ if (isset($_SESSION['user_email'])) {
     <div id="preloder">
         <div class="loader"></div>
     </div>
+    <?php
 
+    $cart_count = 0;
+    $grand_total = 0;
+
+    if (isset($_SESSION['user_email'])) {
+
+        $email = $_SESSION['user_email'];
+
+        $cartQuery = "SELECT 
+                    COUNT(id) as total_items,
+                    SUM(total_price) as total_price
+                  FROM cart
+                  WHERE u_email='$email'";
+
+        $cartRun = mysqli_query($conn, $cartQuery);
+
+        if ($cartRun && mysqli_num_rows($cartRun) > 0) {
+
+            $cartData = mysqli_fetch_assoc($cartRun);
+
+            $cart_count = $cartData['total_items'] ?? 0;
+            $grand_total = $cartData['total_price'] ?? 0;
+        }
+    }
+
+    ?>
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
-                <a href="#">FAQs</a>
+                <a href="../profile.php" class="text-capitalize">My Account</a>
+                <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-dark"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
             </div>
-            <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
-                <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                </ul>
-            </div>
+
         </div>
         <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+            <a href="./shopping_cart.php">
+                <img src="img/icon/cart.png" alt="">
+                <span class="font-weight-bold h1"><?php echo $cart_count; ?></span>
+            </a>
+
+            <div class="price">
+                <?php echo number_format($grand_total); ?>
+                <span> PKR</span>
+            </div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -67,7 +94,6 @@ if (isset($_SESSION['user_email'])) {
         </div>
     </div>
     <!-- Offcanvas Menu End -->
-
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -81,8 +107,7 @@ if (isset($_SESSION['user_email'])) {
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Admin</a>
-                                <a href="../profile.php">My Account</a>
+                                <a href="../profile.php" class="text-capitalize">My Account</a>
                             </div>
                             <div class="header__top__hover">
                                 <a href="<?php echo isset($_SESSION['user_email']) ? './handlers/logout.php' : './login.php'   ?>" class="text-white"><?php echo isset($_SESSION['user_email']) ? 'Logout' : 'Login'   ?></a>
@@ -96,7 +121,7 @@ if (isset($_SESSION['user_email'])) {
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.php"><img src="img/logo.png" alt="" class="w-75"></a>
+                        <img src="img/logo.png" alt="" class="w-75">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -105,16 +130,26 @@ if (isset($_SESSION['user_email'])) {
                             <li class="active"><a href="./index.html">Home</a></li>
                             <li><a href="./shop.php">Shop</a></li>
                             <li><a href="./about.php">About Us</a></li>
-                            <li><a href="./checkout.php">Check Out</a></li>
-                            <li><a href="./contact.php">Contacts</a></li>
+                            <li><a href="./checkout.php">Checkout</a></li>
+                            <li><a href="./contact.php">Contact Us</a></li>
                         </ul>
                     </nav>
                 </div>
+
+
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="../shopping_cart.php"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">0.00<span> PKR</span></div>
+                    <div id="cart_icon_div" class="header__nav__option">
+
+                        <a href="shopping_cart.php">
+                            <div id="icon_no_div">
+                                <i class=" text-dark material-symbols-outlined">
+                                    shopping_bag
+                                </i>
+                                <span id="cart_icon_no" class="font-weight-bold text-dark h5"><?php echo $cart_count; ?></span>
+                            </div>
+                        </a>
+                        <span id="cart_price_header"><?php echo number_format($grand_total); ?>
+                            <span> PKR</span></span>
                     </div>
                 </div>
             </div>
@@ -124,18 +159,19 @@ if (isset($_SESSION['user_email'])) {
     <!-- Header Section End -->
 
 
-
     <div class="container my-5">
         <h2>Login</h2>
-        <form method="POST" class="my-4 px-5" action="handlers/login.php">
+        <form id="login_form" method="POST" class="my-4 px-5" action="handlers/login.php">
             <div class="d-flex justify-content-between">
                 <div class="w-50">
                     <label for="">Email</label>
-                    <input name="email" class="form-control w-75" type="email">
+                    <input id="u_email" name="email" class="form-control w-75" type="email">
+                    <div id="email_error" class="text-danger mt-1"></div>
                 </div>
                 <div class="w-50">
                     <label for="">Password</label>
-                    <input name="pass" class="form-control w-75" type="password">
+                    <input id="password" name="pass" class="form-control w-75" type="password">
+                    <div id="pass_error" class="text-danger mt-1"></div>
                 </div>
             </div>
             <div class=" my-4 d-flex justify-content-between">
@@ -153,3 +189,54 @@ if (isset($_SESSION['user_email'])) {
     <?php
     include "./includes/footer.php";
     ?>
+
+    <script>
+        $(document).ready(function() {
+            $('#u_email').on('input', function() {
+                let value = $(this).val().toLowerCase();
+                $(this).val(value);
+            });
+
+            function validateEmail() {
+                let email = $('#u_email').val().trim();
+                let error = '';
+
+                if (email !== "") {
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        error = "Invalid Email";
+                    }
+                }
+                $('#email_error').text(error);
+                return error === '';
+            }
+
+            function validatePassword() {
+                let password = $('#password').val().trim();
+                let error = '';
+
+
+                let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                if (password == "") {
+                    error = "Password is required";
+                } else if (!regex.test(password)) {
+                    error = "Min 8 chars, include upper, lower, number & special char";
+                }
+
+                $('#pass_error').text(error);
+
+                return error === '';
+            }
+
+            $('#u_email').on('input', validateEmail);
+            $('#password').on('input', validatePassword);
+
+            $('#login_form').on('submit', function(e) {
+                let validEmail = validateEmail();
+                let validPassword = validatePassword();
+                if (!validEmail || !validPassword) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>

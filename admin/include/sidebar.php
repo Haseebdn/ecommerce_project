@@ -180,7 +180,7 @@ if (isset($_SESSION['role_id'])) {
             ?>
             <!-- Mails -->
 
-            <!-- Mails -->
+            <!-- users -->
             <?php
             $userPages = ['register_users.php', 'add_user.php'];
             if (@$role['role_type'] == "All" || @$role['register_users'] == 1) {
@@ -190,11 +190,11 @@ if (isset($_SESSION['role_id'])) {
                         <i class="fa-solid fa-user"></i><span>Register Users</span>
                     </a>
                     <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
-                        <li class="<?php echo ($page == 'register_users.php') ? 'active' : ''; ?>">
-                            <a class="nav-link" href="register_users.php">Users</a>
-                        </li>
                         <li class="<?php echo ($page == 'add_user.php') ? 'active' : ''; ?>">
                             <a class="nav-link" href="add_user.php">Add User</a>
+                        </li>
+                        <li class="<?php echo ($page == 'register_users.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="register_users.php">View Users</a>
                         </li>
 
                     </ul>
@@ -202,7 +202,7 @@ if (isset($_SESSION['role_id'])) {
             <?php
             }
             ?>
-            <!-- Mails -->
+            <!-- users -->
 
             <!-- user management -->
             <?php
