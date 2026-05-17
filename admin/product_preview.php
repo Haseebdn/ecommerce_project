@@ -22,101 +22,146 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 ?>
 
 <div class="main-content">
-<section class="section">
-<div class="section-body">
+    <section class="section">
+        <div class="section-body">
 
-<div class="container d-flex flex-column align-items-center">
+            <div class="container d-flex flex-column align-items-center">
 
-    <!-- Thumbnail -->
-    <div class="w-50 text-center mb-4">
-        <?php if (!empty($record['p_thumbnail'])) { ?>
-            <img src="./uploads/thumbnail/<?php echo $record['p_thumbnail']; ?>" 
-                 class="img-fluid border rounded p-2" width="300">
-        <?php } ?>
-    </div>
+                <!-- Thumbnail -->
+                <div class="w-50 text-center mb-4">
+                    <?php if (!empty($record['p_thumbnail'])) { ?>
+                        <img src="./uploads/thumbnail/<?php echo $record['p_thumbnail']; ?>"
+                            class="img-fluid border rounded p-2" width="300">
+                    <?php } ?>
+                </div>
 
-    <!-- Product Details -->
-    <div class="container w-75">
-        <table class="table table-striped">
+                <!-- Product Details -->
+                <div class="container w-75">
+                    <table class="table table-striped">
 
-            <tr>
-                <th>ID</th>
-                <td><?php echo $record['id']; ?></td>
+                        <tr>
+                            <th>ID</th>
+                            <td><?php echo $record['id']; ?></td>
 
-                <th>Product Name</th>
-                <td><?php echo $record['p_name']; ?></td>
-            </tr>
+                            <th>Product Name</th>
+                            <td><?php echo $record['p_name']; ?></td>
+                        </tr>
 
-            <tr>
-                <th>Category</th>
-                <td><?php echo $record['category_name']; ?></td>
+                        <tr>
+                            <th>Category</th>
+                            <td><?php echo $record['category_name']; ?></td>
 
-                <th>Subcategory</th>
-                <td><?php echo $record['subcat_name']; ?></td>
-            </tr>
+                            <th>Subcategory</th>
+                            <td><?php echo $record['subcat_name']; ?></td>
+                        </tr>
 
-            <tr>
-                <th>Supplier</th>
-                <td><?php echo $record['supp_name']; ?></td>
+                        <tr>
+                            <th>Supplier</th>
+                            <td><?php echo $record['supp_name']; ?></td>
 
-                <th>Code</th>
-                <td><?php echo $record['p_code']; ?></td>
-            </tr>
+                            <th>Code</th>
+                            <td><?php echo $record['p_code']; ?></td>
+                        </tr>
 
-            <tr>
-                <th>Unit Price</th>
-                <td><?php echo $record['unit_price']; ?></td>
+                        <tr>
+                            <th>Unit Price</th>
+                            <td><?php echo $record['unit_price']; ?> PKR</td>
 
-                <th>Sale Price</th>
-                <td><?php echo $record['sale_price']; ?></td>
-            </tr>
+                            <th>Sale Price</th>
+                            <td><?php echo $record['sale_price']; ?> PKR</td>
+                        </tr>
 
-            <tr>
-                <th>Quantity</th>
-                <td><?php echo $record['qty']; ?></td>
+                        <tr>
+                            <th>Quantity</th>
+                            <td><?php echo $record['qty']; ?></td>
 
-                <th>Stock</th>
-                <td><?php echo $record['stock']; ?></td>
-            </tr>
+                            <th>Stock</th>
+                            <td><?php echo $record['stock']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>New Arrival</th>
+                            <td>
+                                <label class="custom-switch pl-0">
+                                    <input type="checkbox"
+                                        onchange="fetchColumn(<?php echo $record['id'] ?>, 'products', 'new_arrivals')"
+                                        id="switch_<?php echo $record['id']; ?>_new_arrivals"
+                                        <?php echo ($record['new_arrivals'] == 1) ? 'checked' : '' ?>
+                                        name="custom-switch-checkbox"
+                                        class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description"></span>
+                                </label>
+                            </td>
 
-            <tr>
-                <th>Description</th>
-                <td colspan="3"><?php echo $record['p_description']; ?></td>
-            </tr>
+                            <th>Best Selling</th>
+                            <td>
+                                <label class="custom-switch pl-0">
+                                    <input type="checkbox"
+                                        onchange="fetchColumn(<?php echo $record['id'] ?>, 'products', 'best_selling')"
+                                        id="switch_<?php echo $record['id']; ?>_best_selling"
+                                        <?php echo ($record['best_selling'] == 1) ? 'checked' : '' ?>
+                                        name="custom-switch-checkbox"
+                                        class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description"></span>
+                                </label>
+                            </td>
+                        </tr>
 
-        </table>
-    </div>
+                        <tr>
+                            <th>Hot Sales</th>
+                            <td>
+                                <label class="custom-switch pl-0">
+                                    <input type="checkbox"
+                                        onchange="fetchColumn(<?php echo $record['id'] ?>, 'products', 'hot_sales')"
+                                        id="switch_<?php echo $record['id']; ?>_hot_sales"
+                                        <?php echo ($record['hot_sales'] == 1) ? 'checked' : '' ?>
+                                        name="custom-switch-checkbox"
+                                        class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description"></span>
+                                </label>
+                            </td>
+                        </tr>
 
-    <!-- Product Images -->
-    <div class="container w-75 mt-4">
-        <h4>Product Images</h4>
+                        <tr>
+                            <th>Description</th>
+                            <td colspan="3"><?php echo $record['p_description']; ?></td>
+                        </tr>
 
-        <div class="d-flex flex-wrap gap-3">
+                    </table>
+                </div>
 
-            <?php
-            if (!empty($record['p_imgs'])) {
+                <!-- Product Images -->
+                <div class="container w-75 mt-4">
+                    <h4>Product Images</h4>
 
-                $images = explode(',', $record['p_imgs']);
+                    <div class="d-flex flex-wrap gap-3">
 
-                foreach ($images as $img) {
-            ?>
-                    <img src="./uploads/product_images/<?php echo trim($img); ?>"
-                         width="150"
-                         class="border rounded p-1">
-            <?php
-                }
-            } else {
-                echo "<p>No images found</p>";
-            }
-            ?>
+                        <?php
+                        if (!empty($record['p_imgs'])) {
+
+                            $images = explode(',', $record['p_imgs']);
+
+                            foreach ($images as $img) {
+                        ?>
+                                <img src="./uploads/product_images/<?php echo trim($img); ?>"
+                                    width="150"
+                                    class="border rounded p-1">
+                        <?php
+                            }
+                        } else {
+                            echo "<p>No images found</p>";
+                        }
+                        ?>
+
+                    </div>
+                </div>
+
+            </div>
 
         </div>
-    </div>
-
-</div>
-
-</div>
-</section>
+    </section>
 </div>
 
 <?php include "./include/footer.php"; ?>

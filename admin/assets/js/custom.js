@@ -9,7 +9,7 @@
 
 function fetchstatus(cat_id, table) {
     $.ajax({
-        url: "https://ecommerce-project.test/admin/handlers/custom.php",
+        url: "/admin/handlers/custom.php",
         method: "POST",
         data: {
             "category": cat_id,
@@ -17,6 +17,32 @@ function fetchstatus(cat_id, table) {
         },
         success: function (res) {
             let response = JSON.parse(res);
+            if (response.status == 200) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Status Updated Succesfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+    })
+}
+
+function fetchColumn(p_id, table, feature) {
+    $.ajax({
+        url: "/admin/handlers/product/feature.php",
+        method: "POST",
+        data: {
+            "id": p_id,
+            "table": table,
+            "feature": feature
+        },
+        success: function (res) {
+            let response = JSON.parse(res);
+            console.log(response);
+            
             if (response.status == 200) {
                 Swal.fire({
                     position: "top-end",

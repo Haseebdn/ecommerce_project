@@ -22,7 +22,7 @@ if (isset($_SESSION['role_id'])) {
         <div class="sidebar-brand">
             <a href="index.php">
                 <img alt="image" src="assets/img/mod.png" class="header-logo" />
-                
+
             </a>
         </div>
 
@@ -158,7 +158,7 @@ if (isset($_SESSION['role_id'])) {
 
             <!-- Mails -->
             <?php
-            $userPages = ['contact_table.php'];
+            $userPages = ['contact_table.php', 'reply_form.php'];
             if (@$role['role_type'] == "All" || @$role['contact'] == 1) {
             ?>
                 <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
@@ -171,6 +171,30 @@ if (isset($_SESSION['role_id'])) {
                         </li>
                         <li class="<?php echo ($page == 'contact_table.php') ? 'active' : ''; ?>">
                             <a class="nav-link" href="contact_table.php">View Mails</a>
+                        </li>
+
+                    </ul>
+                </li>
+            <?php
+            }
+            ?>
+            <!-- Mails -->
+
+            <!-- Mails -->
+            <?php
+            $userPages = ['register_users.php', 'add_user.php'];
+            if (@$role['role_type'] == "All" || @$role['register_users'] == 1) {
+            ?>
+                <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
+                    <a href="#" class="menu-toggle nav-link has-dropdown">
+                        <i class="fa-solid fa-user"></i><span>Register Users</span>
+                    </a>
+                    <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
+                        <li class="<?php echo ($page == 'register_users.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="register_users.php">Users</a>
+                        </li>
+                        <li class="<?php echo ($page == 'add_user.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="add_user.php">Add User</a>
                         </li>
 
                     </ul>

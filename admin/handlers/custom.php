@@ -4,6 +4,7 @@ if (isset($_POST) && !empty($_POST)) {
     // variables
     $category = $_POST['category'];
     $table = $_POST['table'];
+    $column=$_POST['column'];
     // variables
 
     // query
