@@ -69,7 +69,7 @@ if ($connected) {
             $place_order = true;
 
             while ($product = mysqli_fetch_assoc($cart)) {
-
+                $price = $product['price'];
                 $p_id = $product['p_id'];
                 $p_name = $product['p_name'];
                 $total_price = $product['total_price'];
@@ -79,11 +79,12 @@ if ($connected) {
                 $g_total += $total_price;
 
                 $order = "INSERT INTO `orders`
-                (`p_id`,`p_name`,`price`,`p_code`,`p_qty`,`order_no`,`order_email`)
+                (`p_id`,`p_name`,`price`,`t_price`,`p_code`,`p_qty`,`order_no`,`order_email`)
                 
                 VALUES(
                 '$p_id',
                 '$p_name',
+                '$price',
                 '$total_price',
                 '$p_code',
                 '$qty',
