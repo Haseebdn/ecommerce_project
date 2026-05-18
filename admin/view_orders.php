@@ -8,21 +8,6 @@
  <div class="main-content">
      <section class="section">
          <div class="section-body">
-             <!-- alert -->
-             <?php if (isset($_SESSION['success'])) { ?>
-                 <div class="alert text-center alert-success">
-                     <?php echo $_SESSION['success']; ?>
-                 </div>
-             <?php unset($_SESSION['success']);
-                } ?>
-
-             <?php if (isset($_SESSION['error'])) { ?>
-                 <div class="alert text-center alert-danger">
-                     <?php echo $_SESSION['error']; ?>
-                 </div>
-             <?php unset($_SESSION['error']);
-                } ?>
-             <!-- alert -->
              <div class="row">
                  <div class="col-12">
                      <div class="card">
@@ -103,7 +88,8 @@
                                                      </a>
                                                  </td>
                                                  <td>
-                                                     <a class="btn btn-danger btn-sm" href="./handlers/order/delete.php">
+                                                     <a class="btn btn-danger btn-sm deleteBtn"
+                                                         href="./handlers/order/delete.php?id=<?php echo base64_encode($order['id']) ?>">
                                                          <i class="fa-solid fa-trash"></i>
                                                      </a>
                                                  </td>
@@ -126,58 +112,92 @@
  </div>
 
 
- <?php
-    include "./include/footer.php";
-    ?>
+ <?php include "./include/footer.php"; ?>
+
  <script src="assets/bundles/datatables/datatables.min.js"></script>
-
  <script src="assets/js/page/datatables.js"></script>
- 
+
  <script>
-     $(document).on('change', '.status', function() {
+     $(document).ready(function() {
 
-         let order_no = $(this).data('oid');
-         let select = $(this).val();
+         // ✅ Session alerts
+         <?php if (isset($_SESSION['success'])) { ?>
+             Swal.fire({
+                 position: "top-end",
+                 icon: "success",
+                 title: "<?php echo $_SESSION['success']; ?>",
+                 showConfirmButton: false,
+                 timer: 2000
+             });
 
-         $.ajax({
+             <?php unset($_SESSION['success']); ?>
+         <?php } ?>
 
-             url: "/admin/handlers/order/status.php",
+         <?php if (isset($_SESSION['error'])) { ?>
+             Swal.fire({
+                 position: "top-end",
+                 icon: "error",
+                 title: "<?php echo $_SESSION['error']; ?>",
+                 showConfirmButton: false,
+                 timer: 2000
+             });
+             <?php unset($_SESSION['error']); ?>
+         <?php } ?>
 
-             method: "POST",
+         // ✅ Status change
+         $(document).on('change', '.status', function() {
+             let order_no = $(this).data('oid');
+             let select = $(this).val();
 
-             data: {
-                 value: select,
-                 order_no: order_no
-             },
-
-             success: function(res) {
-
-                 let response = JSON.parse(res);
-
-                 if (response.status == 200) {
-
-                     $('#tableExport').load(location.href + " #tableExport");
-
-                     Swal.fire({
-                         position: "top-end",
-                         icon: "success",
-                         title: response.msg,
-                         showConfirmButton: false,
-                         timer: 1500
-                     });
-
-                 } else {
-
-                     Swal.fire({
-                         position: "top-end",
-                         icon: "error",
-                         title: response.msg,
-                         showConfirmButton: false,
-                         timer: 1500
-                     });
-
+             $.ajax({
+                 url: "/admin/handlers/order/status.php",
+                 method: "POST",
+                 data: {
+                     value: select,
+                     order_no: order_no
+                 },
+                 success: function(res) {
+                     let response = JSON.parse(res);
+                     if (response.status == 200) {
+                         Swal.fire({
+                             position: "top-end",
+                             icon: "success",
+                             title: response.msg,
+                             showConfirmButton: false,
+                             timer: 1500
+                         });
+                     } else {
+                         Swal.fire({
+                             position: "top-end",
+                             icon: "error",
+                             title: response.msg,
+                             showConfirmButton: false,
+                             timer: 1500
+                         });
+                     }
                  }
-             }
+             });
          });
+
+         // ✅ Delete with confirmation
+         $(document).on('click', '.deleteBtn', function(e) {
+             e.preventDefault();
+             let link = $(this).attr('href');
+
+             Swal.fire({
+                 title: "Are you sure?",
+                 text: "This order will be deleted permanently!",
+                 icon: "warning",
+                 showCancelButton: true,
+                 confirmButtonColor: "#d33",
+                 cancelButtonColor: "#3085d6",
+                 confirmButtonText: "Yes, delete it!"
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     window.location.href = link;
+                 }
+             });
+         });
+
      });
  </script>

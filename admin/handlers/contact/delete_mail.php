@@ -8,31 +8,31 @@ if (isset($_GET)) {
 
     if (empty($id)) {
 
-        $_SESSION['error'] = "Invalid Order";
-        header("location:/admin/view_orders.php");
+        $_SESSION['error'] = "Invalid Mail";
+        header("location:/admin/contact_table.php");
         exit();
     }
 
-    $query = "DELETE FROM `orders` WHERE `id`='$id'";
+    $query = "DELETE FROM `contact_mails` WHERE `id`='$id'";
 
     try {
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
 
-            $_SESSION['success'] = "Product deleted from order successfully";
-            header("location:/admin/view_orders.php");
+            $_SESSION['success'] = "Mail deleted successfully";
+            header("location:/admin/contact_table.php");
             exit();
         } else {
 
             $_SESSION['error'] = "Deletion Failed";
-            header("location:/admin/view_orders.php");
+            header("location:/admin/contact_table.php");
             exit();
         }
     } catch (mysqli_sql_exception) {
 
         $_SESSION['error'] = "Deletion Failed";
-        header("location:/admin/view_orders.php");
+        header("location:/admin/contact_table.php");
         exit();
     }
 }

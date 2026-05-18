@@ -160,17 +160,17 @@ if (isset($_SESSION['user_email'])) {
 
 
     <div class="container my-5">
-        <h2>Login</h2>
+        <h2 class="px-5">Login</h2>
         <form id="login_form" method="POST" class="my-4 px-5" action="handlers/login.php">
             <div class="d-flex justify-content-between">
                 <div class="w-50">
                     <label for="">Email</label>
-                    <input id="u_email" name="email" class="form-control w-75" type="email">
+                    <input id="u_email" name="email" class="form-control w-75" type="email" tabindex="1">
                     <div id="email_error" class="text-danger mt-1"></div>
                 </div>
                 <div class="w-50">
                     <label for="">Password</label>
-                    <input id="password" name="pass" class="form-control w-75" type="password">
+                    <input id="password" name="pass" class="form-control w-75" type="password" tabindex="2">
                     <div id="pass_error" class="text-danger mt-1"></div>
                 </div>
             </div>
