@@ -109,14 +109,20 @@
                                      </div>
                                      <div class="invoice-detail-item">
                                          <div class="invoice-detail-name">Shipping</div>
-                                         <div class="invoice-detail-value"><?php $shipp_cost = ($g_total * (5 / 100));
-                                                                            echo $shipp_cost  ?> PKR</div>
+                                         <div class="invoice-detail-value">
+                                             <?php
+                                                $shipp_cost = ($g_total * (5 / 100));
+                                                echo $shipp_cost;
+                                                ?> PKR</div>
                                      </div>
                                      <hr class="mt-2 mb-2">
                                      <div class="invoice-detail-item">
                                          <div class="invoice-detail-name">Total</div>
-                                         <div class="invoice-detail-value invoice-detail-value-lg"><?php $final_total = $g_total + $shipp_cost;
-                                        echo $final_total    ?> PKR</div>
+                                         <div class="invoice-detail-value invoice-detail-value-lg">
+                                             <?php
+                                                $final_total = $g_total + $shipp_cost;
+                                                echo $final_total;
+                                                ?> PKR</div>
                                      </div>
                                  </div>
                              </div>

@@ -4,9 +4,7 @@
  * because it will make it harder for you to update.
  * 
  */
-
 "use strict";
-
 function fetchstatus(cat_id, table) {
     $.ajax({
         url: "/admin/handlers/custom.php",
@@ -22,6 +20,14 @@ function fetchstatus(cat_id, table) {
                     position: "top-end",
                     icon: "success",
                     title: "Status Updated Succesfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: response.msg,
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -42,7 +48,7 @@ function fetchColumn(p_id, table, feature) {
         success: function (res) {
             let response = JSON.parse(res);
             console.log(response);
-            
+
             if (response.status == 200) {
                 Swal.fire({
                     position: "top-end",
