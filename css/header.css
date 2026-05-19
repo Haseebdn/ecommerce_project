@@ -32,14 +32,33 @@
     }
 }
 
+@media (max-width: 990px) {
+    .forgot_input {
+        width: 100%;
+    }
+
+    .otp_head {
+        font-size: 28px;
+    }
+}
+
+@media (min-width: 990px) {
+    .forgot_input {
+        width: 75%;
+    }
+
+
+}
+
+
 #socials_li,
-#contacts_li{
+#contacts_li {
     display: flex;
     justify-content: start;
     gap: 20px;
 }
 
-#socials_li  a i,
-#contacts_li a i{
+#socials_li a i,
+#contacts_li a i {
     font-size: 25px;
 }

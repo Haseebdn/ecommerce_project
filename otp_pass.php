@@ -1,9 +1,7 @@
 <?php
 include "sql/conn.php";
-if (isset($_SESSION['user_email'])) {
-    header("location: index.php");
-    exit();
-}
+$fEmail = @$_SESSION['forgot_email'];
+$code = @$_SESSION['code'];
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +13,7 @@ if (isset($_SESSION['user_email'])) {
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MODRAZE</title>
+    <title>Male-Fashion | Template</title>
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_bag" />
@@ -159,30 +157,58 @@ if (isset($_SESSION['user_email'])) {
     <!-- Header Section End -->
 
 
-    <div class="container my-5">
-        <h2 class="px-5">Login</h2>
-        <form id="login_form" method="POST" class="my-4 px-5" action="handlers/login.php">
-            <div class="d-flex justify-content-between">
-                <div class="w-50">
+    <div class="container my-5 otp-div">
+
+        <h2 class="px-4 otp_head">Change Password</h2>
+
+        <form id="otp_form" method="POST" class="my-4 px-4" action="./handlers/forgot_pass.php">
+
+            <div class="row forgot-row">
+
+                <div class="col col-md-6 col-12 forgot-div pb-4">
                     <label for="">Email</label>
-                    <input id="u_email" name="email" class="form-control w-75" type="email" tabindex="1">
+
+                    <input id="forgot_email" name="email" class="form-control forgot_input" type="email"  value="<?php echo $fEmail ?>" readonly>
+
                     <div id="email_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
-                    <div class="d-flex justify-content-between w-75">
-                        <label for="">Password </label><span><a class="text-primary" href="./forgot_otp.php">Forgot Password?</a></span>
-                    </div>
-                    <input id="password" name="pass" class="form-control w-75" type="password" tabindex="2">
-                    <div id="pass_error" class="text-danger mt-1"></div>
+
+                <div class="col col-md-6 col-sm-12 forgot-div pb-4">
+                    <label for="">OTP Code</label>
+
+                    <input id="otp_code" name="otp" class="form-control forgot_input" type="number" tabindex="1">
+
+                    <div id="code_error" class="text-danger mt-1"></div>
                 </div>
+
             </div>
-            <div class=" my-4 d-flex justify-content-between">
-                <div class="w-50">
-                    <button type="submit" class="btn btn-dark w-25">Login</button>
+
+            <div class="row forgot-row">
+
+                <div class="col col-md-6 col-sm-12 forgot-div pb-4">
+                    <label for="">New Password</label>
+
+                    <input id="new_pass" name="new_pass" class="form-control forgot_input" type="password" tabindex="2">
+
+                    <div id="newpass_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
-                    <a class="btn btn-danger w-25" href="signup.php">Signup</a>
+
+                <div class="col col-md-6 col-sm-12 forgot-div pb-4">
+                    <label for="">Confirm Password</label>
+
+                    <input id="con_pass" name="con_pass" class="form-control forgot_input" type="password" tabindex="3">
+
+                    <div id="conpass_error" class="text-danger mt-1"></div>
                 </div>
+
+            </div>
+
+            <div class=" my-4 row">
+
+                <div class=" col col col-md-5 col-sm-10 ">
+                    <button type="submit" class="btn btn-dark otp-btn">Submit</button>
+                </div>
+
             </div>
 
         </form>
@@ -194,51 +220,121 @@ if (isset($_SESSION['user_email'])) {
 
     <script>
         $(document).ready(function() {
-            $('#u_email').on('input', function() {
-                let value = $(this).val().toLowerCase();
-                $(this).val(value);
-            });
 
+            // Email validation
             function validateEmail() {
-                let email = $('#u_email').val().trim();
+
+                let email = $('#forgot_email').val().trim();
                 let error = '';
 
-                if (email !== "") {
-                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                        error = "Invalid Email";
-                    }
+                if (email == "") {
+
+                    error = "Please Enter Email";
+
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+                    error = "Invalid Email";
                 }
+
                 $('#email_error').text(error);
                 return error === '';
             }
 
-            function validatePassword() {
-                let password = $('#password').val().trim();
+            // OTP validation
+            function validateOTP() {
+
+                let otp = $('#otp_code').val().trim();
+                let sessionCode = "<?php echo $code; ?>";
                 let error = '';
 
+                if (otp == '') {
+
+                    error = "Please Enter OTP";
+
+                } else if (!/^\d{6}$/.test(otp)) {
+
+                    error = "OTP must be exactly 6 digits";
+
+                } else if (otp !== sessionCode) {
+
+                    error = "Invalid OTP Code";
+                }
+
+                $('#code_error').text(error);
+                return error === '';
+            }
+
+            // Password validation
+            function validatePassword() {
+
+                let password = $('#new_pass').val().trim();
+                let error = '';
 
                 let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
                 if (password == "") {
+
                     error = "Password is required";
+
                 } else if (!regex.test(password)) {
+
                     error = "Min 8 chars, include upper, lower, number & special char";
                 }
 
-                $('#pass_error').text(error);
-
+                $('#newpass_error').text(error);
                 return error === '';
             }
 
-            $('#u_email').on('input', validateEmail);
-            $('#password').on('input', validatePassword);
+            // Confirm password validation
+            function confirmPassword() {
 
-            $('#login_form').on('submit', function(e) {
+                let pass = $('#new_pass').val().trim();
+                let con_pass = $('#con_pass').val().trim();
+                let error = '';
+
+                if (con_pass == '') {
+
+                    error = "Please Confirm Password";
+
+                } else if (pass !== con_pass) {
+
+                    error = "Password Not Matched";
+                }
+
+                $('#conpass_error').text(error);
+                return error === '';
+            }
+
+            // Only numbers in OTP field
+            $('#otp_code').on('input', function() {
+
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value.length > 6) {
+                    this.value = this.value.slice(0, 6);
+                }
+
+            });
+
+            // Events
+            $('#forgot_email').on('input', validateEmail);
+            $('#otp_code').on('input', validateOTP);
+            $('#new_pass').on('input', validatePassword);
+            $('#con_pass').on('input', confirmPassword);
+
+            // Form submit
+            $('#otp_form').on('submit', function(e) {
+
                 let validEmail = validateEmail();
+                let validOTP = validateOTP();
                 let validPassword = validatePassword();
-                if (!validEmail || !validPassword) {
+                let validConPass = confirmPassword();
+
+                if (!validEmail || !validOTP || !validPassword || !validConPass) {
+
                     e.preventDefault();
                 }
+
             });
+
         });
     </script>

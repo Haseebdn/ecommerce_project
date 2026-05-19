@@ -211,7 +211,7 @@ if (isset($_SESSION['role_id'])) {
             ?>
                 <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
                     <a href="#" class="menu-toggle nav-link has-dropdown">
-                        <i class="fa-solid fa-user"></i><span>Orders</span>
+                        <i class="fa-solid fa-box"></i><span>Orders</span>
                     </a>
                     <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
                         
@@ -225,6 +225,28 @@ if (isset($_SESSION['role_id'])) {
             }
             ?>
             <!-- orders -->
+
+            <!-- POS -->
+            <?php
+            $userPages = ['pos_orders'];
+            if (@$role['role_type'] == "All" || @$role['pos'] == 1) {
+            ?>
+                <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
+                    <a href="#" class="menu-toggle nav-link has-dropdown">
+                        <i class="fa-solid fa-receipt"></i><span>POS</span>
+                    </a>
+                    <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
+                        
+                        <li class="<?php echo ($page == 'pos_orders.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="pos_orders.php">POS Orders</a>
+                        </li>
+
+                    </ul>
+                </li>
+            <?php
+            }
+            ?>
+            <!-- POS -->
 
             <!-- user management -->
             <?php
