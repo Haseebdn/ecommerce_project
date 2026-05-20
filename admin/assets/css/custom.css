@@ -1,6 +1,35 @@
 #p_img_table{
 height: 60px;
 }
+
+.pos-items-card {
+    display: flex;
+    flex-direction: column;
+    height: 500px; /* adjust as needed */
+}
+
+.pos-items-card .pos-items-body {
+    flex: 1;
+    overflow: hidden;
+    padding: 0;
+}
+
+.pos-items-card .pos-table-div {
+    height: 100%;
+    overflow-x:auto;
+}
+
+.pos-items-card .pos-cart-table .pos-items-head .th-pos-column {
+    position: sticky;
+    background: #dee2e6;
+    top: 0;
+    z-index: 1;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.pos-items-card .pos-card-footer {
+    flex-shrink: 0;
+}
 /*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3VzdG9tLmNzcyIsInNvdXJjZXMiOlsiY3VzdG9tLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9 */
 
 /*# sourceMappingURL=custom.css.map */
