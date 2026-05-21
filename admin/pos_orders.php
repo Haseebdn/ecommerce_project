@@ -70,7 +70,7 @@
                          </div>
                          <!-- heading -->
                          <!-- form -->
-                         <form action="" method="POST" enctype="multipart/form-data">
+                         <form id="user_form" method="POST" enctype="multipart/form-data">
                              <div class="card-body">
 
                                  <!-- invoice no. -->
@@ -117,11 +117,10 @@
                                      </select>
                                  </div>
                                  <!-- payment status -->
-
                              </div>
                              <!-- buttons -->
                              <div class="card-footer text-right">
-                                 <button id="cat_submit" class="btn btn-primary mr-1" type="submit">Submit</button>
+                                 <button id="cart_submit" class="btn btn-primary mr-1">Submit</button>
                              </div>
                              <!-- buttons -->
                          </form>
@@ -151,7 +150,7 @@
                                      </thead>
 
                                      <tbody id="cart_items">
-                                        
+
 
                                      </tbody>
                                  </table>
@@ -162,7 +161,7 @@
                          <!-- card footer -->
                          <div class=" d-flex justify-content-between pos-card-footer card-footer px-3">
                              <h5>Total Purchase:</h5>
-                             <div >
+                             <div>
                                  <span id="total_purchase" class="h5"></span> <span class="h5">PKR</span>
                              </div>
                          </div>
@@ -187,9 +186,11 @@
 
          $('.addBtn').on('click', function() {
 
-             let id = $(this).data('pid');
+             let btn = $(this); // current button
 
-             let qty = $(this).closest('tr').find('.qty').val();
+             let id = btn.data('pid');
+
+             let qty = btn.closest('tr').find('.qty').val();
 
              $.ajax({
 
@@ -201,6 +202,146 @@
                      id: id,
                      qty: qty
                  },
+
+                 success: function(res) {
+
+                     let response = JSON.parse(res);
+
+                     // remove focus/hover active effect
+                     btn.blur();
+
+                     if (response.status == 200) {
+
+                         Swal.fire({
+                             position: "top-end",
+                             icon: "success",
+                             title: response.msg,
+                             showConfirmButton: false,
+                             timer: 1500
+                         });
+                         loadCartItems();
+
+                     } else {
+
+                         Swal.fire({
+                             position: "top-end",
+                             icon: "error",
+                             title: response.msg,
+                             showConfirmButton: false,
+                             timer: 1500
+                         });
+
+                     }
+
+                 },
+
+                 error: function() {
+
+                     btn.blur();
+
+                     Swal.fire({
+                         position: "top-end",
+                         icon: "error",
+                         title: "Something went wrong",
+                         showConfirmButton: false,
+                         timer: 1500
+                     });
+
+                 }
+
+             });
+
+         });
+
+         loadCartItems();
+
+         function loadCartItems() {
+
+             $.ajax({
+
+                 url: "/admin/handlers/pos/cart_items.php",
+
+                 method: "POST",
+
+                 data: {
+                     items: true
+                 },
+
+                 success: function(res) {
+
+                     let response = JSON.parse(res);
+
+                     console.log(response);
+
+                     $('#cart_items').html(response.data);
+                     $('#total_purchase').html(response.total_purchase);
+                     $('#t_price').val(response.total_purchase);
+                 }
+
+             });
+
+         }
+
+
+         invoice();
+
+         function invoice() {
+
+             $.ajax({
+
+                 url: "/admin/handlers/pos/invoice_no.php",
+
+                 method: "POST",
+
+                 data: {
+                     invoice: true
+                 },
+
+                 success: function(res) {
+
+                     let response = JSON.parse(res);
+
+                     console.log(response);
+
+                     if (response.status == 200) {
+
+                         $('#invoice_no').val(response.data);
+
+                     }
+
+                 },
+
+                 error: function() {
+
+                     Swal.fire({
+                         position: "top-end",
+                         icon: "error",
+                         title: "Failed to fetch invoice number",
+                         showConfirmButton: false,
+                         timer: 1500
+                     });
+
+                 }
+
+             });
+
+         }
+
+         $('#cart_submit').on('click', function(e) {
+
+             e.preventDefault();
+
+             let form = $("#user_form");
+
+             let formdata = new FormData(form[0]);
+
+             $.ajax({
+
+                 url: "/admin/handlers/pos/user.php",
+                 method: "POST",
+                 data:formdata,
+                 processData: false,
+                 contentType: false,
 
                  success: function(res) {
 
@@ -245,34 +386,5 @@
              });
 
          });
-
-         loadCartItems();
-
-         function loadCartItems() {
-
-             $.ajax({
-
-                 url: "/admin/handlers/pos/cart_items.php",
-
-                 method: "POST",
-
-                 data: {
-                     items: true
-                 },
-
-                 success: function(res) {
-
-                     let response = JSON.parse(res);
-
-                     console.log(response);
-
-                     $('#cart_items').html(response.data);
-                     $('#total_purchase').html(response.total_purchase)
-                 }
-
-             });
-
-         }
-
      });
  </script>

@@ -5,7 +5,7 @@ height: 60px;
 .pos-items-card {
     display: flex;
     flex-direction: column;
-    height: 500px; /* adjust as needed */
+    height: 487px; /* adjust as needed */
 }
 
 .pos-items-card .pos-items-body {
