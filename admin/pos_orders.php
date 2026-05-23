@@ -70,7 +70,7 @@
                          </div>
                          <!-- heading -->
                          <!-- form -->
-                         <form id="user_form" method="POST" enctype="multipart/form-data">
+                         <form id="user_form">
                              <div class="card-body">
 
                                  <!-- invoice no. -->
@@ -118,13 +118,16 @@
                                  </div>
                                  <!-- payment status -->
                              </div>
-                             <!-- buttons -->
-                             <div class="card-footer text-right">
-                                 <button id="cart_submit" class="btn btn-primary mr-1">Submit</button>
-                             </div>
-                             <!-- buttons -->
                          </form>
                          <!-- form -->
+
+                         <!-- buttons -->
+                         <div class="card-footer text-right">
+                             <button type="button" id="cart_submit" class="btn btn-primary mr-1">
+                                 Submit
+                             </button>
+                         </div>
+                         <!-- buttons -->
                      </div>
                      <div class="card pos-items-card">
                          <!-- heading -->
@@ -327,25 +330,25 @@
 
          }
 
-         $('#cart_submit').on('click', function(e) {
 
+         $('#cart_submit').on('click', function(e) {
              e.preventDefault();
 
              let form = $("#user_form");
-
              let formdata = new FormData(form[0]);
 
              $.ajax({
-
                  url: "/admin/handlers/pos/user.php",
                  method: "POST",
-                 data:formdata,
+                 data: formdata,
                  processData: false,
                  contentType: false,
 
                  success: function(res) {
-
                      let response = JSON.parse(res);
+                     $('#user_form')[0].reset();
+                     loadCartItems();
+                     invoice();
 
                      if (response.status == 200) {
 
@@ -358,7 +361,6 @@
                          });
 
                      } else {
-
                          Swal.fire({
                              position: "top-end",
                              icon: "error",
@@ -366,13 +368,10 @@
                              showConfirmButton: false,
                              timer: 1500
                          });
-
                      }
-
                  },
 
                  error: function() {
-
                      Swal.fire({
                          position: "top-end",
                          icon: "error",
@@ -380,11 +379,8 @@
                          showConfirmButton: false,
                          timer: 1500
                      });
-
                  }
-
              });
-
          });
      });
  </script>
