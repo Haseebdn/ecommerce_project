@@ -382,5 +382,57 @@
                  }
              });
          });
+
+         $(document).on('change', '.cart_qty', function(e) {
+             e.preventDefault();
+
+             let value = $(this).val();
+             let id = $(this).data('qid');
+
+             $.ajax({
+                 url: "/admin/handlers/pos/qty_update.php",
+                 method: "POST",
+                 data: {
+                     "qty": value,
+                     "id": id
+                 },
+                 success: function(res) {
+                     let response = JSON.parse(res);
+                     if (response.status == 200) {
+
+                         Swal.fire({
+                             position: "top-end",
+                             icon: "success",
+                             title: response.msg,
+                             showConfirmButton: false,
+                             timer: 1500
+                         });
+
+                     } else {
+                         Swal.fire({
+                             position: "top-end",
+                             icon: "error",
+                             title: response.msg,
+                             showConfirmButton: false,
+                             timer: 1500
+                         });
+                     }
+                 },
+
+                 error: function() {
+                     Swal.fire({
+                         position: "top-end",
+                         icon: "error",
+                         title: "Something went wrong",
+                         showConfirmButton: false,
+                         timer: 1500
+                     });
+                 }
+             })
+
+
+
+         });
+
      });
  </script>

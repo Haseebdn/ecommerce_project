@@ -31,8 +31,8 @@ try {
 
                 <td class='py-2 col-2'>
                     <input type='number' 
-                           class='form-control'
-                           value='{$fetch['qty']}' min='1'>
+                           class='form-control cart_qty'
+                          data-qid='{$fetch['id']}' value='{$fetch['qty']}' min='1'>
                 </td>
 
                 <td class='py-2'>{$fetch['total_price']} PKR</td>
