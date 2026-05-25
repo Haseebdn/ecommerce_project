@@ -1,34 +1,42 @@
 <?php
 include "../sql/conn.php";
 
-if (isset($_POST['qty']) && isset($_POST['cart_id'])) {
+try {
 
-    $qty = $_POST['qty'];
+    if (isset($_POST['qty']) && isset($_POST['cart_id'])) {
 
-    $cart_id = $_POST['cart_id'];
+        $qty = $_POST['qty'];
 
-    $price = "SELECT price FROM `cart` WHERE `id`='$cart_id' ";
-    $wql = mysqli_query($conn, $price);
-    $fetch = mysqli_fetch_assoc($wql);
+        $cart_id = $_POST['cart_id'];
 
-    $price_p = $fetch['price'];
-    $t_price=$price_p * $qty;
+        $price = "SELECT price FROM `cart` WHERE `id`='$cart_id' ";
+        $wql = mysqli_query($conn, $price);
+        $fetch = mysqli_fetch_assoc($wql);
 
-    $query = "UPDATE `cart` SET `qty`='$qty',`total_price`='$t_price'  WHERE `id`='$cart_id'";
+        $price_p = $fetch['price'];
+        $t_price = $price_p * $qty;
 
-    $sql = mysqli_query($conn, $query);
+        $query = "UPDATE `cart` SET `qty`='$qty',`total_price`='$t_price'  WHERE `id`='$cart_id'";
 
-    if ($sql) {
+        $sql = mysqli_query($conn, $query);
 
-        echo json_encode([
-            "status" => 200,
-            "message" => "Qty Updated"
-        ]);
-    } else {
+        if ($sql) {
 
-        echo json_encode([
-            "status" => 500,
-            "message" => "Failed to Update"
-        ]);
+            echo json_encode([
+                "status" => 200,
+                "msg" => "Qty Updated"
+            ]);
+        } else {
+
+            echo json_encode([
+                "status" => 500,
+                "msg" => "Failed to Update"
+            ]);
+        }
     }
+} catch (mysqli_sql_exception) {
+    echo json_encode([
+        "status" => 500,
+        "msg" => "Failed to Update"
+    ]);
 }

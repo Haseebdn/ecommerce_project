@@ -99,7 +99,7 @@ $email = $_SESSION['user_email'];
 
                                     <td class=" p-2">
                                         <a id="delete_btn" class="btn btn-dark"
-                                            href="./handlers/cart/delete_row.php?remove= <?php echo $row['id'] ?>">
+                                            href="./handlers/cart/delete_row.php?remove=<?php echo $row['id'] ?>">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
@@ -122,7 +122,7 @@ $email = $_SESSION['user_email'];
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="continue__btn">
-                            <a  href="/shop.php">Continue Shopping</a>
+                            <a href="/shop.php">Continue Shopping</a>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -134,7 +134,7 @@ $email = $_SESSION['user_email'];
             </div>
         </div>
         <div class="row mt-5 pt-5 justify-content-between">
-            
+
             <?php
 
             $totalQuery = "SELECT SUM(total_price) as grand_total 
@@ -166,6 +166,7 @@ $email = $_SESSION['user_email'];
                         </li>
                     </ul>
                     <?php
+                    mysqli_data_seek($sql, 0);
                     $cart_items = mysqli_num_rows($sql);
                     if ($cart_items > 0) {
                     ?>
@@ -218,7 +219,7 @@ include "./includes/footer.php";
             let cart_id = $(this).data('id');
 
             $.ajax({
-                url: "https://ecommerce-project.test/handlers/quantity.php",
+                url: "/handlers/quantity.php",
                 method: "POST",
 
                 data: {
@@ -227,14 +228,42 @@ include "./includes/footer.php";
                 },
 
                 success: function(res) {
-
                     let response = JSON.parse(res);
+                    console.log(response);
 
+                    if (response.status ==200) {
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                    } else {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "error",
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                },
+
+                error: function() {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Something went wrong",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
+
             });
-
         });
-
 
     });
 </script>
