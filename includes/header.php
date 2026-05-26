@@ -126,11 +126,15 @@ if (!isset($_SESSION['user_email'])) {
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop.php">Shop</a></li>
-                            <li><a href="./about.php">About Us</a></li>
-                            <li><a href="./checkout.php">Checkout</a></li>
-                            <li><a href="./contact.php">Contact Us</a></li>
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="shop.php">Shop</a></li>
+                            <li><a href="about.php">About Us</a></li>
+                            <li>
+                                <a href="<?php echo ($cart_count > 0) ? 'checkout.php' : '#'; ?>">
+                                    Checkout
+                                </a>
+                            </li>
+                            <li><a href="contact.php">Contact Us</a></li>
                         </ul>
                     </nav>
                 </div>
