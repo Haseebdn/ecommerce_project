@@ -230,8 +230,9 @@ include "./includes/footer.php";
                 success: function(res) {
                     let response = JSON.parse(res);
                     console.log(response);
-
-                    if (response.status ==200) {
+                    $('.qty-plus').blur();
+                    $('.qty-minus').blur();
+                    if (response.status == 200) {
 
                         Swal.fire({
                             position: "top-end",
