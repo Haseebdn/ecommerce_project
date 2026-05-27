@@ -211,11 +211,10 @@ $row = mysqli_fetch_assoc($sql);
                                 <p class="text-secondary">Please make transaction of required amount to purchase the above products </p>
                             </div>
 
-                            <input class="mb-2" type="radio" name="payment" value="COD" checked> Cash On Delivery <br>
-                            <input class="mb-5" type="radio" name="payment" value="Paypal"> Paypal <br>
+                            <input class="mb-4" type="radio" name="payment" value="COD" checked> Cash On Delivery <br>
                             <button id="order" type="submit" class="w-100 mb-3 btn btn-dark">Place Order</button>
-                            <a href="./shopping_cart.php" class=" w-100 mb-3 btn btn-success">Back to Cart</a>
-                            <a href="./shop.php" class=" w-100 mb-3 btn btn-danger">Continue Shopping</a>
+                            <a href="./shopping_cart.php" class=" w-100 mb-3 btn btn-danger">Back to Cart</a>
+                            <a href="./shop.php" class=" w-100 mb-3 btn btn-primary">Continue Shopping</a>
 
                         </div>
 
