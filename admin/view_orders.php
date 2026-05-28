@@ -125,7 +125,6 @@
  <script>
      $(document).ready(function() {
 
-         // ✅ Session alerts
          <?php if (isset($_SESSION['success'])) { ?>
              Swal.fire({
                  position: "top-end",
@@ -149,7 +148,6 @@
              <?php unset($_SESSION['error']); ?>
          <?php } ?>
 
-         // ✅ Status change
          $(document).on('change', '.status', function() {
              let order_no = $(this).data('oid');
              let select = $(this).val();
@@ -184,7 +182,6 @@
              });
          });
 
-         // ✅ Delete with confirmation
          $(document).on('click', '.deleteBtn', function(e) {
              e.preventDefault();
              let link = $(this).attr('href');
