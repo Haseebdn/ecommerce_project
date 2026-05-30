@@ -2,6 +2,7 @@
 include "./sql/conn.php";
 include "./includes/header.php";
 
+$cart = null;
 ?>
 
 <!-- Breadcrumb Section Begin -->
@@ -33,7 +34,7 @@ $row = mysqli_fetch_assoc($sql);
 <section class="checkout spad">
     <div class="container">
         <div class="checkout__form">
-            <form id="checkout_form" action="">
+            <form id="checkout_form">
                 <div class="row ">
                     <div class="col-lg-6 col-md-6">
                         <h6 class="checkout__title">Billing Details</h6>
@@ -176,6 +177,7 @@ $row = mysqli_fetch_assoc($sql);
                                 <?php
                                 $query = "SELECT * FROM `cart` WHERE `u_email`='$email'";
                                 $wql = mysqli_query($conn, $query);
+                                $cartCount = mysqli_num_rows($wql);
                                 ?>
                                 <tbody>
                                     <?php
@@ -211,8 +213,8 @@ $row = mysqli_fetch_assoc($sql);
                                 <p class="text-secondary">Please make transaction of required amount to purchase the above products </p>
                             </div>
 
-                            <input class="mb-4" type="radio" name="payment" value="COD" checked> Cash On Delivery <br>
-                            <button id="order" type="submit" class="w-100 mb-3 btn btn-dark">Place Order</button>
+                            <input class="mb-5" type="radio" name="payment" value="COD" checked> Cash On Delivery <br>
+                            <button id="order" type="button" class="w-100 mb-3 btn btn-dark">Place Order</button>
                             <a href="./shopping_cart.php" class=" w-100 mb-3 btn btn-danger">Back to Cart</a>
                             <a href="./shop.php" class=" w-100 mb-3 btn btn-primary">Continue Shopping</a>
 
@@ -235,21 +237,107 @@ include "./includes/footer.php";
 <script>
     $(document).ready(function() {
         $('#order').on('click', function(e) {
+
             e.preventDefault();
+
+            let validCart = <?php echo ($cartCount > 0) ? 'true' : 'false'; ?>;
+
+            let validFName = validateFName();
+            let validLastName = validateLastName();
+            let validEmail = validateEmail();
+            let validPhone = validatePhone();
+            let validCountry = validateCountry();
+            let validState = validateState();
+            let validCity = validateCity();
+            let validCode = validateCode();
+            let validAddress = validateAddress();
+            let validGender = validateGender();
+
+            if (!validFName || !validLastName || !validEmail ||
+                !validPhone || !validCountry || !validState ||
+                !validCity || !validCode || !validAddress || !validGender) {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please fix the highlighted fields.'
+                });
+
+                return;
+            }
+
+            if (!validCart) {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Cart Empty',
+                    text: 'Please add products to your cart before placing an order.'
+                });
+
+                return;
+            }
+
             let form = document.querySelector('#checkout_form');
             let formData = new FormData(form);
-            $.ajax({
-                url: "./handlers/order.php",
-                method: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(res) {
-                    let response = JSON.parse(res);
-                }
-            })
 
-        })
+            Swal.fire({
+                title: "Place Order?",
+                text: "Do you want to place this order?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Place Order"
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                $.ajax({
+                    url: "./handlers/order.php",
+                    method: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+
+                    success: function(res) {
+
+                        let response = JSON.parse(res);
+
+                        if (response.status === "success") {
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Order Placed",
+                                text: response.message
+                            }).then(() => {
+
+                                window.location.href = "./thank_you.php";
+
+                            });
+
+                        } else {
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.message
+                            });
+
+                        }
+                    },
+
+                    error: function() {
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Server Error",
+                            text: "Something went wrong."
+                        });
+
+                    }
+                });
+
+            });
+
+        });
 
 
 
@@ -285,8 +373,9 @@ include "./includes/footer.php";
         function validateFName() {
             let f_name = $('#f_name').val().trim();
             let error = '';
-
-            if (f_name !== "") {
+            if (f_name == "") {
+                error = "Name is required";
+            } else if (f_name !== "") {
                 if (f_name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(f_name)) {
@@ -301,8 +390,9 @@ include "./includes/footer.php";
         function validateLastName() {
             let name = $('#last_name').val().trim();
             let error = '';
-
-            if (name !== "") {
+            if (name == "") {
+                error = "Name is required";
+            } else if (name !== "") {
                 if (name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
@@ -441,23 +531,7 @@ include "./includes/footer.php";
         $('#address').on('input', validateAddress);
         $('#gender').on('input', validateGender);
 
-        $('#checkout_form').on('submit', function(e) {
-            let validFName = validateFName();
-            let validLastName = validateLastName();
-            let validEmail = validateEmail();
-            let validPhone = validatePhone();
-            let validCountry = validateCountry();
-            let validState = validateState();
-            let validCity = validateCity();
-            let validCode = validateCode();
-            let validAddress = validateAddress();
-            let validGender = validateGender();
 
-
-            if (!validFName || !validLastName || !validEmail || !validPhone || !validCountry || !validState || !validCity || !validCode || !validAddress || !validGender) {
-                e.preventDefault();
-            }
-        })
 
 
 

@@ -31,7 +31,6 @@
                                              <th>Quantity</th>
                                              <th>Order No.</th>
                                              <th>Email</th>
-                                             <th>Type</th>
                                              <th>Status</th>
                                              <th>Invoice</th>
                                              <th>Action</th>
@@ -69,10 +68,6 @@
 
                                                  <td>
                                                      <?php echo $order['order_email']    ?>
-                                                 </td>
-
-                                                 <td>
-
                                                  </td>
 
                                                  <td>
