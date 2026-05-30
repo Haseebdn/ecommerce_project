@@ -1,28 +1,32 @@
 <?php
 include "../../sql/conn.php";
 
-if (isset($_GET) && !empty($_GET)) {
-    // variables
-    $id = $_GET['id'];
-    // variables
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    // query
-    $query = "DELETE FROM suppliers WHERE id=$id";
-    // query
+try {
 
-    // response
-    try {
+    if (isset($_GET) && !empty($_GET)) {
+        // variables
+        $id = $_GET['id'];
+        // variables
+
+        // query
+        $query = "DELETE FROM suppliers WHERE id=$id";
+        // query
+
+        // response
         $run = mysqli_query($conn, $query);
 
         if ($run && mysqli_affected_rows($conn) > 0) {
             $_SESSION['success'] = "Data deleted successfully";
-        } else {
-            $_SESSION['error'] = "Data deletion failed";
         }
-    } catch (mysqli_sql_exception $e) {
-        $_SESSION['error'] = "Data deletion failed";
+        // response
+
+        header("location:../../supplier_table.php");
+        exit();
     }
-    // response
+} catch (mysqli_sql_exception $e) {
+    $_SESSION['error'] = "Error : " . $e->getMessage();
 
     header("location:../../supplier_table.php");
     exit();

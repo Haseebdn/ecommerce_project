@@ -49,7 +49,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 <!-- phone no -->
                                 <div class="mt-4">
                                     <label>TEL</label><span class="text-danger ml-1">*</span>
-                                    <input id="supp_telno" type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>" required>
+                                    <input id="supp_telno" type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>" placeholder="i.e +92 312 3456789" required>
                                 </div>
                                 <div id="telno_error" class="text-danger mt-1"></div>
                                 <!-- phone no -->
@@ -145,7 +145,7 @@ include "./include/footer.php";
                 }
             }
 
-            $('#tel_error').text(error);
+            $('#telno_error').text(error);
             return error === '';
         }
 
@@ -166,6 +166,47 @@ include "./include/footer.php";
 
         validateName();
         validateEmail();
-        validatePhone()
+        validatePhone();
+
+
+        $('#supp_form').on('submit', function(e) {
+
+            let isUpdate = <?php echo isset($_GET['id']) ? 'true' : 'false'; ?>;
+
+            let isValid = validateName();
+            let emailValid = validateEmail();
+            let phoneValid = validatePhone();
+
+            if (!isValid || !emailValid || !phoneValid) {
+                e.preventDefault();
+                return;
+            }
+
+
+            if (isUpdate) {
+
+                e.preventDefault();
+
+                let form = this;
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want to update this subcategory?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Update"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+
+                });
+
+            }
+
+        });
     });
 </script>

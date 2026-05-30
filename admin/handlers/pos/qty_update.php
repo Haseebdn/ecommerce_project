@@ -11,8 +11,13 @@ try {
             $qty=1;
         }
         $id = mysqli_real_escape_string($conn, $_POST['id']);
+        $price="SELECT `price` FROM `pos_cart`WHERE `id`=$id";
+        $pql=mysqli_query($conn,$price);
+        $fetch=mysqli_fetch_assoc($pql);
+        $p_price=$fetch['price'];
+        $t_price=$qty * $p_price;
 
-        $query = "UPDATE `pos_cart` SET `qty`='$qty' WHERE `id`='$id'";
+        $query = "UPDATE `pos_cart` SET `qty`='$qty', `total_price`='$t_price' WHERE `id`='$id'";
         $sql = mysqli_query($conn, $query);
         if ($sql) {
             echo json_encode(['status' => 200, 'msg' => 'Quantity Updated Successfully']);

@@ -399,7 +399,7 @@
                  success: function(res) {
                      let response = JSON.parse(res);
                      if (response.status == 200) {
-
+                         loadCartItems();
                          Swal.fire({
                              position: "top-end",
                              icon: "success",

@@ -18,7 +18,7 @@ include "./include/sidebar.php";
                         <!-- heading -->
 
                         <!-- form -->
-                        <form id="add_form" action="./handlers/insert_user.php" method="POST" enctype="multipart/form-data">
+                        <form id="add_form" action="./handlers/customer/insert_user.php" method="POST" enctype="multipart/form-data">
                             <div class="card-body">
                                 <!-- first name -->
                                 <div>
@@ -104,7 +104,7 @@ include "./include/sidebar.php";
                                 <!-- profile pic -->
                                 <label class="mt-4">Profile Picture</label><span class="text-danger"> *</span>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="p_pic" name="p_pic" required>
+                                    <input type="file" class="custom-file-input" id="p_pic" name="p_pic">
                                     <label class="custom-file-label" for="p_pic">Choose file</label>
                                 </div>
                                 <!-- profile pic -->
@@ -381,7 +381,8 @@ include "./include/footer.php";
         $('#password').on('input', validatePassword);
         $('#con_pass').on('input', confirmPassword);
 
-        $('#signup_form').on('submit', function(e) {
+        $('#add_form').on('submit', function(e) {
+        
             let validFName = validateFName();
             let validLastName = validateLastName();
             let validEmail = validateEmail();
@@ -400,5 +401,6 @@ include "./include/footer.php";
             }
         })
 
+        
     })
 </script>
