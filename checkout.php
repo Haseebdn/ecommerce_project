@@ -237,7 +237,7 @@ include "./includes/footer.php";
 <script>
     $(document).ready(function() {
         $('#order').on('click', function(e) {
-
+            $('#order').blur();
             e.preventDefault();
 
             let validCart = <?php echo ($cartCount > 0) ? 'true' : 'false'; ?>;
@@ -285,10 +285,23 @@ include "./includes/footer.php";
                 text: "Do you want to place this order?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Place Order"
+                confirmButtonText: "Place Order",
+                confirmButtonColor: "#3085d6"
             }).then((result) => {
-
                 if (!result.isConfirmed) return;
+
+                $('#order').prop('disabled', true).text('Processing...');
+
+                Swal.fire({
+                    title: 'Processing...',
+                    text: 'Please wait while we place your order.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
 
                 $.ajax({
                     url: "./handlers/order.php",
@@ -298,47 +311,32 @@ include "./includes/footer.php";
                     processData: false,
 
                     success: function(res) {
-
                         let response = JSON.parse(res);
 
-                        if (response.status === "success") {
-
-                            Swal.fire({
-                                icon: "success",
-                                title: "Order Placed",
-                                text: response.message
-                            }).then(() => {
-
-                                window.location.href = "./thank_you.php";
-
-                            });
-
+                        if (response.status === 200) {
+                            window.location.href = "./thank_you.php";
                         } else {
-
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
                                 text: response.message
                             });
-
+                            $('#order').prop('disabled', false).text('Place Order');
                         }
                     },
 
                     error: function() {
-
                         Swal.fire({
                             icon: "error",
                             title: "Server Error",
                             text: "Something went wrong."
                         });
-
+                        $('#order').prop('disabled', false).text('Place Order');
                     }
                 });
-
             });
 
         });
-
 
 
         $('#f_name').on('input', function() {
@@ -519,7 +517,6 @@ include "./includes/footer.php";
         }
 
 
-
         $('#f_name').on('input', validateFName);
         $('#last_name').on('input', validateLastName);
         $('#u_email').on('input', validateEmail);
@@ -531,9 +528,5 @@ include "./includes/footer.php";
         $('#address').on('input', validateAddress);
         $('#gender').on('input', validateGender);
 
-
-
-
-
-    })
+    });
 </script>

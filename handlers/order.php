@@ -42,24 +42,24 @@ try {
             }
 
             $query = "INSERT INTO `order_user`
-        (`f_name`,`last_name`,`od_email`,`od_phone`,`od_country`,
-        `od_state`,`od_city`,`od_postal`,`od_address`,
-        `od_gender`,`order_no`,`payment_method`)
+            (`f_name`,`last_name`,`od_email`,`od_phone`,`od_country`,
+            `od_state`,`od_city`,`od_postal`,`od_address`,
+            `od_gender`,`order_no`,`payment_method`)
         
-        VALUES(
-        '$f_name',
-        '$last_name',
-        '$u_email',
-        '$p_number',
-        '$country',
-        '$state',
-        '$city',
-        '$postal_code',
-        '$address',
-        '$gender',
-        '$order_no',
-        '$payment_method'
-        )";
+            VALUES(
+            '$f_name',
+            '$last_name',
+            '$u_email',
+            '$p_number',
+            '$country',
+            '$state',
+            '$city',
+            '$postal_code',
+            '$address',
+            '$gender',
+            '$order_no',
+            '$payment_method'
+            )";
 
             $sql = mysqli_query($conn, $query);
 
@@ -144,7 +144,12 @@ try {
                         $drun = mysqli_query($conn, $dsql);
 
                         if ($drun) {
-                            echo 1;
+                            $_SESSION['order_no'] = $order_no;
+                            $_SESSION['total'] = $g_total;
+                            echo json_encode([
+                                "status" => 200,
+                                "msg" => "Order Placed Successfully"
+                            ]);
                         } else {
                             echo 2;
                         }
@@ -154,15 +159,10 @@ try {
                 }
             }
         }
-
-        echo json_encode([
-            "status" => 200,
-            "msg" => "Order Placed Successfully"
-        ]);
     } else {
         echo json_encode([
             "status" => 500,
-            "message" => "Order Failed"
+            "msg" => "Order Failed"
         ]);
     }
 } catch (mysqli_sql_exception $e) {

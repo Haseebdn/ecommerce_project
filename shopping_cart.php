@@ -54,67 +54,74 @@ $email = $_SESSION['user_email'];
                         <tbody>
 
                             <?php
-                            while ($row = mysqli_fetch_assoc($sql)) {
+                            if (mysqli_num_rows($sql) > 0) {
+
+                                while ($row = mysqli_fetch_assoc($sql)) {
                             ?>
+                                    <tr>
+
+                                        <td class="p-2">
+                                            <img class="rounded"
+                                                src="./admin/uploads/thumbnail/<?php echo $row['p_thumbnail']; ?>"
+                                                width="50">
+                                        </td>
+
+                                        <td class="col-2 p-2">
+                                            <?php echo $row['p_name']; ?>
+                                        </td>
+
+                                        <td class="p-2">
+                                            <?php echo $row['p_code']; ?>
+                                        </td>
+
+                                        <td class="col-2 p-2">
+
+                                            <button type="button"
+                                                class="qty-plus btn btn-sm btn-dark font-weight-bold"
+                                                data-id="<?php echo $row['id']; ?>">
+                                                +
+                                            </button>
+
+                                            <input type="text"
+                                                class="w-25 text-center quantity qty-input"
+                                                data-id="<?php echo $row['id']; ?>"
+                                                value="<?php echo $row['qty']; ?>">
+
+                                            <button type="button"
+                                                class="qty-minus btn btn-sm btn-dark font-weight-bold"
+                                                data-id="<?php echo $row['id']; ?>">
+                                                -
+                                            </button>
+
+                                        </td>
+
+                                        <td class="p-2">
+                                            <?php echo $row['total_price']; ?> PKR
+                                        </td>
+
+                                        <td class="p-2">
+                                            <a id="delete_btn"
+                                                class="btn btn-dark"
+                                                href="./handlers/cart/delete_row.php?remove=<?php echo $row['id']; ?>">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
                                 <tr>
-
-                                    <td class=" p-2">
-                                        <img class="rounded"
-                                            src="./admin/uploads/thumbnail/<?php echo $row['p_thumbnail'] ?>"
-                                            width="50">
+                                    <td colspan="6" class="text-center py-4">
+                                        Cart is Empty
                                     </td>
-
-                                    <td class="col-2 p-2">
-                                        <?php echo $row['p_name']    ?>
-                                    </td>
-
-                                    <td class=" p-2">
-                                        <?php echo $row['p_code']    ?>
-                                    </td>
-
-                                    <td class="col-2 p-2">
-
-                                        <button type="button"
-                                            class="qty-plus btn btn-sm btn-dark font-weight-bold"
-                                            data-id="<?php echo $row['id'] ?>">
-                                            +
-                                        </button>
-
-                                        <input type="text"
-                                            class="w-25 text-center quantity qty-input"
-                                            data-id="<?php echo $row['id'] ?>"
-                                            value="<?php echo $row['qty'] ?>">
-
-                                        <button type="button"
-                                            class="qty-minus btn btn-sm btn-dark font-weight-bold "
-                                            data-id="<?php echo $row['id'] ?>">
-                                            -
-                                        </button>
-
-                                    </td>
-
-                                    <td class="p-2">
-                                        <?php echo $row['total_price']    ?> PKR
-                                    </td>
-
-                                    <td class=" p-2">
-                                        <a id="delete_btn" class="btn btn-dark"
-                                            href="./handlers/cart/delete_row.php?remove=<?php echo $row['id'] ?>">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-
                                 </tr>
                             <?php
                             }
                             ?>
 
 
-                            <!-- <tr>
-                                <td colspan="6" class="text-center">
-                                    Cart is Empty
-                                </td>
-                            </tr> -->
 
                         </tbody>
                     </table>
@@ -127,7 +134,19 @@ $email = $_SESSION['user_email'];
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="d-flex justify-content-end">
-                            <a class=" primary-btn" href="./handlers/cart/delete_all.php"></i>Remove All</a>
+                            <?php
+                            mysqli_data_seek($sql, 0);
+                            $cart_items = mysqli_num_rows($sql);
+                            if ($cart_items > 0) {
+                            ?>
+                                <a class="deleteBtn primary-btn" href="handlers/cart/delete_all.php">Remove All</a>
+                            <?php
+                            } else {
+                            ?>
+                                <button class="primary-btn">Remove All</button>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -191,6 +210,29 @@ include "./includes/footer.php";
 
 <script>
     $(document).ready(function() {
+
+        <?php if (isset($_SESSION['success'])) { ?>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "<?php echo $_SESSION['success']; ?>",
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+            <?php unset($_SESSION['success']); ?>
+        <?php } ?>
+
+        <?php if (isset($_SESSION['error'])) { ?>
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "<?php echo $_SESSION['error']; ?>",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            <?php unset($_SESSION['error']); ?>
+        <?php } ?>
 
         // increase qty
         $(".qty-plus").click(function() {
@@ -263,6 +305,26 @@ include "./includes/footer.php";
                     });
                 }
 
+            });
+        });
+
+        $(document).on('click', '.deleteBtn', function(e) {
+            e.preventDefault();
+            let link = $(this).attr('href');
+            console.log("clicked");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This will be deleted permanently",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = link;
+                }
             });
         });
 

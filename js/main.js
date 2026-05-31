@@ -221,7 +221,7 @@
     menuItems.forEach(li => {
         const link = li.querySelector("a");
 
-        if (link.getAttribute("href") === currentPage) {
+        if (link && link.getAttribute("href") === currentPage) {
             li.classList.add("active");
         }
     });

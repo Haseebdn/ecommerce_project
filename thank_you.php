@@ -5,6 +5,13 @@
 <?php
 include "./sql/conn.php";
 include "./includes/header.php";
+$order = @$_SESSION['order_no'];
+$total = @$_SESSION['total'];
+
+
+$query = "SELECT * FROM `order_user` WHERE `order_no`='$order'";
+$sql = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($sql);
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -34,7 +41,7 @@ include "./includes/header.php";
             <div class="mod-meta-badge">
               <i class="fas fa-hashtag" aria-hidden="true"></i>
               <span class="mod-meta-label">Order</span>
-              <strong>#MOD123456</strong>
+              <strong> <?php echo @$order     ?></strong>
             </div>
             <div class="mod-meta-badge">
               <i class="far fa-calendar-alt" aria-hidden="true"></i>
@@ -63,7 +70,7 @@ include "./includes/header.php";
               <div class="mod-summary-icon-wrap"><i class="fas fa-receipt"></i></div>
               <div class="mod-summary-info">
                 <span class="mod-summary-key">Order Number</span>
-                <span class="mod-summary-val">#MOD123456</span>
+                <span class="mod-summary-val"><?php echo @$order    ?></span>
               </div>
             </li>
 
@@ -71,7 +78,7 @@ include "./includes/header.php";
               <div class="mod-summary-icon-wrap"><i class="fas fa-credit-card"></i></div>
               <div class="mod-summary-info">
                 <span class="mod-summary-key">Payment Method</span>
-                <span class="mod-summary-val">Visa •••• 4242</span>
+                <span class="mod-summary-val"><?php echo $row['payment_method']    ?></span>
               </div>
             </li>
 
@@ -79,7 +86,7 @@ include "./includes/header.php";
               <div class="mod-summary-icon-wrap"><i class="fas fa-tag"></i></div>
               <div class="mod-summary-info">
                 <span class="mod-summary-key">Total Amount</span>
-                <span class="mod-summary-val mod-summary-val--price">$148.00</span>
+                <span class="mod-summary-val mod-summary-val--price"><?php echo @$total    ?> PKR</span>
               </div>
             </li>
 
@@ -87,7 +94,7 @@ include "./includes/header.php";
               <div class="mod-summary-icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
               <div class="mod-summary-info">
                 <span class="mod-summary-key">Shipping Address</span>
-                <span class="mod-summary-val">42 Fashion Ave, Suite 8,<br>New York, NY 10001</span>
+                <span class="mod-summary-val"><?php echo $row['od_address']    ?></span>
               </div>
             </li>
 
@@ -95,7 +102,7 @@ include "./includes/header.php";
               <div class="mod-summary-icon-wrap"><i class="fas fa-envelope"></i></div>
               <div class="mod-summary-info">
                 <span class="mod-summary-key">Confirmation Sent To</span>
-                <span class="mod-summary-val">customer@example.com</span>
+                <span class="mod-summary-val"><?php echo $row['od_email']    ?></span>
               </div>
             </li>
 
@@ -108,10 +115,10 @@ include "./includes/header.php";
     <div class="row justify-content-center mod-fade-in mod-delay-3">
       <div class="col-12 col-md-10">
         <div class="mod-actions">
-          <a href="index.php" class="mod-btn mod-btn--primary">
+          <a href="shop.php" class="mod-btn mod-btn--primary">
             <i class="fas fa-shopping-bag"></i> Continue Shopping
           </a>
-          <a href="orders.php" class="mod-btn mod-btn--secondary">
+          <a href="profile.php" class="mod-btn mod-btn--secondary">
             <i class="fas fa-list-alt"></i> View Orders
           </a>
           <a href="contact.php" class="mod-btn mod-btn--outline">
@@ -128,8 +135,13 @@ include "./includes/header.php";
 include "./includes/footer.php";
 ?>
 
-<!-- Inject today's date -->
 <script>
+  window.addEventListener('beforeunload', function() {
+    navigator.sendBeacon('./handlers/clear_session.php');
+  });
+  
+  // Inject today's date
+  
   (function() {
     var el = document.getElementById('mod-order-date');
     if (el) {

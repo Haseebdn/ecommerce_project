@@ -1,10 +1,23 @@
 <?php
 include "../../sql/conn.php";
 
-$email = $_SESSION['user_email'];
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+try {
 
-$query = "DELETE FROM `cart` where `u_email`='$email'";
-$sql = mysqli_query($conn, $query);
+    if (isset($_SESSION['user_email'])) {
 
-header("location:../../shopping_cart.php");
-exit();
+        $email = $_SESSION['user_email'];
+
+        $query = "DELETE FROM `cart` WHERE `u_email`='$email'";
+        mysqli_query($conn, $query);
+
+        $_SESSION['success'] = "Deleted Successfully";
+
+        header("Location:../../shopping_cart.php");
+        exit();
+    }
+} catch (mysqli_sql_exception $e) {
+    $_SESSION['error'] = "Error :" . $e->getMessage();
+    header("location:../../shopping_cart.php");
+    exit();
+}
