@@ -21,7 +21,7 @@ if (isset($_SESSION['user_email'])) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_bag" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.23.0/sweetalert2.min.css">
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -226,8 +226,9 @@ if (isset($_SESSION['user_email'])) {
             function validateEmail() {
                 let email = $('#u_email').val().trim();
                 let error = '';
-
-                if (email !== "") {
+                if (email == "") {
+                    error = "Enter Email"
+                } else if (email !== "") {
                     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                         error = "Invalid Email";
                     }
@@ -240,15 +241,9 @@ if (isset($_SESSION['user_email'])) {
                 let password = $('#password').val().trim();
                 let error = '';
 
-
-                let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
                 if (password == "") {
                     error = "Password is required";
-                } else if (!regex.test(password)) {
-                    error = "Min 8 chars, include upper, lower, number & special char";
                 }
-
                 $('#pass_error').text(error);
 
                 return error === '';
