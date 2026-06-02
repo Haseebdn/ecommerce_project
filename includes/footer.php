@@ -88,6 +88,33 @@
 <script src="js/mixitup.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/main.js"></script>
+<script>
+    function updateCartSummary() {
+
+        $.ajax({
+            url: "./handlers/cart/load_cart.php",
+            type: "GET",
+            dataType: "json",
+
+            success: function(response) {
+
+                $("#cart_icon_no").text(response.cart_count);
+
+                $(".cart_price_header").html(
+                    Number(response.grand_total).toLocaleString() +
+                    " <span>PKR</span>"
+                );
+
+                $("#mobile_cart_count").text(response.cart_count);
+
+                $("#mobile_cart_total").html(
+                    Number(response.grand_total).toLocaleString() +
+                    " <span>PKR</span>"
+                );
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

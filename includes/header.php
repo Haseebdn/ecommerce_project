@@ -79,12 +79,14 @@ if (!isset($_SESSION['user_email'])) {
             <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
             <a href="./shopping_cart.php">
                 <img src="img/icon/cart.png" alt="">
-                <span class="font-weight-bold h1"><?php echo $cart_count; ?></span>
+                <span id="mobile_cart_count" class="font-weight-bold h1">
+                    <?php echo $cart_count; ?>
+                </span>
             </a>
 
-            <div class="price">
+            <div id="mobile_cart_total" class="price">
                 <?php echo number_format($grand_total); ?>
-                <span> PKR</span>
+                <span>PKR</span>
             </div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -151,7 +153,7 @@ if (!isset($_SESSION['user_email'])) {
                                 <span id="cart_icon_no" class="font-weight-bold text-dark h5"><?php echo $cart_count; ?></span>
                             </div>
                         </a>
-                        <span id="cart_price_header"><?php echo number_format($grand_total); ?>
+                        <span id="cart_price_header" class="cart_price_header"><?php echo number_format($grand_total); ?>
                             <span> PKR</span></span>
                     </div>
                 </div>

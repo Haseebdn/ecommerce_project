@@ -77,9 +77,9 @@ if (isset($_GET['scId'])) {
                             ?>
                             <?php if (!empty($_GET['search'])): ?>
                                 <a id="cross_btn" href="shop.php<?php
-                                                    if (isset($_GET['cid'])) echo '?cid=' . intval($_GET['cid']);
-                                                    elseif (isset($_GET['scId'])) echo '?scId=' . intval($_GET['scId']);
-                                                    ?>">✕</a>
+                                                                if (isset($_GET['cid'])) echo '?cid=' . intval($_GET['cid']);
+                                                                elseif (isset($_GET['scId'])) echo '?scId=' . intval($_GET['scId']);
+                                                                ?>">✕</a>
                             <?php endif; ?>
                         </form>
                         <!-- ================ search field ================= -->
@@ -294,7 +294,7 @@ include "./includes/footer.php";
                 console.log(response);
 
                 if (response.status == 200) {
-
+                    updateCartSummary()
                     Swal.fire({
                         icon: "success",
                         title: response.message,

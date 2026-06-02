@@ -172,16 +172,14 @@ $email = $_SESSION['user_email'];
                     <ul>
                         <li>
                             Subtotal
-                            <span>
-                                <?php echo number_format($grand_total); ?> PKR
-                            </span>
+                           <span class="cart_price_header"><?php echo number_format($grand_total); ?>
+                            <span> PKR</span></span>
                         </li>
 
                         <li>
                             Total
-                            <span>
-                                <?php echo number_format($grand_total); ?> PKR
-                            </span>
+                            <span class="cart_price_header"><?php echo number_format($grand_total); ?>
+                                <span> PKR</span></span>
                         </li>
                     </ul>
                     <?php
@@ -275,7 +273,7 @@ include "./includes/footer.php";
                     $('.qty-plus').blur();
                     $('.qty-minus').blur();
                     if (response.status == 200) {
-
+                        updateCartSummary();
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
