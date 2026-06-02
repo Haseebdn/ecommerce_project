@@ -31,7 +31,7 @@
                          </div>
                          <!-- heading -->
                          <!-- form -->
-                         <form action="<?php echo isset($_GET['id']) ? './handlers/product/update.php' : './handlers/product/add.php' ?>" method="POST" enctype="multipart/form-data">
+                         <form id="product_form" action="<?php echo isset($_GET['id']) ? './handlers/product/update.php' : './handlers/product/add.php' ?>" method="POST" enctype="multipart/form-data">
                              <div class="card-body">
                                  <!-- input to edit -->
                                  <input type="hidden" name='edit_index' value="<?php echo $_GET['id'] ?? '' ?>">
@@ -59,6 +59,7 @@
                                             }
                                             ?>
                                      </select>
+                                     <div id="cat_error" class="text-danger mt-1"></div>
                                  </div>
                                  <!-- category -->
 
@@ -69,6 +70,8 @@
                                          <option>Select Subcategory</option>
 
                                      </select>
+                                     <div id="subcat_error" class="text-danger mt-1"></div>
+
                                  </div>
                                  <!-- subcategory -->
 
@@ -89,6 +92,7 @@
                                             }
                                             ?>
                                      </select>
+                                     <div id="supp_error" class="text-danger mt-1"></div>
                                  </div>
                                  <!-- supplier -->
 
@@ -148,14 +152,16 @@
                                  <!-- thumbnail -->
                                  <label class="mt-4">Product Thumbnail</label><span class="text-danger ml-1">*</span>
                                  <div class="custom-file">
-                                     <input type="file" class="custom-file-input" id="p_thumbnail" name="p_thumbnail" required>
+                                     <input type="file" class="custom-file-input" id="p_thumbnail"
+                                         name="p_thumbnail"
+                                         <?php echo !isset($_GET['id']) ? 'required' : ''; ?>>
                                      <label class="custom-file-label" for="">Choose file</label>
                                  </div>
                                  <?php if (!empty($record['p_thumbnail'])) { ?>
                                      <div class="mt-2"><img class=" rounded rounded-2" src="./uploads/thumbnail/<?php echo @$record['p_thumbnail']; ?>" width="60" required></div>
                                  <?php } ?>
                                  <!-- thumbnail -->
-                                  
+
                                  <!-- Product Images -->
                                  <label class="mt-4">Product Images</label>
                                  <div class="custom-file">
@@ -186,6 +192,9 @@
     ?>
  <script>
      $(document).ready(function() {
+         $('#cat_name').on('change', function() {
+             fetchSubcategories(this.value);
+         });
 
          let catId = $('#cat_name').val();
          let selectedSubcat = "<?php echo $record['subcat_id'] ?? ''; ?>";
@@ -209,7 +218,7 @@
 
                  if (response.status == 200) {
 
-                     let html = '';
+                     let html = '<option value="" >Select Subcategory</option>';
 
                      response.data.forEach(subcat => {
 
@@ -222,100 +231,141 @@
                  }
              }
          });
-
-         $('#p_name').on('input', function() {
-             let input = this;
-             let start = input.selectionStart;
-             let end = input.selectionEnd;
-
-             let value = input.value;
-
-             let capitalized = value.replace(/\b\w/g, c => c.toUpperCase());
-
-             input.value = capitalized;
-
-             input.setSelectionRange(start, end);
-         });
-
-         $('#p_description').on('input', function() {
-             let input = this;
-             let start = input.selectionStart;
-             let end = input.selectionEnd;
-
-             let value = input.value.toLowerCase();
-
-             let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
-                 return char.toUpperCase();
-             });
-
-             input.value = result;
-             input.setSelectionRange(start, end);
-         });
-
-         function validateCode() {
-             let p_code = $('#p_code').val().trim();
-             let error = "";
-             if (!p_code == "") {
-                 if (p_code.length < 3) {
-                     error = "Too short";
-                 } else if (!/^[a-zA-Z0-9_-]+$/.test(p_code)) {
-                     error = "Spaces and special characters not allowed";
-                 }
-             }
-             $('#code_error').text(error);
-         }
-
-         function validateName() {
-             let name = $("#p_name").val().trim();
-             let error = "";
-
-             if (name !== "") {
-                 if (name.length < 3) {
-                     error = "Too Short";
-                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
-                     error = "Numbers and special characters not allowed";
-                 }
-             }
-
-             $("#name_error").text(error);
-             return error === "";
-         }
-
-         function validateDescription() {
-             let description = $("#p_description").val().trim();
-             let error = "";
-
-             if (description !== "") {
-                 let wordCount = description.split(/\s+/).length;
-
-                 if (wordCount < 3) {
-                     error = "Description must be at least 3 words";
-                 }
-             }
-
-             $("#desc_error").text(error);
-             return error === "";
-         }
-
-         $('#p_code').on('input', validateCode);
-         $("#p_name").on("input", validateName);
-         $('#p_description').on("input", validateDescription);
-
-         $('#product_form').on('submit', function(e) {
-             let codeValid = validateCode();
-             let nameValid = validateName();
-             let descValid = validateDescription();
-             if (!codeValid || !nameValid || !descValid) {
-                 e.preventDefault();
-             }
-         })
-
-         validateName();
-         validateCode();
-         validateDescription();
      }
 
-     $('#cat_name').on('change', function() {
-         fetchSubcategories(this.value);
+     $('#p_name').on('input', function() {
+         let input = this;
+         let start = input.selectionStart;
+         let end = input.selectionEnd;
+
+         let value = input.value;
+
+         let capitalized = value.replace(/\b\w/g, c => c.toUpperCase());
+
+         input.value = capitalized;
+
+         input.setSelectionRange(start, end);
      });
+
+     $('#p_description').on('input', function() {
+         let input = this;
+         let start = input.selectionStart;
+         let end = input.selectionEnd;
+
+         let value = input.value.toLowerCase();
+
+         let result = value.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
+             return char.toUpperCase();
+         });
+
+         input.value = result;
+         input.setSelectionRange(start, end);
+     });
+
+     function validateCategory() {
+
+         let name = $('#cat_name').val().trim();
+         let error = '';
+
+         if (name == "") {
+             error = 'Please select category';
+         }
+         $('#cat_error').text(error);
+         return error === "";
+     }
+
+     function validateSubcat() {
+
+         let name = $('#subcat_name').val().trim();
+         let error = '';
+
+         if (name == "") {
+             error = 'Please select subcategory';
+         }
+         $('#subcat_error').text(error);
+         return error === "";
+     }
+
+     function validateSupp() {
+
+         let name = $('#supp_name').val().trim();
+         let error = '';
+
+         if (name == "") {
+             error = 'Please select supplier';
+         }
+         $('#supp_error').text(error);
+         return error === "";
+     }
+
+     function validateCode() {
+         let p_code = $('#p_code').val().trim();
+         let error = "";
+         if (p_code == "") {
+             error = 'Enter product code';
+         } else if (!p_code == "") {
+             if (p_code.length < 3) {
+                 error = "Too short";
+             } else if (!/^[a-zA-Z0-9_-]+$/.test(p_code)) {
+                 error = "Spaces and special characters not allowed";
+             }
+         }
+         $('#code_error').text(error);
+         return error === "";
+     }
+
+     function validateName() {
+         let name = $("#p_name").val().trim();
+         let error = "";
+
+         if (name !== "") {
+             if (name.length < 3) {
+                 error = "Too Short";
+             } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+                 error = "Numbers and special characters not allowed";
+             }
+         }
+
+         $("#name_error").text(error);
+         return error === "";
+     }
+
+     function validateDescription() {
+         let description = $("#p_description").val().trim();
+         let error = "";
+
+         if (description !== "") {
+             let wordCount = description.split(/\s+/).length;
+
+             if (wordCount < 3) {
+                 error = "Description must be at least 3 words";
+             }
+         }
+
+         $("#desc_error").text(error);
+         return error === "";
+     }
+
+     $('#cat_name').on('change', validateCategory);
+     $('#subcat_name').on('change', validateSubcat);
+     $('#supp_name').on('change', validateSupp);
+     $('#p_code').on('input', validateCode);
+     $("#p_name").on("input", validateName);
+     $('#p_description').on("input", validateDescription);
+
+     $('#product_form').on('submit', function(e) {
+         let validCat = validateCategory();
+         let validSubcat = validateSubcat();
+         let validSupp = validateSupp();
+         let codeValid = validateCode();
+         let nameValid = validateName();
+         let descValid = validateDescription();
+         if (!codeValid || !nameValid || !descValid || !validCat || !validSubcat || !validSupp) {
+             e.preventDefault();
+         }
+     })
+
+     validateName();
+     validateCode();
+     validateDescription();
  </script>

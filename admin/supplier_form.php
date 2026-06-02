@@ -49,7 +49,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 <!-- phone no -->
                                 <div class="mt-4">
                                     <label>TEL</label><span class="text-danger ml-1">*</span>
-                                    <input id="supp_telno" type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>" placeholder="i.e +92 312 3456789" required>
+                                    <input id="supp_telno" type="tel" name="supp_telno" class="form-control" value="<?php echo isset($row['supp_telno']) ? $row['supp_telno'] : '' ?>" required>
                                 </div>
                                 <div id="telno_error" class="text-danger mt-1"></div>
                                 <!-- phone no -->

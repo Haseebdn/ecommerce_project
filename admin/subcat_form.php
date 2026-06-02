@@ -61,6 +61,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
                                         ?>
 
                                     </select>
+                                    <div id="cat_error" class="text-danger mt-1"></div>
                                 </div>
                                 <!-- category -->
 
@@ -134,6 +135,19 @@ include "./include/footer.php";
             input.setSelectionRange(start, end);
         });
 
+        function validateCategory() {
+
+            let name = $('#category_name').val().trim();
+            let error = '';
+
+            if (name == "") {
+                error = 'Please select category';
+            }
+            $('#cat_error').text(error);
+            return error === "";
+        }
+
+
         function validateName() {
             let name = $('#subcat_name').val().trim();
             let error = '';
@@ -162,12 +176,14 @@ include "./include/footer.php";
         }
         $('#subcat_name').on('input', validateName);
         $('#subcat_desc').on('input', validateDesc);
+        $('#category_name').on('input', validateCategory)
 
         $("#subcat_form").on('submit', function(e) {
             let validName = validateName();
             let validDesc = validateDesc();
+            let validCategory = validateCategory();
 
-            if (!validName || !validDesc) {
+            if (!validName || !validDesc || !validCategory) {
                 e.preventDefault();
             }
         })
@@ -181,8 +197,9 @@ include "./include/footer.php";
 
             let validName = validateName();
             let validDesc = validateDesc();
+            let validCategory = validateCategory();
 
-            if (!validName || !validDesc) {
+            if (!validName || !validDesc || !validCategory) {
                 e.preventDefault();
                 return;
             }

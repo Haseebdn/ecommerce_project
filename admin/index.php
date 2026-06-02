@@ -132,13 +132,8 @@ if (isset($_SESSION['admin_email'])) {
             let password = $('#password').val().trim();
             let error = '';
 
-
-            let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
             if (password == "") {
                 error = "Password is required";
-            } else if (!regex.test(password)) {
-                error = "Min 8 chars, include upper, lower, number & special char";
             }
 
             $('#pass_error').text(error);
@@ -146,7 +141,7 @@ if (isset($_SESSION['admin_email'])) {
             return error === '';
         }
 
-        $('#email').on('submit', validateEmail);
+        $('#email').on('input', validateEmail);
         $('#password').on('input', validatePassword);
 
 
