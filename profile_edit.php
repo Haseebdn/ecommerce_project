@@ -2,6 +2,7 @@
 include "./sql/conn.php";
 include "./includes/header.php";
 ?>
+<link rel="stylesheet" href="css/media_queries/signup.css">
 
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
@@ -26,142 +27,138 @@ $query = "SELECT * FROM `user` WHERE `u_email`='$email'";
 $sql = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($sql);
 ?>
-<div class="container my-5">
-    <h2 class="px-5">Edit Profile</h2>
-    <form action="./handlers/edit_profile.php" id="edit_form" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
-        <div class="d-flex justify-content-between">
-            <div class="w-50">
+
+<div class="container mt-5">
+    <h2>Edit Profile</h2>
+    <form id="edit_form" action="./handlers/edit_profile.php" method="POST">
+        <div class="row">
+            <div class="div_input col-md-6">
                 <label for="">First Name</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" name="f_name" id="f_name" type="text" value="<?php echo $row['f_name'] ?>" required>
+                <input class="form-control" name="f_name" id="f_name" type="text" value="<?php echo $row['f_name'] ?>" required>
                 <div id="f_error" class="text-danger mt-1"></div>
             </div>
-            <div class="w-50">
+            <div class="div_input col-md-6">
                 <label for="">Last Name</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="last_name" name="last_name" type="text" value="<?php echo $row['last_name'] ?>" required>
+                <input class="form-control" id="last_name" name="last_name" type="text" value="<?php echo $row['last_name'] ?>" required>
                 <div id="last_error" class="text-danger mt-1"></div>
             </div>
         </div>
-        <div class="d-flex justify-content-between mt-4">
-            <div class="w-50">
+        <div class="row">
+            <div class="div_input col-md-6">
                 <label for="">Email</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="u_email" name="u_email" type="email" value="<?php echo $row['u_email'] ?>" required readonly>
+                <input class="  form-control" id="u_email" name="u_email" type="email" value="<?php echo $row['u_email'] ?>" required readonly>
                 <div id="email_error" class="text-danger mt-1"></div>
             </div>
-            <div class="w-50">
+            <div class="div_input col-md-6">
                 <label for="">Phone No.</label><span class="text-danger"> *</span>
-                <input class=" w-75 form-control" id="p_number" name="p_number" type="tel" value="<?php echo $row['p_number'] ?>" required>
+                <input class="  form-control" id="p_number" name="p_number" type="tel" value="<?php echo $row['p_number'] ?>" required>
                 <div id="number_error" class="text-danger mt-1"></div>
             </div>
         </div>
-        <div class="d-flex justify-content-between mt-4">
-            <div class="w-50">
+        <div class="row">
+            <div class="div_input col-md-6">
                 <label for="">Country</label><span class="text-danger"> *</span><br>
-                <select id="country" name="country" class="w-75 custom-select" required>
+                <div class="d-flex flex-column">
+                    <select id="country" name="country" class="select custom-select" required>
+                        <option value="">Select Country</option>
 
-                    <option value="">Select Country</option>
-
-                    <option value="Pakistan"
-                        <?php echo ($row['country'] == 'Pakistan') ? 'selected' : '' ?>>
-                        Pakistan
-                    </option>
-
-                </select>
-                <div id="country_error" class="text-danger mt-1"></div>
+                        <option value="Pakistan"
+                            <?php echo ($row['country'] == 'Pakistan') ? 'selected' : '' ?>>
+                            Pakistan
+                        </option>
+                    </select>
+                    <div id="country_error" class="text-danger mt-1"></div>
+                </div>
             </div>
-            <div class="w-50">
+            <div class="div_input col-md-6">
                 <label for="">State</label><span class="text-danger"> *</span><br>
-                <select id="state" name="state" class="w-75 custom-select" required>
+                <div class="d-flex flex-column">
+                    <select id="state" name="state" class=" select custom-select" required>
+                        <option value="">Select State</option>
 
-                    <option value="">Select State</option>
+                        <option value="Punjab"
+                            <?php echo ($row['state'] == 'Punjab') ? 'selected' : '' ?>>
+                            Punjab
+                        </option>
 
-                    <option value="Punjab"
-                        <?php echo ($row['state'] == 'Punjab') ? 'selected' : '' ?>>
-                        Punjab
-                    </option>
+                        <option value="KPK"
+                            <?php echo ($row['state'] == 'KPK') ? 'selected' : '' ?>>
+                            KPK
+                        </option>
 
-                    <option value="KPK"
-                        <?php echo ($row['state'] == 'KPK') ? 'selected' : '' ?>>
-                        KPK
-                    </option>
+                        <option value="Balochistan"
+                            <?php echo ($row['state'] == 'Balochistan') ? 'selected' : '' ?>>
+                            Balochistan
+                        </option>
 
-                    <option value="Balochistan"
-                        <?php echo ($row['state'] == 'Balochistan') ? 'selected' : '' ?>>
-                        Balochistan
-                    </option>
-
-                    <option value="Sindh"
-                        <?php echo ($row['state'] == 'Sindh') ? 'selected' : '' ?>>
-                        Sindh
-                    </option>
-
-                </select>
-                <div id="state_error" class="text-danger mt-1"></div>
+                        <option value="Sindh"
+                            <?php echo ($row['state'] == 'Sindh') ? 'selected' : '' ?>>
+                            Sindh
+                        </option>
+                    </select>
+                    <div id="state_error" class="text-danger mt-1"></div>
+                </div>
             </div>
         </div>
-        <div class="d-flex justify-content-between mt-4">
-            <div class="w-50">
+        <div class="row">
+            <div class="div_input col-md-6">
                 <label for="">City</label><span class="text-danger"> *</span>
-                <input id="city" name="city" class=" w-75 form-control" type="text" value="<?php echo $row['city'] ?>" required>
+                <input id="city" name="city" class="  form-control" type="text" value="<?php echo $row['city'] ?>" required>
                 <div id="city_error" class="text-danger mt-1"></div>
             </div>
-            <div class="w-50">
+            <div class="div_input col-md-6">
                 <label for="">Postal Code</label><span class="text-danger"> *</span>
-                <input id="postal_code" name="postal_code" class=" w-75 form-control" type="text" value="<?php echo $row['postal_code'] ?>" required>
+                <input id="postal_code" name="postal_code" class="  form-control" type="text" value="<?php echo $row['postal_code'] ?>">
                 <div id="code_error" class="text-danger mt-1"></div>
             </div>
         </div>
-        <div class="d-flex justify-content-between mt-4">
-            <div class="w-50">
+        <div class="row">
+            <div class="div_input col-md-6">
                 <label for="">Address</label><span class="text-danger"> *</span>
-                <input id="address" name="address" class=" w-75 form-control" type="text" value="<?php echo $row['address'] ?>" required>
+                <input id="address" name="address" class="  form-control" type="text" value="<?php echo $row['address'] ?>" required>
                 <div id="address_error" class="text-danger mt-1"></div>
             </div>
-            <div class="w-50">
-
+            <div class="div_input col-md-6">
                 <label for="">Gender</label><span class="text-danger"> *</span><br>
-                <select id="gender" name="gender" class="w-75 custom-select" required>
+                <div class="d-flex flex-column">
+                    <select id="gender" name="gender" class="select custom-select" required>
+                        <option value="">Select Gender</option>
 
-                    <option value="">Select Gender</option>
+                        <option value="Male"
+                            <?php echo ($row['gender'] == 'Male') ? 'selected' : '' ?>>
+                            Male
+                        </option>
 
-                    <option value="Male"
-                        <?php echo ($row['gender'] == 'Male') ? 'selected' : '' ?>>
-                        Male
-                    </option>
+                        <option value="Female"
+                            <?php echo ($row['gender'] == 'Female') ? 'selected' : '' ?>>
+                            Female
+                        </option>
 
-                    <option value="Female"
-                        <?php echo ($row['gender'] == 'Female') ? 'selected' : '' ?>>
-                        Female
-                    </option>
-
-                    <option value="Others"
-                        <?php echo ($row['gender'] == 'Others') ? 'selected' : '' ?>>
-                        Others
-                    </option>
-
-                </select>
-                <div id="gender_error" class="text-danger mt-1"></div>
-            </div>
-
-        </div>
-
-
-        <div class="d-flex justify-content-between mt-5">
-            <div class="w-50">
-                <button type="submit" class="btn btn-dark w-50">Update Profile</button>
-            </div>
-            <div class="w-50">
-                <a class="btn btn-danger w-50" href="./profile.php">Cancel</a>
+                        <option value="Others"
+                            <?php echo ($row['gender'] == 'Others') ? 'selected' : '' ?>>
+                            Others
+                        </option>
+                    </select>
+                    <div id="gender_error" class="text-danger mt-1"></div>
+                </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-5">
-            <div class="w-50">
-                <button type="reset" class="btn btn-secondary w-50">Reset</button>
-            </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="buttons">
+                    <button type="submit" class="btn btn-dark ">Update Profile</button>
 
+                    <a class="btn btn-danger" href="./profile.php">Cancel</a>
+
+                </div>
+            </div>
         </div>
+
 
     </form>
 </div>
+
+
 
 
 <?php

@@ -193,7 +193,7 @@ $code = @$_SESSION['code'];
                     <div id="newpass_error" class="text-danger mt-1"></div>
                 </div>
 
-                <div class="col col-md-6 col-sm-12 forgot-div pb-4">
+                <div class="col col-md-6 col-12 forgot-div pb-4">
                     <label for="">Confirm Password</label>
 
                     <input id="con_pass" name="con_pass" class="form-control forgot_input" type="password" tabindex="3">
