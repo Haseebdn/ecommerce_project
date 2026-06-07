@@ -110,7 +110,9 @@ include "./include/footer.php";
             let name = $('#supp_name').val().trim();
             let error = '';
 
-            if (name !== "") {
+            if (name == "") {
+                error = "Enter Name";
+            } else if (name !== "") {
                 if (name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
@@ -126,7 +128,9 @@ include "./include/footer.php";
             let email = $('#supp_email').val().trim();
             let error = '';
 
-            if (email !== "") {
+            if (email == "") {
+                error = "Enter Email";
+            } else if (email !== "") {
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                     error = "Invalid Email";
                 }
@@ -138,8 +142,9 @@ include "./include/footer.php";
         function validatePhone() {
             let phone = $('#supp_telno').val().trim();
             let error = '';
-
-            if (phone !== "") {
+            if (phone == "") {
+                error = "Enter phone number";
+            } else if (phone !== "") {
                 if (!/^(\+92|0)?3[0-9]{9}$/.test(phone)) {
                     error = "Invalid phone number";
                 }
@@ -163,11 +168,6 @@ include "./include/footer.php";
                 e.preventDefault();
             }
         });
-
-        validateName();
-        validateEmail();
-        validatePhone();
-
 
         $('#supp_form').on('submit', function(e) {
 

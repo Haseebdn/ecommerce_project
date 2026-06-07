@@ -104,8 +104,9 @@
          function validateUnit() {
              let unit = $('#unit_name').val().trim();
              let error = '';
-
-             if (unit !== "") {
+             if (unit == "") {
+                 error = "Enter unit";
+             }else if (unit !== "") {
                  if (!/^[a-zA-Z][a-zA-Z0-9_-]*$/.test(unit)) {
                      error = "Please enter valid unit ";
                  }

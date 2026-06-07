@@ -28,8 +28,8 @@
                      <div class="card">
                          <!-- heading -->
                          <div class="card-header d-flex justify-content-between">
-                             <h4>Products Table</h4>
-                             <a href="./product_form.php" class="btn btn-primary">Add Product</a>
+                             <h4>Roles Table</h4>
+                             <a href="./role_form.php" class="btn btn-primary">Add Role</a>
                          </div>
                          <!-- heading -->
                          <div class="card-body">

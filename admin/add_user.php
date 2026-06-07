@@ -87,8 +87,8 @@ include "./include/sidebar.php";
 
                                 <!-- postal code -->
                                 <div class="mt-4">
-                                    <label for="">Postal Code</label><span class="text-danger"> *</span>
-                                    <input id="postal_code" name="postal_code" class="form-control" type="text" required>
+                                    <label for="">Postal Code</label>
+                                    <input id="postal_code" name="postal_code" class="form-control" type="text">
                                     <div id="code_error" class="text-danger mt-1"></div>
                                 </div>
                                 <!-- postal code -->
@@ -100,14 +100,6 @@ include "./include/sidebar.php";
                                     <div id="address_error" class="text-danger mt-1"></div>
                                 </div>
                                 <!-- address -->
-
-                                <!-- profile pic -->
-                                <label class="mt-4">Profile Picture</label><span class="text-danger"> *</span>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="p_pic" name="p_pic">
-                                    <label class="custom-file-label" for="p_pic">Choose file</label>
-                                </div>
-                                <!-- profile pic -->
 
                                 <!-- gender -->
                                 <div class="mt-4">
@@ -133,7 +125,7 @@ include "./include/sidebar.php";
                                 <!-- confirm password -->
                                 <div class="mt-4">
                                     <label for="">Confirm Password</label><span class="text-danger"> *</span>
-                                    <input id="con_password" name="con_password" class="form-control" type="password" required>
+                                    <input id="con_password" name="con_pass" class="form-control" type="password" required>
                                     <div id="con_error" class="text-danger mt-1"></div>
                                 </div>
                                 <!-- confirm password -->
@@ -193,7 +185,9 @@ include "./include/footer.php";
             let f_name = $('#f_name').val().trim();
             let error = '';
 
-            if (f_name !== "") {
+            if (f_name == "") {
+                error = "Enter first name";
+            } else if (f_name !== "") {
                 if (f_name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(f_name)) {
@@ -208,8 +202,9 @@ include "./include/footer.php";
         function validateLastName() {
             let name = $('#last_name').val().trim();
             let error = '';
-
-            if (name !== "") {
+            if (name == "") {
+                error = "Enter last name";
+            } else if (name !== "") {
                 if (name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
@@ -230,7 +225,9 @@ include "./include/footer.php";
             let email = $('#u_email').val().trim();
             let error = '';
 
-            if (email !== "") {
+            if (email == "") {
+                error = "Enter email";
+            } else if (email !== "") {
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                     error = "Invalid Email";
                 }
@@ -243,7 +240,9 @@ include "./include/footer.php";
             let phone = $('#p_number').val().trim();
             let error = '';
 
-            if (phone !== "") {
+            if (phone == "") {
+                error = "Enter phone number";
+            } else if (phone !== "") {
                 if (!/^(\+92|0)?3[0-9]{9}$/.test(phone)) {
                     error = "Invalid phone number";
                 }
@@ -296,6 +295,7 @@ include "./include/footer.php";
         function validateCode() {
             let p_code = $('#postal_code').val().trim();
             let error = "";
+
             if (!p_code == "") {
                 if (p_code.length < 3) {
                     error = "Too short";
@@ -328,7 +328,7 @@ include "./include/footer.php";
             let error = '';
 
             if (gender == '') {
-                error = "Please Enter State Name";
+                error = "Please select gender";
             }
 
             $('#gender_error').text(error);
@@ -355,12 +355,12 @@ include "./include/footer.php";
 
         function confirmPassword() {
             let pass = $('#password').val().trim();
-            let con_pass = $('#con_pass').val().trim();
+            let con_pass = $('#con_password').val().trim();
             let error = '';
 
             if (con_pass == '') {
                 error = "Please Confirm Password";
-            } else if (pass !== con_pass) {
+            } else if (con_pass !== pass) {
                 error = "Password Not Matched";
             }
 
@@ -372,17 +372,17 @@ include "./include/footer.php";
         $('#last_name').on('input', validateLastName);
         $('#u_email').on('input', validateEmail);
         $('#p_number').on('input', validatePhone);
-        $('#country').on('input', validateCountry);
-        $('#state').on('input', validateState);
+        $('#country').on('change', validateCountry);
+        $('#state').on('change', validateState);
         $('#city').on('input', validateCity);
         $('#postal_code').on('input', validateCode);
         $('#address').on('input', validateAddress);
-        $('#gender').on('input', validateGender);
+        $('#gender').on('change', validateGender);
         $('#password').on('input', validatePassword);
-        $('#con_pass').on('input', confirmPassword);
+        $('#con_password').on('input', confirmPassword);
 
         $('#add_form').on('submit', function(e) {
-        
+
             let validFName = validateFName();
             let validLastName = validateLastName();
             let validEmail = validateEmail();
@@ -401,6 +401,6 @@ include "./include/footer.php";
             }
         })
 
-        
+
     })
 </script>

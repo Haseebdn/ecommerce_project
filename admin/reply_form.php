@@ -103,7 +103,10 @@ include "include/footer.php";
         function validateName() {
             let name = $('#last_name').val().trim();
             let error = '';
-            if (name !== "") {
+
+            if (name == "") {
+                error = "Enter receiver name";
+            } else if (name !== "") {
                 if (name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
@@ -123,7 +126,9 @@ include "include/footer.php";
             let email = $('#u_email').val().trim();
             let error = '';
 
-            if (email !== "") {
+            if (email == "") {
+                error = "Enter Email";
+            } else if (email !== "") {
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                     error = "Invalid Email";
                 }
@@ -151,6 +156,10 @@ include "include/footer.php";
         function validateSubject() {
             let subject = $("#subject").val().trim();
             let error = "";
+
+            if (subject == "") {
+                error = "Enter email subject";
+            }
 
             if (subject !== "") {
                 let wordCount = subject.split(/\s+/).length;
@@ -183,7 +192,9 @@ include "include/footer.php";
             let msg = $("#msg").val().trim();
             let error = "";
 
-            if (msg !== "") {
+            if (msg == "") {
+                error = "Enter message";
+            } else if (msg !== "") {
                 let wordCount = msg.split(/\s+/).length;
 
                 if (wordCount < 3) {

@@ -159,33 +159,29 @@ if (isset($_SESSION['user_email'])) {
     <!-- Header Section End -->
 
 
-    <div class="container my-5">
-        <h2 class="px-5">Login</h2>
-        <form id="login_form" method="POST" class="my-4 px-5" action="handlers/login.php">
-            <div class="d-flex justify-content-between">
-                <div class="w-50">
-                    <label for="">Email</label>
-                    <input id="u_email" name="email" class="form-control w-75" type="email" tabindex="1">
-                    <div id="email_error" class="text-danger mt-1"></div>
+    <div class="container my-5 d-flex justify-content-center">
+        <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
+            <h2 class="mb-4">Login</h2>
+            <form id="login_form" method="POST" action="handlers/login.php">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email</label>
+                    <input id="u_email" name="email" class="form-control" type="email" tabindex="1">
+                    <div id="email_error" class="text-danger mt-1 small"></div>
                 </div>
-                <div class="w-50">
-                    <div class="d-flex justify-content-between w-75">
-                        <label for="">Password </label><span><a class="text-primary" href="./forgot_otp.php">Forgot Password?</a></span>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="form-label fw-semibold">Password</label>
+                        <a class="small text-primary" href="./forgot_otp.php">Forgot Password?</a>
                     </div>
-                    <input id="password" name="pass" class="form-control w-75" type="password" tabindex="2">
-                    <div id="pass_error" class="text-danger mt-1"></div>
+                    <input id="password" name="pass" class="form-control" type="password" tabindex="2">
+                    <div id="pass_error" class="text-danger mt-1 small"></div>
                 </div>
-            </div>
-            <div class=" my-4 d-flex justify-content-between">
-                <div class="w-50">
-                    <button type="submit" class="btn btn-dark w-25">Login</button>
+                <div class="d-flex  pb-2 mt-4 mb-1">
+                    <button type="submit" class=" mr-3 btn btn-dark flex-fill">Login</button>
+                    <a href="signup.php" class="btn btn-danger flex-fill">Signup</a>
                 </div>
-                <div class="w-50">
-                    <a class="btn btn-danger w-25" href="signup.php">Signup</a>
-                </div>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 
     <?php

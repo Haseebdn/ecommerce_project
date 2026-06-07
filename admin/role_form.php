@@ -132,15 +132,18 @@ include "./include/footer.php";
         function validateName() {
             let name = $('#role_name').val().trim();
             let error = '';
-            if (name !== "") {
+
+            if (name == "") {
+                error = "Name is required";
+            } else if (name !== "") {
                 if (name.length < 3) {
                     error = "Too short";
                 } else if (!/^[a-zA-Z\s]+$/.test(name)) {
                     error = "Numbers and special characters not allowed";
                 }
-                $('#role_error').text(error);
-                return error === "";
             }
+            $('#role_error').text(error);
+            return error === "";
         }
 
         $('#role_name').on('input', validateName);
@@ -148,10 +151,10 @@ include "./include/footer.php";
         $("#role_form").on('submit', function(e) {
             let validName = validateName();
 
-
             if (!validName) {
                 e.preventDefault();
             }
+
         })
     });
 </script>

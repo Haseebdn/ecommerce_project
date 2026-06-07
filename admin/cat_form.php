@@ -111,12 +111,12 @@ include "./include/footer.php";
       let name = $("#cat_name").val().trim();
       let error = "";
 
-      if (name !== "") {
-        if (name.length < 3) {
-          error = "Too Short";
-        } else if (!/^[a-zA-Z\s]+$/.test(name)) {
-          error = "Numbers and special characters not allowed";
-        }
+      if (name == "") {
+        error = "Enter Name";
+      } else if (name.length < 3) {
+        error = "Too Short";
+      } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+        error = "Numbers and special characters not allowed";
       }
 
       $("#name_error").text(error);
@@ -152,8 +152,6 @@ include "./include/footer.php";
       }
     });
 
-    validateName();
-    validateDescription();
 
     $('#cat_form').on('submit', function(e) {
 

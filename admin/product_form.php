@@ -47,7 +47,7 @@
 
                                      <label> Category</label><span class="text-danger ml-1">*</span>
                                      <select id="cat_name" name="cat_id" class="form-control">
-                                         <option>Select Category</option>
+                                         <option value="">Select Category</option>
                                          <?php
                                             while ($cat = mysqli_fetch_assoc($sql)) {
                                             ?>
@@ -67,7 +67,7 @@
                                  <div class="form-group">
                                      <label>Subcategory</label><span class="text-danger ml-1">*</span>
                                      <select id="subcat_name" name="subcat_id" class="form-control">
-                                         <option>Select Subcategory</option>
+                                         <option value="">Select Subcategory</option>
 
                                      </select>
                                      <div id="subcat_error" class="text-danger mt-1"></div>
@@ -83,7 +83,7 @@
                                  <div class="form-group">
                                      <label>Supplier</label><span class="text-danger ml-1">*</span>
                                      <select id="supp_name" name="supp_id" class="form-control">
-                                         <option>Select Supplier</option>
+                                         <option value="">Select Supplier</option>
                                          <?php while ($supp = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <option value="<?php echo $supp['id'] ?>"
@@ -197,7 +197,7 @@
          });
 
          let catId = $('#cat_name').val();
-         let selectedSubcat = "<?php echo $record['subcat_id'] ?? ''; ?>";
+         let selectedSubcat = "<?php echo isset($record) ? $record['subcat_id'] : ''; ?>";
 
          if (catId) {
              fetchSubcategories(catId, selectedSubcat);
@@ -301,15 +301,17 @@
      function validateCode() {
          let p_code = $('#p_code').val().trim();
          let error = "";
+
          if (p_code == "") {
              error = 'Enter product code';
-         } else if (!p_code == "") {
+         } else {
              if (p_code.length < 3) {
                  error = "Too short";
              } else if (!/^[a-zA-Z0-9_-]+$/.test(p_code)) {
                  error = "Spaces and special characters not allowed";
              }
          }
+
          $('#code_error').text(error);
          return error === "";
      }
@@ -317,11 +319,12 @@
      function validateName() {
          let name = $("#p_name").val().trim();
          let error = "";
-
-         if (name !== "") {
+         if (name == "") {
+             error = "Enter Name";
+         } else if (name !== "") {
              if (name.length < 3) {
                  error = "Too Short";
-             } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+             } else if (!/^[a-zA-Z0-9\s\-()]+$/.test(name)) {
                  error = "Numbers and special characters not allowed";
              }
          }
@@ -364,8 +367,4 @@
              e.preventDefault();
          }
      })
-
-     validateName();
-     validateCode();
-     validateDescription();
  </script>
