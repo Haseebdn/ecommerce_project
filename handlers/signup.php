@@ -16,8 +16,6 @@ if (isset($_POST) && !empty($_POST)) {
     $gender = mysqli_real_escape_string($conn, $_POST['gender']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $hashed = password_hash($password, PASSWORD_BCRYPT);
-    $p_pic = $_FILES['p_pic']['name'];
-    $p_tmp = $_FILES['p_pic']['tmp_name'];
 
     if (empty($f_name) || empty($last_name) || empty($u_email) || empty($p_number) || empty($country) || empty($state) || empty($city) || empty($postal_code) || empty($address) || empty($gender) || empty($password)) {
         $_SESSION['error'] = "Please Fill All Fields Correctly";
@@ -25,17 +23,6 @@ if (isset($_POST) && !empty($_POST)) {
         exit();
     }
 
-    $pic_name = '';
-    if (!empty($p_pic)) {
-        $ext = strtolower(pathinfo($p_pic, PATHINFO_EXTENSION));
-        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
-            $_SESSION['error'] = "Invalid File Format";
-            header("location:../signup.php");
-            exit();
-        }
-        $pic_name = time() . rand(1, 10000) . '.' . $ext;
-        move_uploaded_file($p_tmp, '../uploads/profile_pictures/' . $pic_name);
-    }
 
     $check_email = "SELECT `u_email`
                 FROM `user`
@@ -51,7 +38,7 @@ if (isset($_POST) && !empty($_POST)) {
         exit();
     }
 
-    $query = "INSERT INTO `user` (`f_name`,`last_name`,`u_email`,`p_number`,`country`,`state`,`city`,`postal_code`,`address`,`gender`,`password`,`p_pic`) VALUES('$f_name','$last_name','$u_email','$p_number','$country','$state','$city','$postal_code','$address','$gender','$hashed','$pic_name')";
+    $query = "INSERT INTO `user` (`f_name`,`last_name`,`u_email`,`p_number`,`country`,`state`,`city`,`postal_code`,`address`,`gender`,`password`) VALUES('$f_name','$last_name','$u_email','$p_number','$country','$state','$city','$postal_code','$address','$gender','$hashed')";
 
     try {
         $run = mysqli_query($conn, $query);

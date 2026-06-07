@@ -1,0 +1,67 @@
+@media (max-width:576px) {
+    form {
+        padding: 20px 20px;
+    }
+
+    h2 {
+        padding: 0px 19px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    h2 {
+        padding: 0px 48px;
+    }
+
+    .select,
+    input {
+        width: 100%;
+    }
+
+    
+    
+
+
+    form {
+        margin: 25px 0px;
+        padding: 20px 48px;
+    }
+
+    .div_input {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: end;
+        gap: 30px;
+    }
+}
+
+@media (min-width: 769px) {
+    h2 {
+        padding: 0px 48px;
+    }
+
+    input,
+    .select {
+        width: 75% !important;
+    }
+
+    form {
+        margin: 40px 0px;
+        padding: 20px 48px;
+    }
+
+    .div_input {
+        margin-bottom: 1.5rem;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 75%;
+    }
+
+}

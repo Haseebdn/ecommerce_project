@@ -32,6 +32,7 @@ if (isset($_SESSION['user_email'])) {
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/media_queries/signup.css">
 </head>
 
 <body>
@@ -121,7 +122,7 @@ if (isset($_SESSION['user_email'])) {
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <img src="img/logo.png" alt="" class="w-75">
+                        <img src="img/logo.png" alt="" class="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -160,107 +161,107 @@ if (isset($_SESSION['user_email'])) {
 
 
     <div class="container mt-5">
-        <h2 class="px-5">Signup</h2>
-        <form id="signup_form" action="./handlers/signup.php" method="POST" class=" my-5 px-5" enctype="multipart/form-data">
-            <div class="d-flex justify-content-between">
-                <div class="w-50">
+        <h2>Signup</h2>
+        <form id="signup_form" action="./handlers/signup.php" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="div_input col-md-6">
                     <label for="">First Name</label><span class="text-danger"> *</span>
-                    <input class=" w-75 form-control" name="f_name" id="f_name" type="text" required>
+                    <input class="form-control" name="f_name" id="f_name" type="text" required>
                     <div id="f_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
+                <div class="div_input col-md-6">
                     <label for="">Last Name</label><span class="text-danger"> *</span>
-                    <input class=" w-75 form-control" id="last_name" name="last_name" type="text" required>
+                    <input class="form-control" id="last_name" name="last_name" type="text" required>
                     <div id="last_error" class="text-danger mt-1"></div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
+            <div class="row">
+                <div class="div_input col-md-6">
                     <label for="">Email</label><span class="text-danger"> *</span>
-                    <input class=" w-75 form-control" id="u_email" name="u_email" type="email" required>
+                    <input class="  form-control" id="u_email" name="u_email" type="email" required>
                     <div id="email_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
+                <div class="div_input col-md-6">
                     <label for="">Phone No.</label><span class="text-danger"> *</span>
-                    <input class=" w-75 form-control" id="p_number" name="p_number" type="tel" required>
+                    <input class="  form-control" id="p_number" name="p_number" type="tel" required>
                     <div id="number_error" class="text-danger mt-1"></div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
+            <div class="row">
+                <div class="div_input col-md-6">
                     <label for="">Country</label><span class="text-danger"> *</span><br>
-                    <select id="country" name="country" class="w-75 custom-select" required>
-                        <option value="">Select Country</option>
-                        <option value="Pakistan">Pakistan</option>
-                    </select>
-                    <div id="country_error" class="text-danger mt-1"></div>
+                    <div class="d-flex flex-column">
+                        <select id="country" name="country" class="select custom-select" required>
+                            <option value="">Select Country</option>
+                            <option value="Pakistan">Pakistan</option>
+                        </select>
+                        <div id="country_error" class="text-danger mt-1"></div>
+                    </div>
                 </div>
-                <div class="w-50">
+                <div class="div_input col-md-6">
                     <label for="">State</label><span class="text-danger"> *</span><br>
-                    <select id="state" name="state" class="w-75 custom-select" required>
-                        <option value="">Select State</option>
-                        <option value="Punjab">Punjab</option>
-                        <option value="KPK">KPK</option>
-                        <option value="Balochistan">Balochistan</option>
-                        <option value="Sindh">Sindh</option>
-                    </select>
-                    <div id="state_error" class="text-danger mt-1"></div>
+                    <div class="d-flex flex-column">
+                        <select id="state" name="state" class=" select custom-select" required>
+                            <option value="">Select State</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="KPK">KPK</option>
+                            <option value="Balochistan">Balochistan</option>
+                            <option value="Sindh">Sindh</option>
+                        </select>
+                        <div id="state_error" class="text-danger mt-1"></div>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
+            <div class="row">
+                <div class="div_input col-md-6">
                     <label for="">City</label><span class="text-danger"> *</span>
-                    <input id="city" name="city" class=" w-75 form-control" type="text" required>
+                    <input id="city" name="city" class="  form-control" type="text" required>
                     <div id="city_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
+                <div class="div_input col-md-6">
                     <label for="">Postal Code</label><span class="text-danger"> *</span>
-                    <input id="postal_code" name="postal_code" class=" w-75 form-control" type="text" required>
+                    <input id="postal_code" name="postal_code" class="  form-control" type="text">
                     <div id="code_error" class="text-danger mt-1"></div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
+            <div class="row">
+                <div class="div_input col-md-6">
                     <label for="">Address</label><span class="text-danger"> *</span>
-                    <input id="address" name="address" class=" w-75 form-control" type="text" required>
+                    <input id="address" name="address" class="  form-control" type="text" required>
                     <div id="address_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
-                    <label for="">Profile Picture</label><span class="text-danger"> *</span>
-                    <input id="p_pic" name="p_pic" class=" w-75 form-control" type="file">
+                <div class="div_input col-md-6">
+                    <label for="">Gender</label><span class="text-danger"> *</span><br>
+                    <div class="d-flex flex-column">
+                        <select id="gender" name="gender" class="select custom-select" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <div id="gender_error" class="text-danger mt-1"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
-                    <label for="">Gender</label><span class="text-danger"> *</span><br>
-                    <select id="gender" name="gender" class="w-75 custom-select" required>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Others">Others</option>
-                    </select>
-                    <div id="gender_error" class="text-danger mt-1"></div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
+            <div class="row">
+                <div class="div_input col-md-6">
                     <label for="">Password</label><span class="text-danger"> *</span>
-                    <input id="password" name="password" class=" w-75 form-control" type="password" required>
+                    <input id="password" name="password" class="  form-control" type="password" required>
                     <div id="pass_error" class="text-danger mt-1"></div>
                 </div>
-                <div class="w-50">
+                <div class="div_input col-md-6">
                     <label for="">Confirm Password</label><span class="text-danger"> *</span>
-                    <input id="con_password" name="con_password" class=" w-75 form-control" type="password" required>
+                    <input id="con_password" name="con_password" class="  form-control" type="password" required>
                     <div id="con_error" class="text-danger mt-1"></div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mt-4">
-                <div class="w-50">
-                    <button type="submit" class="btn btn-dark w-50">Signup</button>
-                </div>
-                <div class="w-50">
-                    <a class="btn btn-danger w-50" href="./login.php">Back to Login</a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="buttons">
+                        <button type="submit" class="btn btn-dark">Signup</button>
+                        <a class="btn btn-danger" href="./login.php">Back to Login</a>
+                    </div>
                 </div>
             </div>
 
@@ -307,7 +308,9 @@ if (isset($_SESSION['user_email'])) {
                 let f_name = $('#f_name').val().trim();
                 let error = '';
 
-                if (f_name !== "") {
+                if (f_name == "") {
+                    error = "Please Enter Name";
+                } else if (f_name !== "") {
                     if (f_name.length < 3) {
                         error = "Too short";
                     } else if (!/^[a-zA-Z\s]+$/.test(f_name)) {
@@ -322,8 +325,9 @@ if (isset($_SESSION['user_email'])) {
             function validateLastName() {
                 let name = $('#last_name').val().trim();
                 let error = '';
-
-                if (name !== "") {
+                if (name == "") {
+                    error = "Please Enter Name";
+                } else if (name !== "") {
                     if (name.length < 3) {
                         error = "Too short";
                     } else if (!/^[a-zA-Z\s]+$/.test(name)) {
@@ -343,8 +347,9 @@ if (isset($_SESSION['user_email'])) {
             function validateEmail() {
                 let email = $('#u_email').val().trim();
                 let error = '';
-
-                if (email !== "") {
+                if (email == "") {
+                    error = "Please Enter Email";
+                } else if (email !== "") {
                     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                         error = "Invalid Email";
                     }
@@ -356,8 +361,9 @@ if (isset($_SESSION['user_email'])) {
             function validatePhone() {
                 let phone = $('#p_number').val().trim();
                 let error = '';
-
-                if (phone !== "") {
+                if (phone == "") {
+                    error = "Please Enter Phone";
+                } else if (phone !== "") {
                     if (!/^(\+92|0)?3[0-9]{9}$/.test(phone)) {
                         error = "Invalid phone number";
                     }
@@ -395,7 +401,9 @@ if (isset($_SESSION['user_email'])) {
                 let city = $('#city').val().trim();
                 let error = '';
 
-                if (city !== "") {
+                if (city == "") {
+                    error = "Please Enter City";
+                } else if (city !== "") {
                     if (city.length < 3) {
                         error = "Too short";
                     } else if (!/^[a-zA-Z\s]+$/.test(city)) {
@@ -410,6 +418,7 @@ if (isset($_SESSION['user_email'])) {
             function validateCode() {
                 let p_code = $('#postal_code').val().trim();
                 let error = "";
+
                 if (!p_code == "") {
                     if (p_code.length < 3) {
                         error = "Too short";
@@ -425,7 +434,9 @@ if (isset($_SESSION['user_email'])) {
                 let address = $("#address").val().trim();
                 let error = "";
 
-                if (address !== "") {
+                if (address == "") {
+                    error = "Please Enter Address";
+                } else if (address !== "") {
                     let wordCount = address.split(/\s+/).length;
 
                     if (wordCount < 3) {
@@ -469,7 +480,7 @@ if (isset($_SESSION['user_email'])) {
 
             function confirmPassword() {
                 let pass = $('#password').val().trim();
-                let con_pass = $('#con_pass').val().trim();
+                let con_pass = $('#con_password').val().trim();
                 let error = '';
 
                 if (con_pass == '') {
@@ -486,14 +497,14 @@ if (isset($_SESSION['user_email'])) {
             $('#last_name').on('input', validateLastName);
             $('#u_email').on('input', validateEmail);
             $('#p_number').on('input', validatePhone);
-            $('#country').on('input', validateCountry);
-            $('#state').on('input', validateState);
+            $('#country').on('change', validateCountry);
+            $('#state').on('change', validateState);
             $('#city').on('input', validateCity);
             $('#postal_code').on('input', validateCode);
             $('#address').on('input', validateAddress);
-            $('#gender').on('input', validateGender);
+            $('#gender').on('change', validateGender);
             $('#password').on('input', validatePassword);
-            $('#con_pass').on('input', confirmPassword);
+            $('#con_password').on('input', confirmPassword);
 
             $('#signup_form').on('submit', function(e) {
                 let validFName = validateFName();
