@@ -21,50 +21,48 @@ include "./includes/header.php";
 </section>
 <!-- Breadcrumb Section End -->
 
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="w-50 d-flex flex-column align-items-center">
-        <div>
-            <h2>Provide Info</h2>
-        </div>
-        <form id="pass_form" class="w-75 pb-3" action="./handlers/change_password.php" method="POST">
-            <div class="my-4">
-                <label for="">
-                    Email
-                </label>
-                <input id="email" class="form-control" type="email" name="email" value="<?php echo $_SESSION['user_email'] ?>" readonly>
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
+        <h2 class="mb-4">Provide Info</h2>
+
+        <form id="pass_form" method="POST" action="./handlers/change_password.php">
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+                <input id="email" class="form-control" type="email" name="email"
+                    value="<?php echo $_SESSION['user_email'] ?>" readonly>
                 <div id="email_error" class="text-danger mt-1"></div>
             </div>
-            <div class="my-4">
-                <label for="">
-                    Old Password
-                </label>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Old Password</label>
                 <input id="old_pass" class="form-control" type="password" name="old_pass">
                 <div id="old_error" class="text-danger mt-1"></div>
             </div>
-            <div class="my-4">
-                <label for="">
-                    New Password
-                </label>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">New Password</label>
                 <input id="new_pass" class="form-control" type="password" name="new_pass">
                 <div id="new_error" class="text-danger mt-1"></div>
             </div>
-            <div class="my-4">
-                <label for="">
-                    Confirm Password
-                </label>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Confirm Password</label>
                 <input id="con_pass" class="form-control" type="password" name="con_pass">
                 <div id="con_error" class="text-danger mt-1"></div>
             </div>
-            <div class="my-4 w-100">
-                <div><button type="submit" class="w-100 btn btn-dark">Change Password</button></div>
+
+            <div class="d-flex pb-2 mt-4 mb-1">
+                <button type="submit" class="mr-3 btn btn-dark flex-fill">
+                    Change Password
+                </button>
+                <a class="btn btn-danger flex-fill" href="./profile.php">
+                    Cancel
+                </a>
             </div>
-            <div class="my-3 w-100">
-                <div><a class=" w-100 btn btn-danger" href="./profile.php">Cancel</a></div>
-            </div>
+
         </form>
     </div>
-
-
 </div>
 
 
@@ -97,13 +95,8 @@ include "./includes/footer.php";
             let password = $('#old_pass').val().trim();
             let error = '';
 
-
-            let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
             if (password == "") {
                 error = "Password is required";
-            } else if (!regex.test(password)) {
-                error = "Min 8 chars, include upper, lower, number & special char";
             }
 
             $('#old_error').text(error);

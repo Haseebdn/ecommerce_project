@@ -3,6 +3,35 @@ include "./sql/conn.php";
 include "./includes/header.php";
 ?>
 
+<style>
+    @media (max-width: 768px) {
+        #email_form {
+            width: 100%;
+        }
+
+        #head {
+            width: 100%;
+        }
+
+        .wrapper {
+            width: 100%;
+        }
+    }
+
+    @media (min-width: 768px) {
+        #email_form {
+            width: 75%;
+        }
+
+        #head {
+            width: 75%;
+        }
+
+        .wrapper {
+            width: 50%;
+        }
+    }
+</style>
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
     <div class="container">
@@ -21,45 +50,32 @@ include "./includes/header.php";
 </section>
 <!-- Breadcrumb Section End -->
 
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="w-50 d-flex flex-column align-items-center">
-        <div class="w-75">
-            <h2>Change Email</h2>
-        </div>
-        <form id="email_form" class=" w-75 pb-3" method="POST" action="./handlers/change_email.php">
-            <div class="my-4 w-100">
-                <label for="">
-                    Old Email
-                </label>
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
+        <h2 class="mb-4">Change Email</h2>
+        <form id="login_form" method="POST" action="handlers/login.php">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Old Email</label>
                 <input id="old_email" class="form-control" type="email" name="old_email" value="<?php echo $_SESSION['user_email'] ?>" readonly>
             </div>
-            <div class="my-4">
-                <label for="">
-                    New Email
-                </label>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">New Email</label>
                 <input id="new_email" class="form-control" type="email" name="new_email">
                 <div id="new_error" class="text-danger mt-1"></div>
-
             </div>
-            <div class="my-4">
-                <label for="">
-                    Current Password
-                </label>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Current Password</label>
                 <input id="pass" class="form-control" type="password" name="pass">
                 <div id="pass_error" class="text-danger mt-1"></div>
-
             </div>
-            <div class="my-4 w-100">
-                <div><button type="submit" class="w-100 btn btn-dark">Change Email</button></div>
-            </div>
-            <div class="my-3 w-100">
-                <div><a class=" w-100 btn btn-danger" href="./profile.php">Cancel</a></div>
+            <div class="d-flex pb-2 mt-4 mb-1">
+                <button type="submit" class="mr-3 btn btn-dark flex-fill">Change Email</button>
+                <a class=" btn btn-danger flex-fill" href="./profile.php">Cancel</a>
             </div>
         </form>
     </div>
-
-
 </div>
+
 
 
 
@@ -77,8 +93,9 @@ include "./includes/footer.php";
         function validateEmail() {
             let email = $('#new_email').val().trim();
             let error = '';
-
-            if (email !== "") {
+            if (email == "") {
+                error = "Enter New Email";
+            } else if (email !== "") {
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                     error = "Invalid Email";
                 }
