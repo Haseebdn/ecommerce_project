@@ -33,7 +33,7 @@ $email = $_SESSION['user_email'];
         $row = mysqli_fetch_assoc($sql);
         $p_pic = $row['p_pic'];
         ?>
-        <div class="col col-md-3 p-4 d-flex flex-column align-items-center">
+        <div class="col col-lg-3 col-md-12 col-sm-12 col-12 p-4 d-flex flex-column align-items-center">
             <form action="./handlers/pic_upload.php" method="POST" enctype="multipart/form-data" id="picForm">
 
                 <input type="file" name="p_pic" id="pic" class="d-none" accept="image/*" onchange="document.getElementById('picForm').submit();">
@@ -68,7 +68,7 @@ $email = $_SESSION['user_email'];
             <span><?php echo $row['u_email']    ?></span>
         </div>
 
-        <div class="col profile col-md-6  p-4">
+        <div class="col profile col-lg-6 col-md-8 col-sm-12 col-12 p-4">
             <h3>Profile Info</h3>
             <div class="name mt-4 d-flex justify-content-between ">
                 <div id="f_name">
@@ -110,7 +110,7 @@ $email = $_SESSION['user_email'];
             </div>
         </div>
 
-        <div class="col col-md-3 pt-4">
+        <div class="col col-lg-3 col-md-4 col-sm-12 col-12 pt-4">
             <form method="POST" class="w-100 pt-5" action="./profile_edit.php">
                 <input type="hidden" name="profile_edit" value="">
                 <button type="submit" class="btn btn-dark w-100">Edit Profile Data</button>
@@ -125,87 +125,96 @@ $email = $_SESSION['user_email'];
             </form>
         </div>
     </div>
-    <div class="row mt-5 flex-column">
-        <h2 class="mb-3">Order History</h2>
+    <div class="container">
+        <div class="row mt-5 flex-column">
+            <h2 class="mb-3">Order History</h2>
 
-        <div class="order-tabs d-flex border-bottom mb-0">
-            <button class="order-tab-btn active" data-target="pending">Pending</button>
-            <button class="order-tab-btn" data-target="completed">Completed</button>
-        </div>
-
-        <?php
-        $pendingOrders = [];
-        $query = "SELECT * FROM `orders` WHERE `order_email`='$email' AND `status`='pending'";
-        $sql = mysqli_query($conn, $query);
-        while ($r = mysqli_fetch_assoc($sql)) $pendingOrders[] = $r;
-
-        $completedOrders = [];
-        $comp = "SELECT * FROM `orders` WHERE `order_email`='$email' AND `status`='completed'";
-        $cql = mysqli_query($conn, $comp);
-        while ($r = mysqli_fetch_assoc($cql)) $completedOrders[] = $r;
-        ?>
-
-        <div class="order-tab-pane active" id="order-pending">
-            <div class="order-table-wrap">
-                <table class="order-table">
-                    <thead>
-                        <tr>
-                            <th>Order No.</th>
-                            <th>Product</th>
-                            <th>Product Code</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($pendingOrders as $r): ?>
-                            <tr>
-                                <td class="order-no"><?= $r['order_no'] ?></td>
-                                <td><?= $r['p_name'] ?></td>
-                                <td><?= $r['p_code'] ?></td>
-                                <td><?= $r['price'] ?> PKR</td>
-                                <td><?= $r['p_qty'] ?></td>
-                                <td><strong><?= $r['t_price'] ?> PKR</strong></td>
-                                <td><span class="badge-pending">Pending</span></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="pg-bar" id="pg-pending"></div>
+            <div class="order-tabs d-flex border-bottom mb-0">
+                <button class="order-tab-btn active" data-target="pending">Pending</button>
+                <button class="order-tab-btn" data-target="completed">Completed</button>
             </div>
-        </div>
 
-        <div class="order-tab-pane" id="order-completed">
-            <div class="order-table-wrap">
-                <table class="order-table">
-                    <thead>
-                        <tr>
-                            <th>Order No.</th>
-                            <th>Product</th>
-                            <th>Product Code</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($completedOrders as $r): ?>
-                            <tr>
-                                <td class="order-no"><?= $r['order_no'] ?></td>
-                                <td><?= $r['p_name'] ?></td>
-                                <td><?= $r['p_code'] ?></td>
-                                <td><?= $r['price'] ?> PKR</td>
-                                <td><?= $r['p_qty'] ?></td>
-                                <td><strong><?= $r['t_price'] ?> PKR</strong></td>
-                                <td><span class="badge-completed">Completed</span></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="pg-bar" id="pg-completed"></div>
+            <?php
+            $pendingOrders = [];
+            $query = "SELECT * FROM `orders` WHERE `order_email`='$email' AND `status`='pending'";
+            $sql = mysqli_query($conn, $query);
+            while ($r = mysqli_fetch_assoc($sql)) $pendingOrders[] = $r;
+
+            $completedOrders = [];
+            $comp = "SELECT * FROM `orders` WHERE `order_email`='$email' AND `status`='completed'";
+            $cql = mysqli_query($conn, $comp);
+            while ($r = mysqli_fetch_assoc($cql)) $completedOrders[] = $r;
+            ?>
+            <div class="col">
+                <div class="order-tab-pane active" id="order-pending">
+                    <div class="order-table-wrap">
+                        <div class="table-responsive">
+                            <table class="order-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order No.</th>
+                                        <th>Product</th>
+                                        <th>Product Code</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($pendingOrders as $r): ?>
+                                        <tr>
+                                            <td class="order-no"><?= $r['order_no'] ?></td>
+                                            <td><?= $r['p_name'] ?></td>
+                                            <td><?= $r['p_code'] ?></td>
+                                            <td><?= $r['price'] ?> PKR</td>
+                                            <td><?= $r['p_qty'] ?></td>
+                                            <td><strong><?= $r['t_price'] ?> PKR</strong></td>
+                                            <td><span class="badge-pending">Pending</span></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pg-bar" id="pg-pending"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <div class="order-tab-pane" id="order-completed">
+                    <div class="order-table-wrap">
+                        <div class="table-responsive">
+                            <table class="order-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order No.</th>
+                                        <th>Product</th>
+                                        <th>Product Code</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($completedOrders as $r): ?>
+                                        <tr>
+                                            <td class="order-no"><?= $r['order_no'] ?></td>
+                                            <td><?= $r['p_name'] ?></td>
+                                            <td><?= $r['p_code'] ?></td>
+                                            <td><?= $r['price'] ?> PKR</td>
+                                            <td><?= $r['p_qty'] ?></td>
+                                            <td><strong><?= $r['t_price'] ?> PKR</strong></td>
+                                            <td><span class="badge-completed">Completed</span></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pg-bar" id="pg-completed"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -169,3 +169,16 @@ h5 {
     opacity: .4;
     cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+    .order-table {
+        font-size: 12px;
+        min-width: 520px;
+    }
+
+    .order-table th,
+    .order-table td {
+        padding: 9px 10px;
+        white-space: nowrap;
+    }
+}
