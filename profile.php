@@ -43,14 +43,24 @@ $email = $_SESSION['user_email'];
             if ($p_pic == null) {
             ?>
                 <div class="img">
-                    <img class="p_pic" src="./img/default.jpg" alt=""
-                        onclick="document.getElementById('pic').click()">
+                    <div class="img_wrapper">
+                        <img class="p_pic" src="./img/default.jpg" alt=""
+                            onclick="document.getElementById('pic').click()">
+                            <div class="icon">
+                                <i class=" h4 fa fa-camera" aria-hidden="true"></i>
+                            </div>
+                    </div>
                 </div>
             <?php
             } else {
             ?>
                 <div class="img">
-                    <img class="p_pic" src="./uploads/profile_pictures/<?php echo $p_pic ?>" alt="" onclick="document.getElementById('pic').click()">
+                    <div class="img_wrapper">
+                        <img class="p_pic" src="./uploads/profile_pictures/<?php echo $p_pic ?>" alt="" onclick="document.getElementById('pic').click()">
+                        <div class="icon">
+                                <i class=" h4 fa fa-camera" aria-hidden="true"></i>
+                        </div>
+                    </div>
                 </div>
             <?php
             }
@@ -145,11 +155,11 @@ $email = $_SESSION['user_email'];
             $cql = mysqli_query($conn, $comp);
             while ($r = mysqli_fetch_assoc($cql)) $completedOrders[] = $r;
             ?>
-            <div class="col">
+            <div class="col col-12">
                 <div class="order-tab-pane active" id="order-pending">
                     <div class="order-table-wrap">
                         <div class="table-responsive">
-                            <table class="order-table">
+                            <table class=" table order-table">
                                 <thead>
                                     <tr>
                                         <th>Order No.</th>
@@ -181,11 +191,11 @@ $email = $_SESSION['user_email'];
                 </div>
 
             </div>
-            <div>
+            <div class="col col-12">
                 <div class="order-tab-pane" id="order-completed">
                     <div class="order-table-wrap">
                         <div class="table-responsive">
-                            <table class="order-table">
+                            <table class=" w-100 table order-table">
                                 <thead>
                                     <tr>
                                         <th>Order No.</th>
