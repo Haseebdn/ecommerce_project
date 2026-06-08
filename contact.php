@@ -42,7 +42,7 @@ include "./includes/header.php";
             ?>
             <div class="col-lg-6 col-md-6">
                 <div class="contact__form">
-                    <form action="./handlers/contact.php" method="POST">
+                    <form action="./handlers/contact.php" method="POST" id="contactForm">
                         <div class="row">
                             <div class="col-lg-6">
                                 <input name="last_name" class="form-control text-dark" type="text" placeholder="Name" value="<?php echo $row['last_name'] ?>" readonly>
@@ -51,7 +51,10 @@ include "./includes/header.php";
                                 <input name="u_email" class="form-control text-dark" type="text" placeholder="Email" value="<?php echo $email ?>" readonly>
                             </div>
                             <div class="col-lg-12">
-                                <textarea name="msg" class="form-control text-dark" placeholder="Message"></textarea>
+                                <div class="d-flex flex-column mb-3">
+                                    <textarea name="msg" id="msg" class="form-control mb-1 text-dark" placeholder="Message"></textarea>
+                                    <small id="msg_error" class="text-danger"></small>
+                                </div>
                                 <button type="submit" class="site-btn">Send Message</button>
                             </div>
                         </div>
@@ -90,4 +93,43 @@ include "./includes/footer.php";
         });
         <?php unset($_SESSION['error']); ?>
     <?php } ?>
+
+    // Message validation
+    function validateMessage() {
+
+        let msg = $('#msg').val().trim();
+        let error = '';
+
+        let words = msg.split(/\s+/).filter(word => word.length > 0);
+
+        if (msg == '') {
+
+            error = "Please Enter Message";
+
+        } else if (!/^[A-Za-z]/.test(msg)) {
+
+            error = "Message cannot start with numbers or special characters";
+
+        } else if (words.length < 3) {
+
+            error = "Message must contain at least 3 words";
+        }
+
+        $('#msg_error').text(error);
+        return error === '';
+    }
+
+    // Real-time validation
+    $('#msg').on('input', validateMessage);
+
+    // Form submit validation
+    $('#contact_form').on('submit', function(e) {
+
+        let validMessage = validateMessage();
+
+        if (!validMessage) {
+
+            e.preventDefault();
+        }
+    });
 </script>

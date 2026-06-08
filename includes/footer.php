@@ -26,10 +26,9 @@
                 <div class="footer__widget">
                     <h6>Featured</h6>
                     <ul>
-                        <li><a href="">Trending</a></li>
-                        <li><a href="">New Arrival</a></li>
-                        <li><a href="">Best Sellers</a></li>
-                        <li><a href="">Hot Sales</a></li>
+                        <li><a href="./index.php#featured_products">New Arrivals</a></li>
+                        <li><a href="./index.php#featured_products">Best Selling</a></li>
+                        <li><a href="./index.php#featured_products">Hot Sales</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,9 +58,9 @@
                     <h6 class="mt-2">Contacts</h6>
                     <ul>
                         <li id="contacts_li">
-                            <a href=""><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                            <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                            <a href=""><i class="fa fa-phone" aria-hidden="true"></i></a>
+                            <a href="https://wa.link/v972ij"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                            <a href="mailto:haseebnazir437@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                            <a href="tel:+923216805362"><i class="fa fa-phone" aria-hidden="true"></i></a>
                             <a href="/contact.php"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                         </li>
                     </ul>

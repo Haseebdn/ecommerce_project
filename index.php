@@ -119,7 +119,7 @@ include "./includes/header.php";
 <!-- Banner Section End -->
 
 <!-- Product Section Begin -->
-<section class="product spad">
+<section id="featured_products" class="product spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
