@@ -9,7 +9,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     h2 {
         padding: 0px 48px;
     }
@@ -19,17 +19,13 @@
         width: 100%;
     }
 
-    
-    
-
-
     form {
         margin: 25px 0px;
         padding: 20px 48px;
     }
 
     .div_input {
-        margin-bottom: 1.5rem !important;
+        margin-bottom: 1.5rem;
     }
 
     .buttons {
@@ -39,14 +35,14 @@
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
     h2 {
         padding: 0px 48px;
     }
 
     input,
     .select {
-        width: 75% !important;
+        width: 100%;
     }
 
     form {
@@ -60,8 +56,19 @@
 
     .buttons {
         display: flex;
-        justify-content: space-between;
-        width: 75%;
+        justify-content: start;
+        gap: 30px;
+        width: 100%;
     }
 
 }
+
+@media (min-width: 990px) {
+    .buttons,
+    input,
+    .select {
+        width: 75% !important;
+    }
+}
+
+

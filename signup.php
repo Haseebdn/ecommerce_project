@@ -259,8 +259,8 @@ if (isset($_SESSION['user_email'])) {
             <div class="row">
                 <div class="col-md-6">
                     <div class="buttons">
-                        <button type="submit" class="btn btn-dark">Signup</button>
-                        <a class="btn btn-danger" href="./login.php">Back to Login</a>
+                        <button type="submit" class="btn btn-dark flex-fill">Signup</button>
+                        <a class="btn btn-danger flex-fill" href="./login.php">Back to Login</a>
                     </div>
                 </div>
             </div>
