@@ -23,7 +23,7 @@ include "./includes/header.php";
 
 <div class="container my-5 d-flex justify-content-center">
     <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
-        <h2 class="mb-4">Provide Info</h2>
+        <h2 class="mb-4">Change Password</h2>
 
         <form id="pass_form" method="POST" action="./handlers/change_password.php">
 

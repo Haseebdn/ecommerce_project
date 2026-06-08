@@ -171,7 +171,7 @@ if (isset($_SESSION['user_email'])) {
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
                         <label class="form-label fw-semibold">Password</label>
-                        <a class="small text-primary" href="./forgot_otp.php">Forgot Password?</a>
+                        <a class="small pt-1 text-primary" href="./forgot_otp.php">Forgot Password?</a>
                     </div>
                     <input id="password" name="pass" class="form-control" type="password" tabindex="2">
                     <div id="pass_error" class="text-danger mt-1 small"></div>
