@@ -275,6 +275,29 @@ include "./includes/footer.php";
 
 
 <script>
+    <?php if (isset($_SESSION['success'])) { ?>
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "<?php echo $_SESSION['success']; ?>",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+        <?php unset($_SESSION['success']); ?>
+    <?php } ?>
+
+    <?php if (isset($_SESSION['error'])) { ?>
+        Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "<?php echo $_SESSION['error']; ?>",
+            showConfirmButton: false,
+            timer: 2000
+        });
+        <?php unset($_SESSION['error']); ?>
+    <?php } ?>
+
     $(".add-cart").on("click", function(e) {
 
         e.preventDefault();

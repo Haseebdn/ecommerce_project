@@ -34,18 +34,18 @@ include "./includes/header.php";
                 </div>
             </div>
 
-            <?php  
-            $email=$_SESSION['user_email'];
-            $query ="SELECT `last_name` From `user` WHERE `u_email`='$email'";
-            $sql =mysqli_query($conn,$query);
-            $row =mysqli_fetch_assoc($sql);
+            <?php
+            $email = $_SESSION['user_email'];
+            $query = "SELECT `last_name` From `user` WHERE `u_email`='$email'";
+            $sql = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($sql);
             ?>
             <div class="col-lg-6 col-md-6">
                 <div class="contact__form">
                     <form action="./handlers/contact.php" method="POST">
                         <div class="row">
                             <div class="col-lg-6">
-                                <input name="last_name" class="form-control text-dark" type="text" placeholder="Name" value="<?php echo $row ['last_name'] ?>" readonly>
+                                <input name="last_name" class="form-control text-dark" type="text" placeholder="Name" value="<?php echo $row['last_name'] ?>" readonly>
                             </div>
                             <div class="col-lg-6">
                                 <input name="u_email" class="form-control text-dark" type="text" placeholder="Email" value="<?php echo $email ?>" readonly>
@@ -66,3 +66,28 @@ include "./includes/header.php";
 <?php
 include "./includes/footer.php";
 ?>
+
+<script>
+    <?php if (isset($_SESSION['success'])) { ?>
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "<?php echo $_SESSION['success']; ?>",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+        <?php unset($_SESSION['success']); ?>
+    <?php } ?>
+
+    <?php if (isset($_SESSION['error'])) { ?>
+        Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "<?php echo $_SESSION['error']; ?>",
+            showConfirmButton: false,
+            timer: 2000
+        });
+        <?php unset($_SESSION['error']); ?>
+    <?php } ?>
+</script>

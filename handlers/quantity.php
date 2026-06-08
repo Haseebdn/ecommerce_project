@@ -1,6 +1,8 @@
 <?php
 include "../sql/conn.php";
 
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 try {
 
     if (isset($_POST['qty']) && isset($_POST['cart_id'])) {
@@ -30,13 +32,13 @@ try {
 
             echo json_encode([
                 "status" => 500,
-                "msg" => "Failed to Update"
+                "msg" => "Failed To Update"
             ]);
         }
     }
 } catch (mysqli_sql_exception) {
     echo json_encode([
         "status" => 500,
-        "msg" => "Failed to Update"
+        "msg" => "Failed To Update"
     ]);
 }

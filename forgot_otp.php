@@ -182,6 +182,31 @@ include "sql/conn.php";
 
     <script>
         $(document).ready(function() {
+
+            <?php if (isset($_SESSION['success'])) { ?>
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "<?php echo $_SESSION['success']; ?>",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                <?php unset($_SESSION['success']); ?>
+            <?php } ?>
+
+            <?php if (isset($_SESSION['error'])) { ?>
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "<?php echo $_SESSION['error']; ?>",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                <?php unset($_SESSION['error']); ?>
+            <?php } ?>
+
+            
             $('#forgot_email').on('input', function() {
 
                 let value = $(this).val().toLowerCase();

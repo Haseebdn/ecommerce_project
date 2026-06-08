@@ -4,6 +4,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 include "../sql/conn.php";
 
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 try {
 
     $connected = @fsockopen("www.google.com", 80);
@@ -162,7 +164,7 @@ try {
     } else {
         echo json_encode([
             "status" => 500,
-            "msg" => "Order Failed"
+            "msg" => "Failed to place order"
         ]);
     }
 } catch (mysqli_sql_exception $e) {

@@ -21,7 +21,7 @@ try {
 
             echo json_encode([
                 "status" => 409,
-                "message" => "Product already added to cart"
+                "message" => "Product Already Added To Cart"
             ]);
 
             exit();
@@ -62,14 +62,14 @@ try {
 
                 echo json_encode([
                     "status" => 500,
-                    "message" => "Failed To Add In Cart"
+                    "message" => "Failed To Add To Cart"
                 ]);
             }
         } else {
 
             echo json_encode([
                 "status" => 404,
-                "message" => "Product not found"
+                "message" => "Product Not Found"
             ]);
         }
     }

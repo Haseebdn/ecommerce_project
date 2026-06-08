@@ -19,7 +19,7 @@ try {
         // Empty validation
         if (empty($email) || empty($new_pass) || empty($otp)) {
 
-            $_SESSION['error'] = "Please fill in all fields";
+            $_SESSION['error'] = "Please Fill  All Fields Correctly";
 
             header("location:../otp_pass.php");
             exit();
@@ -54,16 +54,16 @@ try {
 
         } else {
 
-            $_SESSION['error'] = "Invalid OTP or Email";
+            $_SESSION['error'] = "Invalid OTP Or Email";
 
             header("location:../otp_pass.php");
             exit();
         }
     }
 
-} catch (mysqli_sql_exception) {
+} catch (mysqli_sql_exception $e) {
 
-    $_SESSION['error'] = "Password Updation Failed";
+    $_SESSION['error'] = "Error:". $e->getMessage();
 
     header("location:../otp_pass.php");
     exit();

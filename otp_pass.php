@@ -2,6 +2,18 @@
 include "sql/conn.php";
 $fEmail = @$_SESSION['forgot_email'];
 $code = @$_SESSION['code'];
+
+if (empty($fEmail)) {
+    $_SESSION['error'] = ["Failed To Fetch Email"];
+    header("location:./forgot_otp.php");
+    exit();
+}
+
+if (empty($code)) {
+    $_SESSION['error'] = ["Failed To Fetch OTP"];
+    header("location:./forgot_otp.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -168,7 +180,7 @@ $code = @$_SESSION['code'];
                 <div class="col col-md-6 col-12 forgot-div pb-4">
                     <label for="">Email</label>
 
-                    <input id="forgot_email" name="email" class="form-control forgot_input" type="email"  value="<?php echo $fEmail ?>" readonly>
+                    <input id="forgot_email" name="email" class="form-control forgot_input" type="email" value="<?php echo $fEmail ?>" readonly>
 
                     <div id="email_error" class="text-danger mt-1"></div>
                 </div>
@@ -220,6 +232,29 @@ $code = @$_SESSION['code'];
 
     <script>
         $(document).ready(function() {
+
+            <?php if (isset($_SESSION['success'])) { ?>
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "<?php echo $_SESSION['success']; ?>",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                <?php unset($_SESSION['success']); ?>
+            <?php } ?>
+
+            <?php if (isset($_SESSION['error'])) { ?>
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "<?php echo $_SESSION['error']; ?>",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                <?php unset($_SESSION['error']); ?>
+            <?php } ?>
 
             // Email validation
             function validateEmail() {

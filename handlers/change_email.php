@@ -1,54 +1,79 @@
 <?php
 include "../sql/conn.php";
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-if (isset($_POST)) {
+try {
 
-    $u_email   = mysqli_real_escape_string($conn, $_POST['old_email']);
-    $new_email = mysqli_real_escape_string($conn, $_POST['new_email']);
-    $password  = mysqli_real_escape_string($conn, $_POST['pass']);
+    if (isset($_POST)) {
 
-    if (empty($u_email) || empty($new_email) || empty($password)) {
-        $_SESSION['error'] = "Please fill all fields correctly";
-        header("Location: ../change_email.php");
-        exit();
-    }
+        $u_email   = mysqli_real_escape_string($conn, $_POST['old_email']);
+        $new_email = mysqli_real_escape_string($conn, $_POST['new_email']);
+        $password  = mysqli_real_escape_string($conn, $_POST['pass']);
 
-    $query = "SELECT `password` FROM `user` WHERE `u_email` = '$u_email'";
-    $result = mysqli_query($conn, $query);
+        if (empty($u_email) || empty($new_email) || empty($password)) {
+            $_SESSION['error'] = "Please fill all fields correctly";
+            header("Location: ../change_email.php");
+            exit();
+        }
 
-    if (mysqli_num_rows($result) > 0) {
+        $query = "SELECT `password` FROM `user` WHERE `u_email` = '$u_email'";
+        $result = mysqli_query($conn, $query);
 
-        $fetch = mysqli_fetch_assoc($result);
-        $hashed_pass = $fetch['password'];
+        if (mysqli_num_rows($result) > 0) {
 
-        if (password_verify($password, $hashed_pass)) {
+            $fetch = mysqli_fetch_assoc($result);
+            $hashed_pass = $fetch['password'];
 
-            $update = "UPDATE `user` 
+            if (password_verify($password, $hashed_pass)) {
+
+                $check = mysqli_query(
+                    $conn,
+                    "SELECT id FROM user WHERE u_email='$new_email'"
+                );
+
+                if (mysqli_num_rows($check) > 0) {
+                    $_SESSION['error'] = "Email already exists";
+                    header("Location: ../change_email.php");
+                    exit();
+                }
+
+                $update = "UPDATE `user` 
                        SET `u_email` = '$new_email' 
                        WHERE `u_email` = '$u_email'";
 
-            $run = mysqli_query($conn, $update);
+                mysqli_begin_transaction($conn);
 
-            if ($run) {
-                $query = "UPDATE `cart` SET `u_email`='$new_email' WHERE  `u_email`='$u_email'";
-                $sql = mysqli_query($conn, $query);
-                $_SESSION['success'] = "Email updated successfully";
+                $run = mysqli_query($conn, $update);
+                if ($run) {
+                    $query = "UPDATE `cart` SET `u_email`='$new_email' WHERE  `u_email`='$u_email'";
+                    $sql = mysqli_query($conn, $query);
+
+                    if (!$sql) {
+                        throw new Exception("Cart updation failed");
+                    }
+
+                    mysqli_commit($conn);
+
+                    $_SESSION['success'] = "Email updated successfully";
+                    unset($_SESSION['user_email']);
+
+                    header("Location: ../login.php");
+                    exit();
+                } else {
+                    $_SESSION['error'] = "Email updation failed";
+                }
             } else {
-                $_SESSION['error'] = "Email update failed";
+                $_SESSION['error'] = "Incorrect password";
             }
         } else {
-            $_SESSION['error'] = "Incorrect password";
+            $_SESSION['error'] = "Invalid old email";
         }
-    } else {
-        $_SESSION['error'] = "Old email not found";
+        header("Location: ../change_email.php");
+        exit();
     }
-
-    session_unset();
-
-    // destroy the session
-    session_destroy();
-
-    // redirect user
-    header("Location: ../login.php");
+} catch (mysqli_sql_exception $e) {
+    mysqli_rollback($conn);
+    $_SESSION['error'] = "Error:" . $e->getMessage();
+    header("Location: ../change_email.php");
     exit();
 }

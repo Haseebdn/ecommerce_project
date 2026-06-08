@@ -20,7 +20,7 @@ if ($connected) {
 
         if (empty($email)) {
 
-            $_SESSION['error'] = "Email is required";
+            $_SESSION['error'] = "Email Is Required";
 
             header("location:../forgot_otp.php");
             exit();
@@ -28,7 +28,7 @@ if ($connected) {
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-            $_SESSION['error'] = "Invalid email format";
+            $_SESSION['error'] = "Invalid Email Format";
 
             header("location:../forgot_otp.php");
             exit();
@@ -44,7 +44,7 @@ if ($connected) {
 
             if (mysqli_num_rows($sql) == 0) {
 
-                $_SESSION['error'] = "Email does not exist";
+                $_SESSION['error'] = "Invalid Email";
 
                 header("location:../forgot_otp.php");
                 exit();
@@ -101,12 +101,12 @@ if ($connected) {
                 $_SESSION['forgot_email'] = $email;
                 $_SESSION['code'] = $otp;
 
-                $_SESSION['success'] = "OTP sent successfully";
+                $_SESSION['success'] = "OTP Sent Successfully";
                 header("location:../otp_pass.php");
                 exit();
             } else {
 
-                $_SESSION['error'] = "OTP sending failed";
+                $_SESSION['error'] = "OTP Sending Failed";
 
                 header("location:../forgot_otp.php");
                 exit();
