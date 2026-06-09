@@ -21,13 +21,13 @@ $catId = null;
 
 //  ========== category fetch (from subcategory or directly)===========
 if (isset($_GET['scId'])) {
-    $subcatId = intval($_GET['scId']); //typecasting to int
+    $subcatId = base64_decode($_GET['scId']); //typecasting to int
     $query = "SELECT parent_id FROM categories WHERE id='$subcatId'"; //subcategory query
     $run = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($run);
     $catId = $row['parent_id'] ?? null; // get main category with help of subcategory
 } elseif (isset($_GET['cid'])) {
-    $catId = $_GET['cid'];   // fetch category directly from url
+    $catId = base64_decode($_GET['cid']);   // fetch category directly from url
 }
 //  ========== category fetch (from subcategory or directly)===========
 ?>
@@ -61,9 +61,9 @@ if (isset($_GET['scId'])) {
                         <!-- ================ search field ================= -->
                         <form id="shop_form" action="shop.php" method="GET">
                             <?php if (isset($_GET['cid'])): ?>
-                                <input type="hidden" name="cid" value="<?php echo intval($_GET['cid']); ?>">
+                                <input type="hidden" name="cid" value="<?php echo htmlspecialchars($_GET['cid']); ?>">
                             <?php elseif (isset($_GET['scId'])): ?>
-                                <input type="hidden" name="scId" value="<?php echo intval($_GET['scId']); ?>">
+                                <input type="hidden" name="scId" value="<?php echo htmlspecialchars($_GET['scId']); ?>">
                             <?php endif; ?>
 
                             <input type="text" class="form-control" name="search" placeholder="Search..."
@@ -77,13 +77,13 @@ if (isset($_GET['scId'])) {
                             ?>
                             <?php if (!empty($_GET['search'])): ?>
                                 <a id="cross_btn" href="shop.php<?php
-                                                                if (isset($_GET['cid'])) echo '?cid=' . intval($_GET['cid']);
-                                                                elseif (isset($_GET['scId'])) echo '?scId=' . intval($_GET['scId']);
-                                                                ?>">✕</a>
-                            <?php endif; ?>
+                                                                if (isset($_GET['cid'])) echo '?cid=' . urlencode($_GET['cid']);
+                                                                elseif (isset($_GET['scId'])) echo '?scId=' . urlencode($_GET['scId']);
+                                                                ?>">
+                                <?php endif; ?>
                         </form>
-                        <!-- ================ search field ================= -->
                     </div>
+                    <!-- ================ search field ================= -->
                     <div class="shop__sidebar__accordion">
                         <div class="accordion" id="accordionExample">
                             <div class="card">
@@ -101,7 +101,7 @@ if (isset($_GET['scId'])) {
                                                 while ($cat = mysqli_fetch_assoc($sql)) {
                                                 ?>
 
-                                                    <li><a class="text-dark" href="shop.php?cid=<?php echo $cat['id'] ?? '' ?>"><?php echo $cat['cat_name'] ?? '';    ?></a></li>
+                                                    <li><a class="text-dark" href="shop.php?cid=<?php echo base64_encode($cat['id'])  ?? '' ?>"><?php echo $cat['cat_name'] ?? '';    ?></a></li>
                                                 <?php
                                                 }
 
@@ -131,7 +131,7 @@ if (isset($_GET['scId'])) {
                                                 }
                                                 while ($subcat = mysqli_fetch_assoc($sql)) {
                                                 ?>
-                                                    <li><a class="text-dark" href="shop.php?scId=<?php echo $subcat['id'] ?? "" ?>"><?php echo $subcat['cat_name'] ?? '';    ?></a></li>
+                                                    <li><a class="text-dark" href="shop.php?scId=<?php echo base64_encode($subcat['id'])  ?? "" ?>"><?php echo $subcat['cat_name'] ?? '';    ?></a></li>
                                                 <?php
                                                 }
                                                 ?>
@@ -151,7 +151,7 @@ if (isset($_GET['scId'])) {
             $searchCondition = $search ? "AND p_name LIKE '%$search%'" : "";
 
             if (isset($_GET['scId'])) {
-                $subcatId = intval($_GET['scId']);
+                $subcatId = base64_decode($_GET['scId']);
 
                 $countQuery = "SELECT COUNT(*) as total FROM products WHERE subcat_id = '$subcatId' $searchCondition";
                 $countResult = mysqli_query($conn, $countQuery);
@@ -160,7 +160,7 @@ if (isset($_GET['scId'])) {
 
                 $query = "SELECT * FROM products WHERE subcat_id = '$subcatId' $searchCondition LIMIT $limit OFFSET $offset";
             } elseif (isset($_GET['cid'])) {
-                $catId = intval($_GET['cid']);
+                $catId = base64_decode($_GET['cid']);
 
                 $countQuery = "SELECT COUNT(*) as total FROM products WHERE cat_id = '$catId' $searchCondition";
                 $countResult = mysqli_query($conn, $countQuery);

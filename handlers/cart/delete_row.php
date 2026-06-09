@@ -2,9 +2,8 @@
 include "../../sql/conn.php";
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 try {
-
     if (isset($_GET)) {
-        $id = $_GET['remove'];
+        $id = base64_decode($_GET['remove']);
 
         $query = "DELETE FROM `cart` where `id`=$id";
         $sql = mysqli_query($conn, $query);

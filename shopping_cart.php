@@ -7,6 +7,31 @@ $email = $_SESSION['user_email'];
     #delete_btn:hover i {
         color: red;
     }
+
+    .remove_all button,
+     .remove_all a{
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 14px 35px !important;
+        display: inline-block;
+    }
+
+    @media (min-width:768px) {
+        .remove_all {
+            display: flex;
+            justify-content: end;
+        }
+    }
+
+    @media (max-width:768px) {
+        .remove_all {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    }
 </style>
 
 <!-- Breadcrumb Section Begin -->
@@ -102,7 +127,7 @@ $email = $_SESSION['user_email'];
                                         <td class="p-2">
                                             <a id="delete_btn"
                                                 class="btn btn-dark"
-                                                href="./handlers/cart/delete_row.php?remove=<?php echo $row['id']; ?>">
+                                                href="./handlers/cart/delete_row.php?remove=<?php echo base64_encode($row['id']); ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
@@ -126,14 +151,14 @@ $email = $_SESSION['user_email'];
                         </tbody>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="row w-100">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="continue__btn">
                             <a href="/shop.php">Continue Shopping</a>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="d-flex justify-content-end">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="remove_all">
                             <?php
                             mysqli_data_seek($sql, 0);
                             $cart_items = mysqli_num_rows($sql);
@@ -152,49 +177,60 @@ $email = $_SESSION['user_email'];
                 </div>
             </div>
         </div>
-        <div class="row mt-5 pt-5 justify-content-between">
-
+        <div class="container mt-5 pt-4">
             <?php
-
-            $totalQuery = "SELECT SUM(total_price) as grand_total 
-               FROM cart 
-               WHERE u_email='$email'";
+            $totalQuery = "SELECT SUM(total_price) as grand_total
+                   FROM cart
+                   WHERE u_email='$email'";
 
             $totalRun = mysqli_query($conn, $totalQuery);
             $totalData = mysqli_fetch_assoc($totalRun);
 
             $grand_total = $totalData['grand_total'] ?? 0;
-
             ?>
-            <div class="w-75">
-                <div class="cart__total ml-auto w-75">
-                    <h6>Cart total</h6>
-                    <ul>
-                        <li>
-                            Subtotal
-                           <span class="cart_price_header"><?php echo number_format($grand_total); ?>
-                            <span> PKR</span></span>
-                        </li>
 
-                        <li>
-                            Total
-                            <span class="cart_price_header"><?php echo number_format($grand_total); ?>
-                                <span> PKR</span></span>
-                        </li>
-                    </ul>
-                    <?php
-                    mysqli_data_seek($sql, 0);
-                    $cart_items = mysqli_num_rows($sql);
-                    if ($cart_items > 0) {
-                    ?>
-                        <a href="./checkout.php" class="primary-btn">Proceed to checkout</a>
-                    <?php
-                    } else {
-                    ?>
-                        <button class="w-100 primary-btn">Proceed to checkout</button>
-                    <?php
-                    }
-                    ?>
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 col-sm-10 col-12">
+                    <div class="cart__total">
+                        <h6>Cart total</h6>
+
+                        <ul class="list-unstyled mb-4">
+                            <li class="d-flex justify-content-between">
+                                <span>Subtotal</span>
+                                <span class="cart_price_header">
+                                    <?php echo number_format($grand_total); ?>
+                                    <span>PKR</span>
+                                </span>
+                            </li>
+
+                            <li class="d-flex justify-content-between">
+                                <span>Total</span>
+                                <span class="cart_price_header">
+                                    <?php echo number_format($grand_total); ?>
+                                    <span>PKR</span>
+                                </span>
+                            </li>
+                        </ul>
+
+                        <?php
+                        mysqli_data_seek($sql, 0);
+                        $cart_items = mysqli_num_rows($sql);
+
+                        if ($cart_items > 0) {
+                        ?>
+                            <a href="./checkout.php" class="primary-btn btn-block text-center">
+                                Proceed to checkout
+                            </a>
+                        <?php
+                        } else {
+                        ?>
+                            <button type="button" class="primary-btn btn-block" disabled>
+                                Proceed to checkout
+                            </button>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
