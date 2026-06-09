@@ -202,7 +202,7 @@ if (isset($_GET['scId'])) {
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
 
-                                <a href="./shop_details.php">
+                                <a href="./shop_details.php?id=<?php echo base64_encode($product['id'])  ?> ">
                                     <div class="product__item__pic set-bg rounded" data-setbg="./admin/uploads/thumbnail/<?php echo $product['p_thumbnail'] ?>">
                                         <!-- <ul class="product__hover">
                                         <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
