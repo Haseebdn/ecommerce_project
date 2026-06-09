@@ -79,8 +79,8 @@ if (isset($_GET['scId'])) {
                                 <a id="cross_btn" href="shop.php<?php
                                                                 if (isset($_GET['cid'])) echo '?cid=' . urlencode($_GET['cid']);
                                                                 elseif (isset($_GET['scId'])) echo '?scId=' . urlencode($_GET['scId']);
-                                                                ?>">
-                                <?php endif; ?>
+                                                                ?>">✕</a>
+                            <?php endif; ?>
                         </form>
                     </div>
                     <!-- ================ search field ================= -->
