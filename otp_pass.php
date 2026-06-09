@@ -358,7 +358,7 @@ if (empty($code)) {
 
             // Form submit
             $('#otp_form').on('submit', function(e) {
-
+                $('.btn').blur();
                 let validEmail = validateEmail();
                 let validOTP = validateOTP();
                 let validPassword = validatePassword();

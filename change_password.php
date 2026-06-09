@@ -97,23 +97,6 @@ include "./includes/footer.php";
             <?php unset($_SESSION['error']); ?>
         <?php } ?>
 
-        $('#email').on('input', function() {
-            let value = $(this).val().toLowerCase();
-            $(this).val(value);
-        });
-
-        function validateEmail() {
-            let email = $('#email').val().trim();
-            let error = '';
-
-            if (email !== "") {
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                    error = "Invalid Email";
-                }
-            }
-            $('#email_error').text(error);
-            return error === '';
-        }
 
         function validateOldPassword() {
             let password = $('#old_pass').val().trim();
@@ -161,22 +144,21 @@ include "./includes/footer.php";
             return error === '';
         }
 
-        $('#email').on('input', validateEmail);
         $('#old_pass').on('input', validateOldPassword);
         $('#new_pass').on('input', validateNewPassword);
         $('#con_pass').on('input', confirmPassword);
 
-        $('#pass_form').on('input', function(e) {
-            let validEmail = validateEmail();
+        $('#pass_form').on('submit', function(e) {
+            $('.btn').blur();
             let validOldPass = validateOldPassword();
             let validNewPass = validateNewPassword();
             let validConPass = confirmPassword();
 
-            if (!validEmail || !validOldPass || !validNewPass || !validConPass) {
-
+            if (!validOldPass || !validNewPass || !validConPass) {
                 e.preventDefault();
             }
 
-        })
+
+        });
     })
 </script>

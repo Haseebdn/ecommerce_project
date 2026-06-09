@@ -380,6 +380,7 @@ include "./includes/footer.php"
         $('#gender').on('input', validateGender);
 
         $('#edit_form').on('submit', function(e) {
+            $('.btn').blur();
             let validFName = validateFName();
             let validLastName = validateLastName();
             let validEmail = validateEmail();

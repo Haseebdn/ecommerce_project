@@ -53,7 +53,7 @@ include "./includes/header.php";
 <div class="container my-5 d-flex justify-content-center">
     <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
         <h2 class="mb-4">Change Email</h2>
-        <form id="login_form" method="POST" action="handlers/login.php">
+        <form id="newemail_form" method="POST" action="handlers/change_email.php">
             <div class="mb-3">
                 <label class="form-label fw-semibold">Old Email</label>
                 <input id="old_email" class="form-control" type="email" name="old_email" value="<?php echo $_SESSION['user_email'] ?>" readonly>
@@ -86,7 +86,7 @@ include "./includes/footer.php";
 <script>
     $(document).ready(function() {
 
-    <?php if (isset($_SESSION['success'])) { ?>
+        <?php if (isset($_SESSION['success'])) { ?>
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -108,7 +108,7 @@ include "./includes/footer.php";
             });
             <?php unset($_SESSION['error']); ?>
         <?php } ?>
-        
+
         $('#new_email').on('input', function() {
             let value = $(this).val().toLowerCase();
             $(this).val(value);
@@ -132,13 +132,8 @@ include "./includes/footer.php";
             let password = $('#pass').val().trim();
             let error = '';
 
-
-            let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
             if (password == "") {
                 error = "Password is required";
-            } else if (!regex.test(password)) {
-                error = "Min 8 chars, include upper, lower, number & special char";
             }
 
             $('#pass_error').text(error);
@@ -149,12 +144,16 @@ include "./includes/footer.php";
         $('#new_email').on('input', validateEmail);
         $('#pass').on('input', validatePassword);
 
-        $('#email_form').on('submit', function(e) {
+        $('#newemail_form').on('submit', function(e) {
+            $('.btn').blur();
+            
             let validEmail = validateEmail();
             let validPass = validatePassword();
 
             if (!validEmail || !validPass) {
+
                 e.preventDefault();
+
             }
         })
     })

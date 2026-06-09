@@ -531,6 +531,7 @@ if (isset($_SESSION['user_email'])) {
             $('#con_password').on('input', confirmPassword);
 
             $('#signup_form').on('submit', function(e) {
+                $('.btn').blur();
                 let validFName = validateFName();
                 let validLastName = validateLastName();
                 let validEmail = validateEmail();

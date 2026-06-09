@@ -307,6 +307,7 @@ include "./includes/footer.php";
         });
 
         $(document).on('click', '.deleteBtn', function(e) {
+            $('.btn').blur();
             e.preventDefault();
             let link = $(this).attr('href');
             console.log("clicked");

@@ -238,6 +238,7 @@ include "sql/conn.php";
             $('#forgot_email').on('input', validateEmail);
 
             $('#otp_form').on('submit', function(e) {
+                $('.btn').blur();
                 let validEmail = validateEmail();
                 if (!validEmail) {
                     e.preventDefault();

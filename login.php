@@ -249,6 +249,7 @@ if (isset($_SESSION['user_email'])) {
             $('#password').on('input', validatePassword);
 
             $('#login_form').on('submit', function(e) {
+                $('.btn').blur();
                 let validEmail = validateEmail();
                 let validPassword = validatePassword();
                 if (!validEmail || !validPassword) {

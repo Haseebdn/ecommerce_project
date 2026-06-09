@@ -127,7 +127,7 @@ $email = $_SESSION['user_email'];
             </form>
             <form method="POST" class="w-100 pt-3 " action="./change_email.php">
                 <input type="hidden" name="email_change" value="">
-                <button type="submit" class="btn btn-warning w-100">Change Email</button>
+                <button type="submit" class="btn text-white btn-warning w-100">Change Email</button>
             </form>
             <form method="POST" class="w-100 pt-3 " action="./change_password.php">
                 <input type="hidden" name="password_change" value="">

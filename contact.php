@@ -55,7 +55,7 @@ include "./includes/header.php";
                                     <textarea name="msg" id="msg" class="form-control mb-1 text-dark" placeholder="Message"></textarea>
                                     <small id="msg_error" class="text-danger"></small>
                                 </div>
-                                <button type="submit" class="site-btn">Send Message</button>
+                                <button type="submit" class="btn site-btn">Send Message</button>
                             </div>
                         </div>
                     </form>
@@ -124,7 +124,7 @@ include "./includes/footer.php";
 
     // Form submit validation
     $('#contact_form').on('submit', function(e) {
-
+        $('.btn').blur();
         let validMessage = validateMessage();
 
         if (!validMessage) {
