@@ -26,7 +26,7 @@ if (isset($_POST) && !empty($_POST)) {
 
             if ($adm_pass == $admin['adm_pass']) {
                 if (!$admin['is_active'] == 1) {
-                    $_SESSION['error'] = "Your access blocked";
+                    $_SESSION['error'] = "Access Denied";
                     header("Location: /admin/home.php");
                     exit();
                 } else {

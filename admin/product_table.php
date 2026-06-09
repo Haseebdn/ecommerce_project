@@ -8,21 +8,6 @@
  <div class="main-content">
      <section class="section">
          <div class="section-body">
-             <!-- alert -->
-             <?php if (isset($_SESSION['success'])) { ?>
-                 <div class="alert text-center alert-success">
-                     <?php echo $_SESSION['success']; ?>
-                 </div>
-             <?php unset($_SESSION['success']);
-                } ?>
-
-             <?php if (isset($_SESSION['error'])) { ?>
-                 <div class="alert text-center alert-danger">
-                     <?php echo $_SESSION['error']; ?>
-                 </div>
-             <?php unset($_SESSION['error']);
-                } ?>
-             <!-- alert -->
              <div class="row">
                  <div class="col-12">
                      <div class="card">
@@ -104,3 +89,55 @@
  <script src="assets/bundles/datatables/datatables.min.js"></script>
 
  <script src="assets/js/page/datatables.js"></script>
+ <script>
+     <?php if (isset($_SESSION['success'])) : ?>
+
+         Swal.fire({
+             position: "top-end",
+             icon: "success",
+             title: "<?php echo $_SESSION['success']; ?>",
+             showConfirmButton: false,
+             timer: 2000
+         });
+
+     <?php unset($_SESSION['success']);
+        endif; ?>
+
+
+     <?php if (isset($_SESSION['error'])) : ?>
+
+         Swal.fire({
+             position: "top-end",
+             icon: "error",
+             title: "<?php echo $_SESSION['error']; ?>",
+             showConfirmButton: false,
+             timer: 2000
+         });
+
+     <?php unset($_SESSION['error']);
+        endif; ?>
+
+
+
+     $(document).on('click', '.deleteBtn', function(e) {
+         e.preventDefault();
+         let link = $(this).attr('href');
+
+         Swal.fire({
+             title: "Are you sure?",
+             text: "This order will be deleted permanently!",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#d33",
+             cancelButtonColor: "#3085d6",
+             confirmButtonText: "Yes, delete it!"
+         }).then((result) => {
+             if (result.isConfirmed) {
+                 window.location.href = link;
+             }
+
+         });
+
+
+     });
+ </script>

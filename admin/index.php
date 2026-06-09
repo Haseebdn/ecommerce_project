@@ -41,14 +41,6 @@ if (isset($_SESSION['admin_email'])) {
                             </div>
                             <div class="card-body ">
                                 <form id="login_form" method="POST" action="./handlers/login.php" class="needs-validation" novalidate="">
-                                    <?php
-                                    if (isset($_SESSION['error'])) {
-                                    ?>
-                                        <div class="alert text-danger p-0 m-0 mb-2"><?php echo $_SESSION['error']   ?></div>
-                                    <?php
-                                        unset($_SESSION['error']);
-                                    }
-                                    ?>
 
                                     <div class="form-group">
                                         <label for="email">Email</label>
@@ -58,13 +50,13 @@ if (isset($_SESSION['admin_email'])) {
                                     </div>
                                     <div class="form-group">
                                         <div class="d-block">
-                                            <label for="password"  class="control-label" name="password">Password</label>
+                                            <label for="password" class="control-label" name="password">Password</label>
                                         </div>
                                         <input id="password" type="password" class="form-control" name="adm_pass" tabindex="2" required>
                                         <div id="pass_error" class="text-danger mt-1">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group mt-3 pt-3">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                             Login
@@ -89,7 +81,9 @@ if (isset($_SESSION['admin_email'])) {
     <!-- Template JS File -->
     <script src="assets/js/scripts.js"></script>
     <!-- Custom JS File -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="assets/js/custom.js"></script>
+
     <script>
         setTimeout(() => {
             const $alert = $('.alert');
@@ -98,6 +92,20 @@ if (isset($_SESSION['admin_email'])) {
                 $alert.fadeOut();
             }
         }, 2000);
+
+        <?php if (isset($_SESSION['error'])) : ?>
+
+         Swal.fire({
+             position: "top-end",
+             icon: "error",
+             title: "<?php echo $_SESSION['error']; ?>",
+             showConfirmButton: false,
+             timer: 2000
+         });
+
+     <?php unset($_SESSION['error']);
+        endif; ?>
+
 
         $('#email').on('input', function() {
             let value = $(this).val().toLowerCase();
