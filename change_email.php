@@ -1,7 +1,13 @@
 <?php
 include "./sql/conn.php";
+if (!isset($_SESSION['user_email'])) {
+    $_SESSION['error'] = "Please Login First";
+    header("Location: login.php");
+    exit();
+}
 include "./includes/header.php";
 ?>
+
 
 <style>
     @media (max-width: 768px) {
@@ -51,7 +57,7 @@ include "./includes/header.php";
 <!-- Breadcrumb Section End -->
 
 <div class="container my-5 d-flex justify-content-center">
-    <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
+    <div class="card shadow-sm p-4" style="width:100%; max-width:435px;">
         <h2 class="mb-4">Change Email</h2>
         <form id="newemail_form" method="POST" action="handlers/change_email.php">
             <div class="mb-3">
@@ -146,7 +152,7 @@ include "./includes/footer.php";
 
         $('#newemail_form').on('submit', function(e) {
             $('.btn').blur();
-            
+
             let validEmail = validateEmail();
             let validPass = validatePassword();
 

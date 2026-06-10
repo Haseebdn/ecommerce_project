@@ -14,6 +14,7 @@
         padding: 0px 48px;
     }
 
+    .togglePassword,
     .select,
     input {
         width: 100%;
@@ -63,12 +64,34 @@
 
 }
 
+@media (max-width: 990px) {
+    #eyeToggle
+    .iconPassword {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+}
+
 @media (min-width: 990px) {
+
+    .togglePassword,
     .buttons,
     input,
     .select {
         width: 75% !important;
     }
+
+    #eyeToggle,
+    .iconPassword {
+        position: absolute;
+        top: 50%;
+        right: 28%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
 }
-
-

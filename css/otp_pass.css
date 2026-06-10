@@ -1,0 +1,96 @@
+.position-relative {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    font-size: 16px;
+}
+
+.toggle-password:hover {
+    color: #000;
+}
+
+@media (min-width:990px) {
+    .toggle-password {
+        right: 29%;
+    }
+}
+
+.pw-wrapper {
+    position: relative;
+}
+
+.pw-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09);
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+.pw-dropdown.show {
+    display: block;
+}
+
+.pw-dropdown.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pw-rule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 13px;
+    color: #888;
+    transition: color .2s ease;
+}
+
+.pw-rule.ok {
+    color: #198754;
+}
+
+.pw-rule .rule-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: transform .2s ease;
+}
+
+.pw-rule.ok .rule-icon {
+    transform: scale(1.15);
+}
+
+.pw-all-ok {
+    font-size: 12px;
+    text-align: center;
+    color: #198754;
+    padding: 4px 0 2px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 4px;
+    display: none;
+}
+
+.pw-all-ok.show {
+    display: block;
+}

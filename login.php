@@ -35,6 +35,15 @@ if (isset($_SESSION['user_email'])) {
 </head>
 
 <body>
+    <style>
+        #togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -127,7 +136,7 @@ if (isset($_SESSION['user_email'])) {
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li><a href="./index.html">Home</a></li>
                             <li><a href="./shop.php">Shop</a></li>
                             <li><a href="./about.php">About Us</a></li>
                             <li><a href="./checkout.php">Checkout</a></li>
@@ -160,7 +169,7 @@ if (isset($_SESSION['user_email'])) {
 
 
     <div class="container my-5 d-flex justify-content-center">
-        <div class="card shadow-sm p-4" style="width:100%; max-width:420px;">
+        <div class="card shadow-sm p-4" style="width:100%; max-width:435px;">
             <h2 class="mb-4">Login</h2>
             <form id="login_form" method="POST" action="handlers/login.php">
                 <div class="mb-3">
@@ -173,7 +182,15 @@ if (isset($_SESSION['user_email'])) {
                         <label class="form-label fw-semibold">Password</label>
                         <a class="small pt-1 text-primary" href="./forgot_otp.php">Forgot Password?</a>
                     </div>
-                    <input id="password" name="pass" class="form-control" type="password" tabindex="2">
+
+                    <div class="position-relative">
+                        <input id="password" name="pass" class="form-control pr-5" type="password" tabindex="2">
+
+                        <span id="togglePassword">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
+
                     <div id="pass_error" class="text-danger mt-1 small"></div>
                 </div>
                 <div class="d-flex  pb-2 mt-4 mb-1">
@@ -191,29 +208,45 @@ if (isset($_SESSION['user_email'])) {
     <script>
         $(document).ready(function() {
 
+            
             <?php if (isset($_SESSION['success'])) { ?>
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "<?php echo $_SESSION['success']; ?>",
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-
-                <?php unset($_SESSION['success']); ?>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "<?php echo $_SESSION['success']; ?>",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            
+            <?php unset($_SESSION['success']); ?>
             <?php } ?>
-
+            
             <?php if (isset($_SESSION['error'])) { ?>
-                Swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    title: "<?php echo $_SESSION['error']; ?>",
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                <?php unset($_SESSION['error']); ?>
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "<?php echo $_SESSION['error']; ?>",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            <?php unset($_SESSION['error']); ?>
             <?php } ?>
+            
+            $('#togglePassword').click(function() {
 
+                let password = $('#password');
+                let icon = $(this).find('i');
+
+                if (password.attr('type') === 'password') {
+                    password.attr('type', 'text');
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    password.attr('type', 'password');
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+
+            });
+            
             $('#u_email').on('input', function() {
                 let value = $(this).val().toLowerCase();
                 $(this).val(value);

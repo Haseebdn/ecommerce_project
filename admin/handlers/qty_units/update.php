@@ -3,6 +3,8 @@ include "../../sql/conn.php";
 
 // print_r($_POST);
 // die();
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 try {
 
     if (isset($_POST) && !empty($_POST)) {

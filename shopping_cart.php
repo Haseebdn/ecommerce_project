@@ -1,5 +1,10 @@
 <?php
 include "./sql/conn.php";
+if (!isset($_SESSION['user_email'])) {
+    $_SESSION['error']="Please Login First";
+    header("Location: login.php");
+    exit();
+}
 include "./includes/header.php";
 $email = $_SESSION['user_email'];
 ?>
@@ -9,7 +14,7 @@ $email = $_SESSION['user_email'];
     }
 
     .remove_all button,
-     .remove_all a{
+    .remove_all a {
         font-size: 14px;
         font-weight: 700;
         letter-spacing: 2px;

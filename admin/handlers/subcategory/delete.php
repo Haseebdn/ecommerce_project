@@ -1,29 +1,32 @@
 <?php
 include "../../sql/conn.php";
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-if (isset($_GET) && !empty($_GET)) {
-    // variables
-    $id = $_GET['id'];
-    // variables
+try {
+    if (isset($_GET) && !empty($_GET)) {
+        // variables
+        $id = $_GET['id'];
+        // variables
 
-    // query
-    $query = "DELETE FROM `categories` WHERE `id`=$id";
+        // query
+        $query = "DELETE FROM `categories` WHERE `id`=$id";
 
-    // query
+        // query
 
-    // response
-    try {
+        // response
         $run = mysqli_query($conn, $query);
         if ($run) {
-            $_SESSION['success'] = "Data Deleted Successfully";
+            $_SESSION['success'] = "Subcategory Deleted Successfully";
         } else {
-            $_SESSION['error'] = "Data Deletion Failed";
+            $_SESSION['error'] = "Subcategory Deletion Failed";
         }
-    } catch (mysqli_sql_exception) {
-        $_SESSION['error'] = "Data Deletion Failed";
-    }
-    // response
+        // response
 
+        header("location:../../subcat_table.php");
+        exit();
+    }
+} catch (mysqli_sql_exception $e) {
+    $_SESSION['error'] = "Error:" . $e->getMessage();
     header("location:../../subcat_table.php");
     exit();
 }

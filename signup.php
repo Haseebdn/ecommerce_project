@@ -33,6 +33,7 @@ if (isset($_SESSION['user_email'])) {
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/media_queries/signup.css">
+    <link rel="stylesheet" href="css/signup.css">
 </head>
 
 <body>
@@ -128,7 +129,7 @@ if (isset($_SESSION['user_email'])) {
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li><a href="./index.html">Home</a></li>
                             <li><a href="./shop.php">Shop</a></li>
                             <li><a href="./about.php">About Us</a></li>
                             <li><a href="./checkout.php">Checkout</a></li>
@@ -246,13 +247,54 @@ if (isset($_SESSION['user_email'])) {
 
             <div class="row">
                 <div class="div_input col-md-6">
-                    <label for="">Password</label><span class="text-danger"> *</span>
-                    <input id="password" name="password" class="  form-control" type="password" required>
+                    <label for="password">Password</label><span class="text-danger"> *</span>
+                    <div class="position-relative">
+                        <input id="password" name="password" class="form-control" type="password"
+                            required autocomplete="new-password"
+                            aria-describedby="pwd-checklist-region pass_error">
+
+                        <span id="eyeToggle"
+                            role="button" tabindex="0" aria-label="Toggle password visibility">
+                            <i class="fa fa-eye" id="eyeIcon"></i>
+                        </span>
+
+                        <div class="pwd-checklist" id="pwdChecklist"
+                            role="status" aria-live="polite" id="pwd-checklist-region">
+                            <div class="pwd-item" data-rule="length">
+                                <span class="pwd-icon"><i class="fa fa-square-o"></i></span>
+                                <span>At least 8 characters</span>
+                            </div>
+                            <div class="pwd-item" data-rule="upper">
+                                <span class="pwd-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one uppercase letter (A–Z)</span>
+                            </div>
+                            <div class="pwd-item" data-rule="lower">
+                                <span class="pwd-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one lowercase letter (a–z)</span>
+                            </div>
+                            <div class="pwd-item" data-rule="digit">
+                                <span class="pwd-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one number (0–9)</span>
+                            </div>
+                            <div class="pwd-item" data-rule="special">
+                                <span class="pwd-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one special character (@$!%*?&)</span>
+                            </div>
+                            <div class="pwd-all-met" id="pwdAllMet" aria-live="assertive">
+                                <i class="fa fa-check-circle"></i> All requirements met!
+                            </div>
+                        </div>
+                    </div>
                     <div id="pass_error" class="text-danger mt-1"></div>
                 </div>
                 <div class="div_input col-md-6">
                     <label for="">Confirm Password</label><span class="text-danger"> *</span>
-                    <input id="con_password" name="con_password" class="  form-control" type="password" required>
+                    <div class="position-relative">
+                        <input id="con_password" name="con_password" class="  form-control" type="password" required>
+                        <span class="iconPassword">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
                     <div id="con_error" class="text-danger mt-1"></div>
                 </div>
             </div>
@@ -275,7 +317,6 @@ if (isset($_SESSION['user_email'])) {
 
     <script>
         $(document).ready(function() {
-
             <?php if (isset($_SESSION['success'])) { ?>
                 Swal.fire({
                     position: "top-end",
@@ -298,6 +339,22 @@ if (isset($_SESSION['user_email'])) {
                 });
                 <?php unset($_SESSION['error']); ?>
             <?php } ?>
+
+            $('.iconPassword').click(function() {
+
+                let password = $('#password');
+                let icon = $(this).find('i');
+
+                if (password.attr('type') === 'password') {
+                    password.attr('type', 'text');
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    password.attr('type', 'password');
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+
+            });
+
 
             $('#f_name').on('input', function() {
                 let input = this;
@@ -484,23 +541,73 @@ if (isset($_SESSION['user_email'])) {
                 return error === '';
             }
 
-            function validatePassword() {
-                let password = $('#password').val().trim();
-                let error = '';
+            /* ── per-rule testers ── */
+            const pwdRules = {
+                length: v => v.length >= 8,
+                upper: v => /[A-Z]/.test(v),
+                lower: v => /[a-z]/.test(v),
+                digit: v => /\d/.test(v),
+                special: v => /[@$!%*?&]/.test(v)
+            };
 
-
-                let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-                if (password == "") {
-                    error = "Password is required";
-                } else if (!regex.test(password)) {
-                    error = "Min 8 chars, include upper, lower, number & special char";
-                }
-
-                $('#pass_error').text(error);
-
-                return error === '';
+            function updatePwdChecklist(val) {
+                let allMet = true;
+                $('.pwd-item').each(function() {
+                    const rule = $(this).data('rule');
+                    const ok = pwdRules[rule](val);
+                    if (!ok) allMet = false;
+                    const icon = $(this).find('.pwd-icon i');
+                    if (ok) {
+                        $(this).addClass('met');
+                        icon.removeClass('fa-square-o').addClass('fa-check-square');
+                    } else {
+                        $(this).removeClass('met');
+                        icon.removeClass('fa-check-square').addClass('fa-square-o');
+                    }
+                });
+                allMet ? $('#pwdAllMet').addClass('show') : $('#pwdAllMet').removeClass('show');
             }
+
+            /* ── dropdown show/hide ── */
+            let pwdHoveringDropdown = false;
+
+            $('#password').on('focus', function() {
+                updatePwdChecklist($(this).val());
+                $('#pwdChecklist').addClass('visible');
+                $('#pass_error').text('');
+            });
+
+            $('#pwdChecklist')
+                .on('mouseenter', function() {
+                    pwdHoveringDropdown = true;
+                })
+                .on('mouseleave', function() {
+                    pwdHoveringDropdown = false;
+                });
+
+            $('#password').on('blur', function() {
+                setTimeout(function() {
+                    if (!pwdHoveringDropdown) {
+                        $('#pwdChecklist').removeClass('visible');
+                        validatePassword(); /* calls your existing function */
+                    }
+                }, 120);
+            });
+
+            $('#password').on('input', function() {
+                updatePwdChecklist($(this).val());
+                $('#pass_error').text('');
+            });
+
+            /* ── eye toggle ── */
+            $('#eyeToggle').on('click keydown', function(e) {
+                if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                const inp = $('#password');
+                const isPass = inp.attr('type') === 'password';
+                inp.attr('type', isPass ? 'text' : 'password');
+                $('#eyeIcon').toggleClass('fa-eye fa-eye-slash');
+                $(this).attr('aria-label', isPass ? 'Hide password' : 'Show password');
+            });
 
             function confirmPassword() {
                 let pass = $('#password').val().trim();

@@ -42,6 +42,7 @@ if (empty($code)) {
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/otp_pass.css">
 </head>
 
 <body>
@@ -137,7 +138,7 @@ if (empty($code)) {
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li><a href="./index.html">Home</a></li>
                             <li><a href="./shop.php">Shop</a></li>
                             <li><a href="./about.php">About Us</a></li>
                             <li><a href="./checkout.php">Checkout</a></li>
@@ -198,17 +199,58 @@ if (empty($code)) {
             <div class="row forgot-row">
 
                 <div class="col col-md-6 col-sm-12 forgot-div pb-4">
-                    <label for="">New Password</label>
+                    <label>New Password</label>
 
-                    <input id="new_pass" name="new_pass" class="form-control forgot_input" type="password" tabindex="2">
+                    <div class="pw-wrapper">
+                        <div class="position-relative">
+                            <input id="new_pass" name="new_pass"
+                                class="form-control forgot_input pr-5"
+                                type="password" tabindex="2"
+                                aria-describedby="pw-checklist"
+                                autocomplete="new-password">
+                            <i class="fa fa-eye toggle-password"
+                                data-target="new_pass"></i>
+                        </div>
+
+                        <div class="pw-dropdown" id="pw-checklist" role="status" aria-live="polite">
+                            <div class="pw-rule" id="r-len">
+                                <span class="rule-icon"><i class="fa fa-square-o"></i></span>
+                                <span>At least 8 characters</span>
+                            </div>
+                            <div class="pw-rule" id="r-upper">
+                                <span class="rule-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one uppercase letter (A–Z)</span>
+                            </div>
+                            <div class="pw-rule" id="r-lower">
+                                <span class="rule-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one lowercase letter (a–z)</span>
+                            </div>
+                            <div class="pw-rule" id="r-num">
+                                <span class="rule-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one number (0–9)</span>
+                            </div>
+                            <div class="pw-rule" id="r-special">
+                                <span class="rule-icon"><i class="fa fa-square-o"></i></span>
+                                <span>Contains one special character (@$!%*?&amp;)</span>
+                            </div>
+                            <div class="pw-all-ok" id="pw-all-ok">&#10003; Password meets all requirements</div>
+                        </div>
+                    </div>
 
                     <div id="newpass_error" class="text-danger mt-1"></div>
                 </div>
 
                 <div class="col col-md-6 col-12 forgot-div pb-4">
-                    <label for="">Confirm Password</label>
+                    <label>Confirm Password</label>
 
-                    <input id="con_pass" name="con_pass" class="form-control forgot_input" type="password" tabindex="3">
+                    <div class="position-relative">
+                        <input id="con_pass" name="con_pass"
+                            class="form-control forgot_input pr-5"
+                            type="password" tabindex="3">
+
+                        <i class="fa fa-eye toggle-password"
+                            data-target="con_pass"></i>
+                    </div>
 
                     <div id="conpass_error" class="text-danger mt-1"></div>
                 </div>
@@ -232,7 +274,6 @@ if (empty($code)) {
 
     <script>
         $(document).ready(function() {
-
             <?php if (isset($_SESSION['success'])) { ?>
                 Swal.fire({
                     position: "top-end",
@@ -255,6 +296,112 @@ if (empty($code)) {
                 });
                 <?php unset($_SESSION['error']); ?>
             <?php } ?>
+
+            $('.toggle-password').on('click', function() {
+
+                let input = $('#' + $(this).data('target'));
+
+                if (input.attr('type') === 'password') {
+                    input.attr('type', 'text');
+                    $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    input.attr('type', 'password');
+                    $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+
+            });
+
+            // Live checklist — no changes to validatePassword()
+            (function() {
+                var input = $('#new_pass');
+                var dropdown = $('#pw-checklist');
+                var allOk = $('#pw-all-ok');
+                var overDropdown = false;
+
+                var rules = [{
+                        id: 'r-len',
+                        test: function(v) {
+                            return v.length >= 8;
+                        }
+                    },
+                    {
+                        id: 'r-upper',
+                        test: function(v) {
+                            return /[A-Z]/.test(v);
+                        }
+                    },
+                    {
+                        id: 'r-lower',
+                        test: function(v) {
+                            return /[a-z]/.test(v);
+                        }
+                    },
+                    {
+                        id: 'r-num',
+                        test: function(v) {
+                            return /\d/.test(v);
+                        }
+                    },
+                    {
+                        id: 'r-special',
+                        test: function(v) {
+                            return /[@$!%*?&]/.test(v);
+                        }
+                    }
+                ];
+
+                function updateRules(val) {
+                    var allPassed = true;
+                    $.each(rules, function(i, r) {
+                        var el = $('#' + r.id);
+                        var icon = el.find('.rule-icon i');
+                        var passed = r.test(val);
+                        if (!passed) allPassed = false;
+                        if (passed) {
+                            el.addClass('ok');
+                            icon.attr('class', 'fa fa-check-square-o');
+                        } else {
+                            el.removeClass('ok');
+                            icon.attr('class', 'fa fa-square-o');
+                        }
+                    });
+                    if (allPassed && val.length > 0) allOk.addClass('show');
+                    else allOk.removeClass('show');
+                }
+
+                function showDrop() {
+                    dropdown.addClass('show');
+                    setTimeout(function() {
+                        dropdown.addClass('visible');
+                    }, 10);
+                }
+
+                function hideDrop() {
+                    dropdown.removeClass('visible');
+                    setTimeout(function() {
+                        if (!overDropdown && document.activeElement !== input[0]) {
+                            dropdown.removeClass('show');
+                        }
+                    }, 180);
+                }
+
+                dropdown.on('mouseenter', function() {
+                    overDropdown = true;
+                });
+                dropdown.on('mouseleave', function() {
+                    overDropdown = false;
+                    hideDrop();
+                });
+
+                input.on('focus', showDrop);
+                input.on('blur', hideDrop);
+
+                input.on('input', function() {
+                    updateRules($(this).val());
+                    $('#newpass_error').text(''); // suppress error while typing
+                });
+            })();
+
 
             // Email validation
             function validateEmail() {

@@ -1,5 +1,10 @@
 <?php
 include "./sql/conn.php";
+if (!isset($_SESSION['user_email'])) {
+    $_SESSION['error']="Please Login First";
+    header("Location: login.php");
+    exit();
+}
 include "./includes/header.php";
 ?>
 <link rel="stylesheet" href="css/media_queries/signup.css">

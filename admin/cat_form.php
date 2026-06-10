@@ -173,7 +173,7 @@ include "./include/footer.php";
 
         Swal.fire({
           title: "Are you sure?",
-          text: "Do you want to update this category?",
+          text: "Do you want to make changes?",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
