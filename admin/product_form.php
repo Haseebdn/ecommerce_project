@@ -130,15 +130,35 @@
 
                                  <!-- sale price -->
                                  <div class="mt-4">
-                                     <label>Sale Price</label>
-                                     <input type="number" class="form-control" name="sale_price" value="<?php echo @$record['sale_price'] ?>">
+                                     <label>Sale Price</label><span class="text-danger ml-1">*</span>
+                                     <input type="number" class="form-control" name="sale_price" value="<?php echo @$record['sale_price'] ?>" required>
                                  </div>
                                  <!-- sale price -->
 
                                  <!-- Quantity -->
+                                 <?php
+                                    $unit = "SELECT * FROM `qty_units`";
+                                    $uql = mysqli_query($conn, $unit);
+                                    ?>
+                                 <div class="form-group mt-4">
+                                     <label>Unit</label><span class="text-danger ml-1">*</span>
+                                     <select name="qty_type" id="qty_type" class="form-control" required>
+                                         <option value="">Select Unit </option>
+                                         <?php while ($funit = mysqli_fetch_assoc($uql)) {
+                                            ?>
+                                             <option value="<?php echo $funit['id'] ?>"><?php echo $funit['unit_name'] ?></option>
+                                         <?php
+                                            }
+                                            ?>
+                                     </select>
+                                     <div id="qtytype_error" class="text-danger mt-1"></div>
+                                 </div>
+                                 <!-- Quantity -->
+
+                                 <!-- Quantity -->
                                  <div class="mt-4">
-                                     <label>Quantity</label>
-                                     <input type="number" class="form-control" name="qty" value="<?php echo @$record['qty'] ?>">
+                                     <label>Quantity</label><span class="text-danger ml-1">*</span>
+                                     <input type="number" class="form-control" name="qty" value="<?php echo @$record['qty'] ?>" required>
                                  </div>
                                  <!-- Quantity -->
 
@@ -156,10 +176,12 @@
                                          name="p_thumbnail"
                                          <?php echo !isset($_GET['id']) ? 'required' : ''; ?>>
                                      <label class="custom-file-label" for="">Choose file</label>
+                                     <div id="pic_error" class="text-danger mt-1"></div>
                                  </div>
                                  <?php if (!empty($record['p_thumbnail'])) { ?>
                                      <div class="mt-2"><img class=" rounded rounded-2" src="./uploads/thumbnail/<?php echo @$record['p_thumbnail']; ?>" width="60" required></div>
                                  <?php } ?>
+
                                  <!-- thumbnail -->
 
                                  <!-- Product Images -->
@@ -167,6 +189,7 @@
                                  <div class="custom-file">
                                      <input type="file" class="custom-file-input" id="imgs" name="p_imgs[]" multiple>
                                      <label class="custom-file-label" for="">Choose file</label>
+                                     <div id="imgs_error" class="text-danger mt-1"></div>
                                  </div>
                                  <!-- Product Images -->
                              </div>
@@ -298,6 +321,18 @@
          return error === "";
      }
 
+     function validateUnit() {
+
+         let name = $('#qty_type').val().trim();
+         let error = '';
+
+         if (name == "") {
+             error = 'Please Select Unit';
+         }
+         $('#qtytype_error').text(error);
+         return error === "";
+     }
+
      function validateCode() {
          let p_code = $('#p_code').val().trim();
          let error = "";
@@ -333,6 +368,47 @@
          return error === "";
      }
 
+     function validatePic() {
+
+         let isUpdate = <?php echo isset($_GET['id']) ? 'true' : 'false'; ?>;
+
+         let fileInput = $("#p_thumbnail")[0];
+         let file = fileInput.files[0];
+
+         let error = "";
+
+         // Required only for Add Product
+         if (!isUpdate && !file) {
+             error = "Choose Product Thumbnail";
+         }
+
+         if (file) {
+
+             // Allowed extensions
+             let allowedTypes = [
+                 "image/jpeg",
+                 "image/jpg",
+                 "image/png",
+                 "image/webp"
+             ];
+
+             if (!allowedTypes.includes(file.type)) {
+                 error = "Only JPG, JPEG, PNG and WEBP files are allowed";
+             }
+
+             // Max size 2MB
+             let maxSize = 2 * 1024 * 1024;
+
+             if (file.size > maxSize) {
+                 error = "Image size must be less than 2 MB";
+             }
+         }
+
+         $("#pic_error").text(error);
+
+         return error === "";
+     }
+
      function validateDescription() {
          let description = $("#p_description").val().trim();
          let error = "";
@@ -349,12 +425,55 @@
          return error === "";
      }
 
+     function validateImages() {
+
+         let files = $("#imgs")[0].files;
+         let error = "";
+
+         // No files selected -> Valid
+         if (files.length === 0) {
+             $("#imgs_error").text("");
+             return true;
+         }
+
+         let allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+         for (let i = 0; i < files.length; i++) {
+
+             if (!allowedTypes.includes(files[i].type)) {
+                 error = "Only JPG, JPEG, PNG and WEBP images are allowed";
+                 break;
+             }
+
+             if (files[i].size > 2 * 1024 * 1024) {
+                 error = "Each image must be less than 2MB";
+                 break;
+             }
+         }
+
+         $("#imgs_error").text(error);
+         return error === "";
+     }
+
+
+
      $('#cat_name').on('change', validateCategory);
      $('#subcat_name').on('change', validateSubcat);
      $('#supp_name').on('change', validateSupp);
+     $('#qty_type').on('change', validateUnit);
      $('#p_code').on('input', validateCode);
      $("#p_name").on("input", validateName);
      $('#p_description').on("input", validateDescription);
+     $("#imgs").on("change", validateImages);
+     $('#p_thumbnail').on("change", function() {
+
+         validatePic();
+
+         let fileName = this.files.length ? this.files[0].name : "Choose file";
+
+         $(this).next(".custom-file-label").html(fileName);
+
+     });
 
      $('#product_form').on('submit', function(e) {
          let validCat = validateCategory();
@@ -363,7 +482,10 @@
          let codeValid = validateCode();
          let nameValid = validateName();
          let descValid = validateDescription();
-         if (!codeValid || !nameValid || !descValid || !validCat || !validSubcat || !validSupp) {
+         let unitValid = validateUnit();
+         let picValid = validatePic();
+         let imgsValid = validateImages();
+         if (!codeValid || !nameValid || !descValid || !validCat || !validSubcat || !validSupp || !unitValid || !picValid || !imgsValid) {
              e.preventDefault();
          }
      })
@@ -377,7 +499,10 @@
          let codeValid = validateCode();
          let nameValid = validateName();
          let descValid = validateDescription();
-         if (!codeValid || !nameValid || !descValid || !validCat || !validSubcat || !validSupp) {
+         let unitValid = validateUnit();
+         let picValid = validatePic();
+         let imgsValid = validateImages();
+         if (!codeValid || !nameValid || !descValid || !validCat || !validSubcat || !validSupp || !unitValid || !picValid || !imgsValid) {
              e.preventDefault();
              return;
          }

@@ -15,6 +15,7 @@ try {
         $p_description = mysqli_real_escape_string($conn, $_POST['p_description']);
         $unit_price = mysqli_real_escape_string($conn, $_POST['unit_price']);
         $sale_price = mysqli_real_escape_string($conn, $_POST['sale_price']);
+        $qty_type = mysqli_real_escape_string($conn, $_POST['qty_type']);
         $qty = mysqli_real_escape_string($conn, $_POST['qty']);
         $stock = mysqli_real_escape_string($conn, $_POST['stock']);
 
@@ -97,6 +98,7 @@ try {
         p_description='$p_description',
         unit_price='$unit_price',
         sale_price='$sale_price',
+        qty_type='$qty_type',
         qty='$qty',
         stock='$stock',
         p_thumbnail='$thumbnail_name',

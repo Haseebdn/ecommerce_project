@@ -20,6 +20,7 @@ try {
         $p_description = mysqli_real_escape_string($conn, $_POST['p_description']);
         $unit_price = mysqli_real_escape_string($conn, $_POST['unit_price']);
         $sale_price = mysqli_real_escape_string($conn, $_POST['sale_price']);
+        $qty_type = mysqli_real_escape_string($conn, $_POST['qty_type']);
         $qty = mysqli_real_escape_string($conn, $_POST['qty']);
         $stock = mysqli_real_escape_string($conn, $_POST['stock']);
         $p_thumbnail = $_FILES['p_thumbnail']['name'];
@@ -28,7 +29,7 @@ try {
         // variables
 
         // validation
-        if (empty($cat_id) || empty($subcat_id) || empty($supp_id) || empty($p_code) || empty($p_name) || empty($unit_price) || empty($stock) || empty($p_thumbnail)) {
+        if (empty($cat_id) || empty($subcat_id) || empty($supp_id) || empty($p_code) || empty($p_name) || empty($unit_price) || empty($stock) || empty($p_thumbnail)|| empty($qty_type)) {
             $_SESSION['error'] = "Please Fill All Fields Correctly";
             header("location:../../product_table.php");
             exit();
@@ -75,7 +76,7 @@ try {
         // images
 
         //query
-        $query = "INSERT INTO `products` (`cat_id`,`subcat_id`,`supp_id`,`p_code`,`p_name`,`p_description`,`unit_price`,`sale_price`,`qty`,`stock`,`p_thumbnail`,`p_imgs`) VALUES ('$cat_id','$subcat_id','$supp_id','$p_code','$p_name','$p_description','$unit_price','$sale_price','$qty','$stock','$thumbnail_name','$newNameP')";
+        $query = "INSERT INTO `products` (`cat_id`,`subcat_id`,`supp_id`,`p_code`,`p_name`,`p_description`,`unit_price`,`sale_price`,`qty_type`,`qty`,`stock`,`p_thumbnail`,`p_imgs`) VALUES ('$cat_id','$subcat_id','$supp_id','$p_code','$p_name','$p_description','$unit_price','$sale_price','$qty_type','$qty','$stock','$thumbnail_name','$newNameP')";
         //query
 
         // response
