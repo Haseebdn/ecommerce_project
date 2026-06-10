@@ -18,7 +18,7 @@ try {
         $run = mysqli_query($conn, $query);
 
         if ($run && mysqli_affected_rows($conn) > 0) {
-            $_SESSION['success'] = "Data deleted successfully";
+            $_SESSION['success'] = "Supplier Deleted successfully";
         }
         // response
 

@@ -25,7 +25,6 @@
 
                                      <thead>
                                          <tr>
-                                             <th>Select</th>
                                              <th>Name</th>
                                              <th>Email</th>
                                              <th>Message</th>
@@ -43,7 +42,6 @@
                                             while ($row = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
-                                                 <td><input type="checkbox"></td>
                                                  <td><?php echo $row['name']    ?></td>
                                                  <td><?php echo $row['u_email']    ?></td>
                                                  <td><?php echo $row['msg']    ?></td>
@@ -113,7 +111,7 @@
 
              Swal.fire({
                  title: "Are you sure?",
-                 text: "This order will be deleted permanently!",
+                 text: "This mail will be deleted permanently!",
                  icon: "warning",
                  showCancelButton: true,
                  confirmButtonColor: "#d33",

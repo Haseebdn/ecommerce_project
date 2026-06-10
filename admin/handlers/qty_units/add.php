@@ -27,7 +27,7 @@ try {
 
         // response
         $run = mysqli_query($conn, $query);
-        $_SESSION['success'] = "Data Inserted Successfully";
+        $_SESSION['success'] = "Unit Added Successfully";
         // response
 
         header("location:../../qtyUnit_table.php");

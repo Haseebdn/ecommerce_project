@@ -18,7 +18,7 @@ try {
 
         // validation
         if (empty($supp_name) || empty($supp_email) || empty($supp_telno) || empty($id)) {
-            $_SESSION['error'] = "Please fill all fields correctly";
+            $_SESSION['error'] = "Please Fill All Fields Correctly";
             header('location:../../supplier_table.php');
             exit();
         }
@@ -32,7 +32,7 @@ try {
         // response
         $run = mysqli_query($conn, $query);
 
-        $_SESSION['success'] = "Data Updated Successfully";
+        $_SESSION['success'] = "Supplier Updated Successfully";
         // response
 
         header("location:../../supplier_table.php");

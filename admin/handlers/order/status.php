@@ -2,15 +2,17 @@
    include "../../sql/conn.php";
    // print_r($_POST);
    // die();
-   if (isset($_POST)) {
-      $order_no = $_POST['order_no'];
-      $status = $_POST['value'];
+   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-      $query = "UPDATE `orders`
+   try {
+      if (isset($_POST)) {
+         $order_no = $_POST['order_no'];
+         $status = $_POST['value'];
+
+         $query = "UPDATE `orders`
                               Set `status`='$status'
                               WHERE `order_no`='$order_no' ";
-                              
-      try {
+
          $sql = mysqli_query($conn, $query);
 
          if ($sql) {
@@ -18,16 +20,11 @@
                "status" => 200,
                "msg" => "Status Updated Successfully"
             ]);
-         } else {
-            echo json_encode([
-               "status" => 500,
-               "msg" => "Status Updation Failed"
-            ]);
          }
-      } catch (mysqli_sql_exception) {
-         echo json_encode([
-            "status" => 500,
-            "msg" => "Status Updation Failed"
-         ]);
       }
+   } catch (mysqli_sql_exception $e) {
+      echo json_encode([
+         "status" => 500,
+         "msg" => $e->getmessage(),
+      ]);
    }

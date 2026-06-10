@@ -30,7 +30,7 @@ try {
 
         echo json_encode([
             'status' => 200,
-            'msg' => "Invoice No fetched successfully",
+            'msg' => "Invoice No Fetched Successfully",
             'data' => $no
         ]);
     }

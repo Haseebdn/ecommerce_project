@@ -187,8 +187,7 @@ include "./include/footer.php";
                 e.preventDefault();
             }
         })
-        validateName();
-        validateDesc();
+        
 
 
         $('#subcat_form').on('submit', function(e) {

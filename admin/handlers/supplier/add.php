@@ -29,7 +29,7 @@ try {
 
         // response
         $run = mysqli_query($conn, $query);
-        $_SESSION['success'] = "Data Inserted Successfully";
+        $_SESSION['success'] = "Supplier Added Successfully";
         // response
 
         header("location:../../supplier_table.php");

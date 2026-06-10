@@ -382,6 +382,7 @@ include "./include/footer.php";
         $('#con_password').on('input', confirmPassword);
 
         $('#add_form').on('submit', function(e) {
+            e.preventDefault();
 
             let validFName = validateFName();
             let validLastName = validateLastName();
@@ -397,9 +398,24 @@ include "./include/footer.php";
             let validCon = confirmPassword();
 
             if (!validFName || !validLastName || !validEmail || !validPhone || !validCountry || !validState || !validCity || !validCode || !validAddress || !validGender || !validPassword || !validCon) {
-                e.preventDefault();
+                return;
             }
-        })
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to add this user?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#add_form')[0].submit();
+                }
+            });
+        });
 
 
     })

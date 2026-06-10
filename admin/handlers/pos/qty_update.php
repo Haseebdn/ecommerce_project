@@ -22,10 +22,13 @@ try {
         if ($sql) {
             echo json_encode(['status' => 200, 'msg' => 'Quantity Updated Successfully']);
         } else {
-            echo json_encode(['status' => 500, 'msg' => 'Updation failed']);
+            echo json_encode(['status' => 500, 'msg' => 'Updation Failed']);
         }
     }
 } catch (mysqli_sql_exception $e) {
 
-    echo $e->getMessage();
+    echo json_encode([
+        'status' => 500,
+        'msg' => $e->getMessage()
+    ]);
 }

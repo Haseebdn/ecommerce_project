@@ -24,7 +24,7 @@ try {
 
         if ($sql) {
 
-            $_SESSION['success'] = "Item successfully deleted";
+            $_SESSION['success'] = "Item Successfully Deleted";
 
             header("location:../../pos_orders.php");
             exit();
@@ -36,10 +36,9 @@ try {
             exit();
         }
     }
-} catch (mysqli_sql_exception) {
+} catch (mysqli_sql_exception $e) {
 
-    $_SESSION['error'] = "Deletion Failed";
-
+    $_SESSION['error'] = "Error :" . $e->getMessage();
     header("location:../../pos_orders.php");
     exit();
 }

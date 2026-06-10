@@ -37,7 +37,7 @@ try {
 
         if (mysqli_num_rows($check_run) > 0) {
 
-            $_SESSION['error'] = "Email already exists";
+            $_SESSION['error'] = "Email Already Exists";
 
             header("Location:../../register_users.php");
             exit();
@@ -48,9 +48,8 @@ try {
 
         $run = mysqli_query($conn, $query);
         if ($run) {
-            $_SESSION['success'] = "User added Successfully";
+            $_SESSION['success'] = "User Added Successfully";
         }
-
 
         header("location:../../register_users.php");
         exit();

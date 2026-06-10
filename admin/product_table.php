@@ -125,7 +125,7 @@
 
          Swal.fire({
              title: "Are you sure?",
-             text: "This order will be deleted permanently!",
+             text: "This product will be deleted permanently!",
              icon: "warning",
              showCancelButton: true,
              confirmButtonColor: "#d33",

@@ -3,36 +3,31 @@ include "../../sql/conn.php";
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-if (isset($_GET)) {
-    $id = base64_decode($_GET['id']);
+try {
+    if (isset($_GET)) {
+        $id = base64_decode($_GET['id']);
 
-    if (empty($id)) {
+        if (empty($id)) {
 
-        $_SESSION['error'] = "Invalid Order";
-        header("location:/admin/view_orders.php");
-        exit();
-    }
+            $_SESSION['error'] = "Invalid Order";
+            header("location:/admin/view_orders.php");
+            exit();
+        }
 
-    $query = "DELETE FROM `orders` WHERE `id`='$id'";
+        $query = "DELETE FROM `orders` WHERE `id`='$id'";
 
-    try {
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
 
-            $_SESSION['success'] = "Product deleted from order successfully";
-            header("location:/admin/view_orders.php");
-            exit();
-        } else {
-
-            $_SESSION['error'] = "Deletion Failed";
+            $_SESSION['success'] = "Product Deleted Successfully";
             header("location:/admin/view_orders.php");
             exit();
         }
-    } catch (mysqli_sql_exception) {
-
-        $_SESSION['error'] = "Deletion Failed";
-        header("location:/admin/view_orders.php");
-        exit();
     }
+} catch (mysqli_sql_exception $e) {
+
+    $_SESSION['error'] = "Error:" . $e->getMessage();
+    header("location:/admin/view_orders.php");
+    exit();
 }

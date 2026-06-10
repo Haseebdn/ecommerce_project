@@ -25,7 +25,7 @@ try {
 
             echo json_encode([
                 'status' => 500,
-                'msg' => "Please fill all fields correctly"
+                'msg' => "Please Fill All Fields Correctly"
             ]);
             exit();
         }
@@ -64,20 +64,20 @@ try {
                 $dql = mysqli_query($conn, $delete);
                 echo json_encode([
                     'status' => 200,
-                    'msg' => "Data inserted successfully"
+                    'msg' => "Data Inserted Successfully"
                 ]);
             } else {
 
                 echo json_encode([
                     'status' => 500,
-                    'msg' => "Data insertion failed"
+                    'msg' => "Data Insertion Failed"
                 ]);
             }
         } else {
 
             echo json_encode([
                 'status' => 500,
-                'msg' => "Data insertion failed"
+                'msg' => "Data Insertion Failed"
             ]);
         }
     }

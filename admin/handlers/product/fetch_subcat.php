@@ -22,14 +22,14 @@ try {
 
             echo json_encode([
                 "status" => 200,
-                "message" => "Data fetched successfully",
+                "message" => "Data Fetched Successfully",
                 "data" => $row
             ]);
         } else {
 
             echo json_encode([
                 "status" => 404,
-                "message" => "No data found",
+                "message" => "No Data Found",
                 "data" => []
             ]);
         }
@@ -37,7 +37,7 @@ try {
 
         echo json_encode([
             "status" => 400,
-            "message" => "Invalid request"
+            "message" => "Invalid Request"
         ]);
     }
 } catch (mysqli_sql_exception $e) {

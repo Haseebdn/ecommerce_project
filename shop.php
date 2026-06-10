@@ -1,7 +1,7 @@
 <?php
 include "./sql/conn.php";
 include "./includes/header.php";
-
+$email = @$_SESSION['user_email'];
 
 // ========== pagination fetch ============
 $limit = 9;
@@ -302,6 +302,23 @@ include "./includes/footer.php";
 
         e.preventDefault();
 
+        <?php if (empty($_SESSION['user_email'])) { ?>
+
+            Swal.fire({
+                icon: "warning",
+                title: "Login Required",
+                text: "Please login to add products to your cart.",
+                confirmButtonText: "Login"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "login.php";
+                }
+            });
+
+            return;
+
+        <?php } ?>
+
         const pid = $(this).data("pid");
 
         $.ajax({
@@ -314,10 +331,11 @@ include "./includes/footer.php";
             success: function(res) {
 
                 let response = JSON.parse(res);
-                console.log(response);
 
                 if (response.status == 200) {
-                    updateCartSummary()
+
+                    updateCartSummary();
+
                     Swal.fire({
                         icon: "success",
                         title: response.message,
@@ -333,9 +351,18 @@ include "./includes/footer.php";
                         timer: 1500,
                         showConfirmButton: false
                     });
-                }
 
+                } else if (response.status == 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: response.message,
+                        confirmButtonText: "Login"
+                    }).then(() => {
+                        window.location.href = "login.php";
+                    });
+                }
             }
         });
+
     });
 </script>

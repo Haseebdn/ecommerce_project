@@ -51,7 +51,7 @@ try {
 
             echo json_encode([
                 'status' => 200,
-                'msg' => "Items fetched",
+                'msg' => "Items Fetched",
                 'data' => $output,
                 'total_purchase' => $total_purchase
             ]);

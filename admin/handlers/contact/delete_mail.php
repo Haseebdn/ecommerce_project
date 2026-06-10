@@ -20,7 +20,7 @@ if (isset($_GET)) {
 
         if ($sql) {
 
-            $_SESSION['success'] = "Mail deleted successfully";
+            $_SESSION['success'] = "Mail Deleted Successfully";
             header("location:/admin/contact_table.php");
             exit();
         } else {

@@ -8,21 +8,6 @@
  <div class="main-content">
      <section class="section">
          <div class="section-body">
-             <!-- alert -->
-             <?php if (isset($_SESSION['success'])) { ?>
-                 <div class="alert text-center alert-success">
-                     <?php echo $_SESSION['success']; ?>
-                 </div>
-             <?php unset($_SESSION['success']);
-                } ?>
-
-             <?php if (isset($_SESSION['error'])) { ?>
-                 <div class="alert text-center alert-danger">
-                     <?php echo $_SESSION['error']; ?>
-                 </div>
-             <?php unset($_SESSION['error']);
-                } ?>
-             <!-- alert -->
              <div class="row">
                  <div class="col-12">
                      <div class="card">
@@ -82,7 +67,7 @@
                                                  <!-- switch -->
                                                  <td>
                                                      <a class="btn btn-primary btn-sm" href="./role_form.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen"></i></a>
-                                                     <a class="btn btn-danger btn-sm" href="./handlers/adm_role/delete.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                                     <a class="btn deleteBtn btn-danger btn-sm" href="./handlers/adm_role/delete.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash"></i></a>
                                                  </td>
                                              </tr>
                                          <?php
@@ -111,24 +96,57 @@
 
  <script src="assets/js/page/datatables.js"></script>
  <script>
-     $(document).on('click', '.deleteBtn', function(e) {
-         e.preventDefault();
-         let link = $(this).attr('href');
+     $(document).ready(function() {
 
-         Swal.fire({
-             title: "Are you sure?",
-             text: "This user will be deleted permanently!",
-             icon: "warning",
-             showCancelButton: true,
-             confirmButtonColor: "#d33",
-             cancelButtonColor: "#3085d6",
-             confirmButtonText: "Yes, delete it!"
-         }).then((result) => {
-             if (result.isConfirmed) {
-                 window.location.href = link;
-             }
+         <?php if (isset($_SESSION['success'])) : ?>
+
+             Swal.fire({
+                 position: "top-end",
+                 icon: "success",
+                 title: "<?php echo $_SESSION['success']; ?>",
+                 showConfirmButton: false,
+                 timer: 2000
+             });
+
+         <?php unset($_SESSION['success']);
+            endif; ?>
+
+
+         <?php if (isset($_SESSION['error'])) : ?>
+
+             Swal.fire({
+                 position: "top-end",
+                 icon: "error",
+                 title: "<?php echo $_SESSION['success']; ?>",
+                 showConfirmButton: false,
+                 timer: 2000
+             });
+
+         <?php unset($_SESSION['error']);
+            endif; ?>
+
+
+         $(document).on('click', '.deleteBtn', function(e) {
+             e.preventDefault();
+             let link = $(this).attr('href');
+
+             Swal.fire({
+                 title: "Are you sure?",
+                 text: "Supplier will be deleted permanently!",
+                 icon: "warning",
+                 showCancelButton: true,
+                 confirmButtonColor: "#d33",
+                 cancelButtonColor: "#3085d6",
+                 confirmButtonText: "Yes, delete it!"
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     window.location.href = link;
+                 }
+
+             });
+
 
          });
 
-     });
+     })
  </script>

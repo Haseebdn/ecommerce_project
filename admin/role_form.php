@@ -156,5 +156,40 @@ include "./include/footer.php";
             }
 
         })
+
+        $("#role_form").on('submit', function(e) {
+            let isUpdate = <?php echo isset($_GET['id']) ? 'true' : 'false'; ?>;
+
+            let validName = validateName();
+
+            if (!validName) {
+                return;
+            }
+
+            if (isUpdate) {
+
+                e.preventDefault();
+
+                let form = this;
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want to make changes?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Update"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+
+                });
+
+            }
+
+        })
     });
 </script>

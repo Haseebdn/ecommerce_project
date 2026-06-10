@@ -16,7 +16,7 @@ try {
 
         // validation
         if (empty($unit_name)) {
-            $_SESSION['error'] = "Please fill all fields correctly";
+            $_SESSION['error'] = "Please Fill All Fields Correctly";
             header("location:../../qtyUnit_table");
             exit();
         }
@@ -30,7 +30,7 @@ try {
 
         $run = mysqli_query($conn, $query);
 
-        $_SESSION['success'] = "Data Updated Successfully";
+        $_SESSION['success'] = "Unit Updated Successfully";
         // response
 
         header("location:../../qtyUnit_table.php");

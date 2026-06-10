@@ -212,14 +212,77 @@ include "include/footer.php";
         $('#msg').on('input', validateMsg);
 
         $('#reply_form').on('submit', function(e) {
+            e.preventDefault();
+
             let nameValid = validateName();
             let emailValid = validateEmail();
             let subjectValid = validateSubject();
             let msgValid = validateMsg();
 
             if (!nameValid || !emailValid || !subjectValid || !msgValid) {
-                e.preventDefault();
+                return;
             }
-        })
+
+            let form = this;
+
+            Swal.fire({
+                title: 'Send Reply?',
+                text: 'Do you want to send this email?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Send',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    // Loading popup
+                    Swal.fire({
+                        title: 'Sending Email...',
+                        html: 'Please wait while the email is being sent.',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    $.ajax({
+                        url: $(form).attr('action'),
+                        type: 'POST',
+                        data: $(form).serialize(),
+
+                        success: function(response) {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Email Sent!',
+                                text: 'Reply email has been sent successfully.',
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.href = "./reply_form.php";
+                            });
+
+                        },
+
+                        error: function() {
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed',
+                                text: 'Unable to send email. Please try again.'
+                            });
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        });
     });
 </script>

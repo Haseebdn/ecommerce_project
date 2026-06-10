@@ -5,6 +5,13 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
 
+    if (!isset($_SESSION['user_email']) || empty($_SESSION['user_email'])) {
+        echo json_encode([
+            "status" => 401,
+            "message" => "Please login first."
+        ]);
+        exit;
+    }
     $email = $_SESSION['user_email'];
 
     if (!empty($_POST['id'])) {

@@ -132,7 +132,7 @@
 
        Swal.fire({
          title: "Are you sure?",
-         text: "This subcategory will be deleted permanently!",
+         text: "Supplier will be deleted permanently!",
          icon: "warning",
          showCancelButton: true,
          confirmButtonColor: "#d33",
