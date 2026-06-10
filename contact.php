@@ -55,7 +55,7 @@ include "./includes/header.php";
                                     <textarea name="msg" id="msg" class="form-control mb-1 text-dark" placeholder="Message"></textarea>
                                     <small id="msg_error" class="text-danger"></small>
                                 </div>
-                                <button type="submit" class="btn site-btn">Send Message</button>
+                                <button type="submit" class="btn text-white site-btn">Send Message</button>
                             </div>
                         </div>
                     </form>
