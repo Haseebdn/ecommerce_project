@@ -252,7 +252,7 @@ include "./includes/footer.php";
 
         <?php if (isset($_SESSION['success'])) { ?>
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "<?php echo $_SESSION['success']; ?>",
                 showConfirmButton: false,
@@ -264,7 +264,7 @@ include "./includes/footer.php";
 
         <?php if (isset($_SESSION['error'])) { ?>
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "error",
                 title: "<?php echo $_SESSION['error']; ?>",
                 showConfirmButton: false,
@@ -316,7 +316,7 @@ include "./includes/footer.php";
                     if (response.status == 200) {
                         updateCartSummary();
                         Swal.fire({
-                            position: "top-end",
+                            position: "center",
                             icon: "success",
                             title: response.msg,
                             showConfirmButton: false,
@@ -325,7 +325,7 @@ include "./includes/footer.php";
 
                     } else {
                         Swal.fire({
-                            position: "top-end",
+                            position: "center",
                             icon: "error",
                             title: response.msg,
                             showConfirmButton: false,
@@ -336,7 +336,7 @@ include "./includes/footer.php";
 
                 error: function() {
                     Swal.fire({
-                        position: "top-end",
+                        position: "center",
                         icon: "error",
                         title: "Something went wrong",
                         showConfirmButton: false,

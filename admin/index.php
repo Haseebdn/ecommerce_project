@@ -96,7 +96,7 @@ if (isset($_SESSION['admin_email'])) {
         <?php if (isset($_SESSION['error'])) : ?>
 
          Swal.fire({
-             position: "top-end",
+             position: "center",
              icon: "error",
              title: "<?php echo $_SESSION['error']; ?>",
              showConfirmButton: false,

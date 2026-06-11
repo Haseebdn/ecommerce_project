@@ -211,7 +211,7 @@ if (isset($_SESSION['user_email'])) {
             
             <?php if (isset($_SESSION['success'])) { ?>
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "<?php echo $_SESSION['success']; ?>",
                 showConfirmButton: false,
@@ -223,7 +223,7 @@ if (isset($_SESSION['user_email'])) {
             
             <?php if (isset($_SESSION['error'])) { ?>
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "error",
                 title: "<?php echo $_SESSION['error']; ?>",
                 showConfirmButton: false,

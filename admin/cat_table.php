@@ -88,7 +88,7 @@
    <?php if (isset($_SESSION['success'])) : ?>
 
      Swal.fire({
-       position: "top-end",
+       position: "center",
        icon: "success",
        title: "<?php echo $_SESSION['success']; ?>",
        showConfirmButton: false,
@@ -102,7 +102,7 @@
    <?php if (isset($_SESSION['error'])) : ?>
 
      Swal.fire({
-       position: "top-end",
+       position: "center",
        icon: "error",
        title: "<?php echo $_SESSION['success']; ?>",
        showConfirmButton: false,

@@ -216,7 +216,7 @@
                      if (response.status == 200) {
 
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "success",
                              title: response.msg,
                              showConfirmButton: false,
@@ -227,7 +227,7 @@
                      } else {
 
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "error",
                              title: response.msg,
                              showConfirmButton: false,
@@ -243,7 +243,7 @@
                      btn.blur();
 
                      Swal.fire({
-                         position: "top-end",
+                         position: "center",
                          icon: "error",
                          title: "Something went wrong",
                          showConfirmButton: false,
@@ -317,7 +317,7 @@
                  error: function() {
 
                      Swal.fire({
-                         position: "top-end",
+                         position: "center",
                          icon: "error",
                          title: "Failed to fetch invoice number",
                          showConfirmButton: false,
@@ -353,7 +353,7 @@
                      if (response.status == 200) {
 
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "success",
                              title: response.msg,
                              showConfirmButton: false,
@@ -362,7 +362,7 @@
 
                      } else {
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "error",
                              title: response.msg,
                              showConfirmButton: false,
@@ -373,7 +373,7 @@
 
                  error: function() {
                      Swal.fire({
-                         position: "top-end",
+                         position: "center",
                          icon: "error",
                          title: "Something went wrong",
                          showConfirmButton: false,
@@ -401,7 +401,7 @@
                      if (response.status == 200) {
                          loadCartItems();
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "success",
                              title: response.msg,
                              showConfirmButton: false,
@@ -410,7 +410,7 @@
 
                      } else {
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "error",
                              title: response.msg,
                              showConfirmButton: false,
@@ -421,7 +421,7 @@
 
                  error: function() {
                      Swal.fire({
-                         position: "top-end",
+                         position: "center",
                          icon: "error",
                          title: "Something went wrong",
                          showConfirmButton: false,

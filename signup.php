@@ -290,7 +290,7 @@ if (isset($_SESSION['user_email'])) {
                 <div class="div_input col-md-6">
                     <label for="">Confirm Password</label><span class="text-danger"> *</span>
                     <div class="position-relative">
-                        <input id="con_password" name="con_password" class="  form-control" type="password" required>
+                        <input id="con_password" name="con_password" class="form-control" type="password" required>
                         <span class="iconPassword">
                             <i class="fa fa-eye"></i>
                         </span>
@@ -316,10 +316,16 @@ if (isset($_SESSION['user_email'])) {
     ?>
 
     <script>
+        function country() {
+            console.log($('#country').val());
+
+        }
         $(document).ready(function() {
+
+
             <?php if (isset($_SESSION['success'])) { ?>
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "<?php echo $_SESSION['success']; ?>",
                     showConfirmButton: false,
@@ -331,7 +337,7 @@ if (isset($_SESSION['user_email'])) {
 
             <?php if (isset($_SESSION['error'])) { ?>
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "error",
                     title: "<?php echo $_SESSION['error']; ?>",
                     showConfirmButton: false,
@@ -342,7 +348,7 @@ if (isset($_SESSION['user_email'])) {
 
             $('.iconPassword').click(function() {
 
-                let password = $('#password');
+                let password = $('.con_password');
                 let icon = $(this).find('i');
 
                 if (password.attr('type') === 'password') {
@@ -534,7 +540,7 @@ if (isset($_SESSION['user_email'])) {
                 let error = '';
 
                 if (gender == '') {
-                    error = "Please Enter State Name";
+                    error = "Please Select Gender";
                 }
 
                 $('#gender_error').text(error);
@@ -634,7 +640,6 @@ if (isset($_SESSION['user_email'])) {
             $('#postal_code').on('input', validateCode);
             $('#address').on('input', validateAddress);
             $('#gender').on('change', validateGender);
-            $('#password').on('input', validatePassword);
             $('#con_password').on('input', confirmPassword);
 
             $('#signup_form').on('submit', function(e) {

@@ -65,7 +65,7 @@
 }
 
 @media (max-width: 990px) {
-    #eyeToggle
+    #eyeToggle,
     .iconPassword {
         position: absolute;
         top: 50%;

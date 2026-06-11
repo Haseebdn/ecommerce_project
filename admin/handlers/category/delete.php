@@ -16,9 +16,7 @@ try {
         $run = mysqli_query($conn, $query);
 
         if ($run && mysqli_affected_rows($conn) > 0) {
-            $_SESSION['success'] = "Data Deleted Successfully";
-        } else {
-            $_SESSION['error'] = "No Data Found";
+            $_SESSION['success'] = "Category Deleted Successfully";
         }
         // response
 
@@ -27,7 +25,9 @@ try {
     }
 } catch (mysqli_sql_exception $e) {
 
-   $_SESSION['error'] = "Error : " . $e->getMessage();
-    header("location:../../cat_table.php");
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../cat_form.php");
     exit();
 }

@@ -77,6 +77,32 @@ include "./include/footer.php";
 
 <script>
   $(document).ready(function() {
+    <?php if (isset($_SESSION['success'])) : ?>
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "<?php echo $_SESSION['success']; ?>",
+        showConfirmButton: false,
+        timer: 2000
+      });
+
+    <?php unset($_SESSION['success']);
+    endif; ?>
+
+
+    <?php if (isset($_SESSION['error'])) : ?>
+
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "<?php echo $_SESSION['error']; ?>",
+        showConfirmButton: false,
+        timer: 2000
+      });
+
+    <?php unset($_SESSION['error']);
+    endif; ?>
 
     $('#cat_name').on('input', function() {
       let input = this;
@@ -143,51 +169,33 @@ include "./include/footer.php";
     $("#cat_name").on("input", validateName);
     $("#cat_description").on("input", validateDescription);
 
-    $("#cat_form").on("submit", function(e) {
-      let isNameValid = validateName();
-      let isDescValid = validateDescription();
-
-      if (!isNameValid || !isDescValid) {
-        e.preventDefault();
-      }
-    });
-
-
     $('#cat_form').on('submit', function(e) {
 
-      let isUpdate = <?php echo isset($_GET['id']) ? 'true' : 'false'; ?>;
+      e.preventDefault();
+
+      let form = this;
 
       let isNameValid = validateName();
       let isDescValid = validateDescription();
 
       if (!isNameValid || !isDescValid) {
-        e.preventDefault();
         return;
       }
 
-      if (isUpdate) {
+      let isUpdate = <?php echo isset($_GET['id']) ? 'true' : 'false'; ?>;
 
-        e.preventDefault();
-
-        let form = this;
-
-        Swal.fire({
-          title: "Are you sure?",
-          text: "Do you want to make changes?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Update"
-        }).then((result) => {
-
-          if (result.isConfirmed) {
-            form.submit();
-          }
-
-        });
-
-      }
+      Swal.fire({
+        title: "Are you sure?",
+        text: isUpdate ?
+          "Do you want to update this category?" : "Do you want to add this category?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: isUpdate ? "Update" : "Add"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
 
     });
 

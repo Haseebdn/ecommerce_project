@@ -17,7 +17,7 @@ function fetchstatus(cat_id, table) {
             let response = JSON.parse(res);
             if (response.status == 200) {
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "Status Updated Succesfully",
                     showConfirmButton: false,
@@ -25,7 +25,7 @@ function fetchstatus(cat_id, table) {
                 });
             } else {
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "error",
                     title: response.msg,
                     showConfirmButton: false,
@@ -51,7 +51,7 @@ function fetchColumn(p_id, table, feature) {
 
             if (response.status == 200) {
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "Status Updated Succesfully",
                     showConfirmButton: false,

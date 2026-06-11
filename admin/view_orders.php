@@ -122,7 +122,7 @@
 
          <?php if (isset($_SESSION['success'])) { ?>
              Swal.fire({
-                 position: "top-end",
+                 position: "center",
                  icon: "success",
                  title: "<?php echo $_SESSION['success']; ?>",
                  showConfirmButton: false,
@@ -134,7 +134,7 @@
 
          <?php if (isset($_SESSION['error'])) { ?>
              Swal.fire({
-                 position: "top-end",
+                 position: "center",
                  icon: "error",
                  title: "<?php echo $_SESSION['error']; ?>",
                  showConfirmButton: false,
@@ -158,7 +158,7 @@
                      let response = JSON.parse(res);
                      if (response.status == 200) {
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "success",
                              title: response.msg,
                              showConfirmButton: false,
@@ -166,7 +166,7 @@
                          });
                      } else {
                          Swal.fire({
-                             position: "top-end",
+                             position: "center",
                              icon: "error",
                              title: response.msg,
                              showConfirmButton: false,
