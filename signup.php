@@ -163,7 +163,7 @@ if (isset($_SESSION['user_email'])) {
 
     <div class="container mt-5">
         <h2>Signup</h2>
-        <form id="signup_form" action="./handlers/signup.php" method="POST" enctype="multipart/form-data">
+        <form id="signup_form" action="./handlers/signup.php" method="POST" enctype="multipart/form-data" novalidate>
             <div class="row">
                 <div class="div_input col-md-6">
                     <label for="">First Name</label><span class="text-danger"> *</span>
@@ -221,7 +221,7 @@ if (isset($_SESSION['user_email'])) {
                 </div>
                 <div class="div_input col-md-6">
                     <label for="">Postal Code</label><span class="text-danger"> *</span>
-                    <input id="postal_code" name="postal_code" class="  form-control" type="text">
+                    <input id="postal_code" name="postal_code" class="  form-control" type="number">
                     <div id="code_error" class="text-danger mt-1"></div>
                 </div>
             </div>
@@ -316,10 +316,6 @@ if (isset($_SESSION['user_email'])) {
     ?>
 
     <script>
-        function country() {
-            console.log($('#country').val());
-
-        }
         $(document).ready(function() {
 
 
@@ -348,7 +344,7 @@ if (isset($_SESSION['user_email'])) {
 
             $('.iconPassword').click(function() {
 
-                let password = $('.con_password');
+                let password = $('#con_password');
                 let icon = $(this).find('i');
 
                 if (password.attr('type') === 'password') {
@@ -595,14 +591,14 @@ if (isset($_SESSION['user_email'])) {
                 setTimeout(function() {
                     if (!pwdHoveringDropdown) {
                         $('#pwdChecklist').removeClass('visible');
-                        validatePassword(); /* calls your existing function */
+                        validatePassword(); // now runs AFTER clearing stops
                     }
                 }, 120);
             });
 
             $('#password').on('input', function() {
                 updatePwdChecklist($(this).val());
-                $('#pass_error').text('');
+                $('#pass_error').text(''); // don't validate mid-typing
             });
 
             /* ── eye toggle ── */
@@ -614,6 +610,22 @@ if (isset($_SESSION['user_email'])) {
                 $('#eyeIcon').toggleClass('fa-eye fa-eye-slash');
                 $(this).attr('aria-label', isPass ? 'Hide password' : 'Show password');
             });
+
+            function validatePassword() {
+                let pass = $('#password').val().trim();
+                let error = '';
+                let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                if (pass == '') {
+                    error = "Please Enter Password";
+                } else if (!regex.test(pass)) {
+                    error = "Please Enter Valid Password";
+                }
+
+                $('#pass_error').text(error);
+
+                return error === '';
+            }
 
             function confirmPassword() {
                 let pass = $('#password').val().trim();
@@ -644,6 +656,7 @@ if (isset($_SESSION['user_email'])) {
 
             $('#signup_form').on('submit', function(e) {
                 $('.btn').blur();
+
                 let validFName = validateFName();
                 let validLastName = validateLastName();
                 let validEmail = validateEmail();
