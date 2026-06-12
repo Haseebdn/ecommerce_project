@@ -1,4 +1,3 @@
-// add.php
 <?php
 include "../../sql/conn.php";
 
@@ -17,11 +16,13 @@ try {
         $query = "INSERT INTO c categories (cat_name, cat_description) 
                   VALUES ('$cat_name', '$cat_description')";
 
-        mysqli_query($conn, $query);
+        $run = mysqli_query($conn, $query);
+        if ($run) {
 
-        $_SESSION['success'] = "Category Added Successfully";
-        header("location:../../cat_table.php");
-        exit();
+            $_SESSION['success'] = "Category Added Successfully";
+            header("location:../../cat_table.php");
+            exit();
+        }
     }
 } catch (mysqli_sql_exception $e) {
 

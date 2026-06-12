@@ -1,9 +1,6 @@
 <?php
 include "../../sql/conn.php";
 
-// print_r($_POST);
-// die();
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
 
@@ -29,17 +26,20 @@ try {
         // response
 
         $run = mysqli_query($conn, $query);
+        if ($run) {
+            $_SESSION['success'] = "Unit Updated Successfully";
 
-        $_SESSION['success'] = "Unit Updated Successfully";
+            header("location:../../qtyUnit_table.php");
+            exit();
+        }
         // response
 
-        header("location:../../qtyUnit_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
 
-    $_SESSION['error'] = "Error :" . $e->getMessage();
+    error_log($e->getMessage());
 
-    header("location:../../qtyUnit_table.php");
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../qtyUnit_form.php");
     exit();
 }

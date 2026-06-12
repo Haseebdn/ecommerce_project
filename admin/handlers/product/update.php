@@ -1,6 +1,5 @@
 <?php
 include "../../sql/conn.php";
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
     if (isset($_POST) && !empty($_POST)) {
@@ -31,8 +30,8 @@ try {
         $record = mysqli_fetch_assoc($sql);
 
         if (!$record) {
-            $_SESSION['error'] = "Record not found";
-            header("location:../../product_table.php");
+            $_SESSION['error'] = "Record Not Found";
+            header("location:../../product_form.php");
             exit();
         }
         // fetch old imgs
@@ -111,16 +110,17 @@ try {
         $run = mysqli_query($conn, $query);
         if ($run) {
             $_SESSION['success'] = "Product Updated Successfully";
-        } else {
-            $_SESSION['error'] = "Product Updation Failed";
-        }
+            header("location:../../product_table.php");
+            exit();
+        } 
         // response
 
-        header("location:../../product_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error:" . $e->getMessage();
-    header("location:../../product_table.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../product_form.php");
     exit();
 }

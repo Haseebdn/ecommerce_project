@@ -156,21 +156,19 @@ if (isset($_SESSION['role_id'])) {
             ?>
             <!-- Products -->
 
-            <!-- Mails -->
+            <!-- orders -->
             <?php
-            $userPages = ['contact_table.php', 'reply_form.php'];
-            if (@$role['role_type'] == "All" || @$role['contact'] == 1) {
+            $userPages = ['view_orders.php'];
+            if (@$role['role_type'] == "All" || @$role['orders'] == 1) {
             ?>
                 <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
                     <a href="#" class="menu-toggle nav-link has-dropdown">
-                        <i class="fa-solid fa-envelope"></i><span>Mails</span>
+                        <i class="fa-solid fa-box"></i><span>Orders</span>
                     </a>
                     <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
-                        <li class="<?php echo ($page == 'reply_form.php') ? 'active' : ''; ?>">
-                            <a class="nav-link" href="reply_form.php">Reply Mails</a>
-                        </li>
-                        <li class="<?php echo ($page == 'contact_table.php') ? 'active' : ''; ?>">
-                            <a class="nav-link" href="contact_table.php">View Mails</a>
+
+                        <li class="<?php echo ($page == 'view_orders.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="view_orders.php">View Orders</a>
                         </li>
 
                     </ul>
@@ -178,7 +176,7 @@ if (isset($_SESSION['role_id'])) {
             <?php
             }
             ?>
-            <!-- Mails -->
+            <!-- orders -->
 
             <!-- users -->
             <?php
@@ -204,31 +202,10 @@ if (isset($_SESSION['role_id'])) {
             ?>
             <!-- users -->
 
-            <!-- orders -->
-            <?php
-            $userPages = ['view_orders.php'];
-            if (@$role['role_type'] == "All" || @$role['orders'] == 1) {
-            ?>
-                <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
-                    <a href="#" class="menu-toggle nav-link has-dropdown">
-                        <i class="fa-solid fa-box"></i><span>Orders</span>
-                    </a>
-                    <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
-                        
-                        <li class="<?php echo ($page == 'view_orders.php') ? 'active' : ''; ?>">
-                            <a class="nav-link" href="view_orders.php">View Orders</a>
-                        </li>
-
-                    </ul>
-                </li>
-            <?php
-            }
-            ?>
-            <!-- orders -->
 
             <!-- POS -->
             <?php
-            $userPages = ['pos_orders','pos_view'];
+            $userPages = ['pos_orders', 'pos_view'];
             if (@$role['role_type'] == "All" || @$role['pos'] == 1) {
             ?>
                 <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
@@ -236,7 +213,7 @@ if (isset($_SESSION['role_id'])) {
                         <i class="fa-solid fa-receipt"></i><span>POS</span>
                     </a>
                     <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
-                        
+
                         <li class="<?php echo ($page == 'pos_orders.php') ? 'active' : ''; ?>">
                             <a class="nav-link" href="pos_orders.php">POS Orders</a>
                         </li>
@@ -250,6 +227,30 @@ if (isset($_SESSION['role_id'])) {
             }
             ?>
             <!-- POS -->
+
+            <!-- Mails -->
+            <?php
+            $userPages = ['contact_table.php', 'reply_form.php'];
+            if (@$role['role_type'] == "All" || @$role['contact'] == 1) {
+            ?>
+                <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">
+                    <a href="#" class="menu-toggle nav-link has-dropdown">
+                        <i class="fa-solid fa-envelope"></i><span>Mails</span>
+                    </a>
+                    <ul class="dropdown-menu" style="<?php echo isActive($userPages, $page) ? 'display:block;' : ''; ?>">
+                        <li class="<?php echo ($page == 'reply_form.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="reply_form.php">Reply Mails</a>
+                        </li>
+                        <li class="<?php echo ($page == 'contact_table.php') ? 'active' : ''; ?>">
+                            <a class="nav-link" href="contact_table.php">View Mails</a>
+                        </li>
+
+                    </ul>
+                </li>
+            <?php
+            }
+            ?>
+            <!-- Mails -->
 
             <!-- user management -->
             <?php

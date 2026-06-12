@@ -1,9 +1,6 @@
 <?php
 include "../../sql/conn.php";
 
-// print_r($_POST);
-// die();
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
     if (isset($_POST) && !empty($_POST)) {
@@ -16,7 +13,7 @@ try {
         // validation
         if (empty($parent_id) || empty($subcat_name)) {
             $_SESSION['error'] = "Please Fill All Fields Correctly";
-            header("location:../../subcat_table.php");
+            header("location:../../subcat_form.php");
             exit();
         }
         // validation
@@ -29,16 +26,18 @@ try {
         $run = mysqli_query($conn, $query);
         if ($run) {
             $_SESSION['success'] = "Subcategory Added Successfully";
-        } else {
-            $_SESSION['error'] = "Failed To Add";
-        }
-
+            
+            header("location:../../subcat_table.php");
+            exit();
+        } 
         // response
-        header("location:../../subcat_table.php");
-        exit();
+
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error:" . $e->getMessage();
-    header("location:../../subcat_table.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../subcat_form.php");
     exit();
 }

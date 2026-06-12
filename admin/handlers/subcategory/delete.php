@@ -1,6 +1,5 @@
 <?php
 include "../../sql/conn.php";
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
     if (isset($_GET) && !empty($_GET)) {
@@ -17,16 +16,18 @@ try {
         $run = mysqli_query($conn, $query);
         if ($run) {
             $_SESSION['success'] = "Subcategory Deleted Successfully";
-        } else {
-            $_SESSION['error'] = "Subcategory Deletion Failed";
-        }
+            
+            header("location:../../subcat_table.php");
+            exit();
+        } 
         // response
 
-        header("location:../../subcat_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error:" . $e->getMessage();
-    header("location:../../subcat_table.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../subcat_table.php");
     exit();
 }

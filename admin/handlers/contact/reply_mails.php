@@ -69,7 +69,10 @@ try {
         }
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error:" . $e->getMessage();
-    header("location:../../reply_form.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../reply_form.php");
     exit();
 }

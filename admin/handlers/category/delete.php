@@ -17,17 +17,17 @@ try {
 
         if ($run && mysqli_affected_rows($conn) > 0) {
             $_SESSION['success'] = "Category Deleted Successfully";
+            header("location:../../cat_table.php");
+            exit();
         }
         // response
 
-        header("location:../../cat_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
 
     error_log($e->getMessage());
 
     $_SESSION['error'] = "Something went wrong.";
-    header("Location: ../../cat_form.php");
+    header("Location: ../../cat_table.php");
     exit();
 }

@@ -1,9 +1,6 @@
 <?php
 include "../../sql/conn.php";
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-// print_r($_POST);
-// die();
 try {
     if (isset($_POST) && !empty($_POST)) {
         // variables
@@ -26,12 +23,13 @@ try {
 
         // response
         $run = mysqli_query($conn, $query);
-
-        $_SESSION['success'] = "Category Updated Successfully";
+        if ($run) {
+            $_SESSION['success'] = "Category Updated Successfully";
+            header("location:../../cat_table.php");
+            exit();
+        }
         // response
 
-        header("location:../../cat_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
 

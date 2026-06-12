@@ -1,9 +1,6 @@
 <?php
 include "../../sql/conn.php";
 
-// print_r($_POST);
-// die();
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
 
@@ -16,7 +13,7 @@ try {
         // validation
         if (empty($unit_name)) {
             $_SESSION['error'] = "Please Fill All Fields Correctly";
-            header("location:../../qtyUnit_table");
+            header("location:../../qtyUnit_form.php");
             exit();
         }
         // validation
@@ -27,14 +24,20 @@ try {
 
         // response
         $run = mysqli_query($conn, $query);
-        $_SESSION['success'] = "Unit Added Successfully";
+        if ($run) {
+            $_SESSION['success'] = "Unit Added Successfully";
+
+            header("location:../../qtyUnit_table.php");
+            exit();
+        }
         // response
 
-        header("location:../../qtyUnit_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error :" . $e->getMessage();
-    header("location:../../qtyUnit_table.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../qtyUnit_form.php");
     exit();
 }

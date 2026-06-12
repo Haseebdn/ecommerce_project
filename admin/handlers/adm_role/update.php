@@ -1,6 +1,5 @@
 <?php
 include "../../sql/conn.php";
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 try {
 
     if (isset($_POST) && !empty($_POST)) {
@@ -11,7 +10,7 @@ try {
 
         if (empty($roleName) || empty($roleType)) {
             $_SESSION['error'] = "Please Fill  All Fields Correctly";
-            header("location:../../role_table.php");
+            header("location:../../role_form.php");
             exit();
         }
 
@@ -57,13 +56,16 @@ try {
         $run = mysqli_query($conn, $query);
         if ($run) {
             $_SESSION['success'] = "Role Updated Successfully";
+            header("location:../../role_table.php");
+            exit();
         }
 
-        header("location:../../role_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error:" . $e->getMessage();
-    header("location:../../role_table.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../role_form.php");
     exit();
 }

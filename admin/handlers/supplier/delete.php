@@ -1,8 +1,6 @@
 <?php
 include "../../sql/conn.php";
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
 try {
 
     if (isset($_GET) && !empty($_GET)) {
@@ -26,8 +24,10 @@ try {
         exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error : " . $e->getMessage();
 
-    header("location:../../supplier_table.php");
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../supplier_table.php");
     exit();
 }

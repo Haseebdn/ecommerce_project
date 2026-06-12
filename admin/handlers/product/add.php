@@ -1,12 +1,5 @@
 <?php
 include "../../sql/conn.php";
-// echo '<pre>';
-// print_r($_POST);
-// print_r($_FILES);
-// echo '</pre>';
-// die();
-
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
 
@@ -29,9 +22,9 @@ try {
         // variables
 
         // validation
-        if (empty($cat_id) || empty($subcat_id) || empty($supp_id) || empty($p_code) || empty($p_name) || empty($unit_price) || empty($stock) || empty($p_thumbnail)|| empty($qty_type)) {
+        if (empty($cat_id) || empty($subcat_id) || empty($supp_id) || empty($p_code) || empty($p_name) || empty($unit_price) || empty($stock) || empty($p_thumbnail) || empty($qty_type)) {
             $_SESSION['error'] = "Please Fill All Fields Correctly";
-            header("location:../../product_table.php");
+            header("location:../../product_form.php");
             exit();
         }
         // validation
@@ -42,7 +35,7 @@ try {
             $ext = strtolower(pathinfo($p_thumbnail, PATHINFO_EXTENSION));
             if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
                 $_SESSION['error'] = "Invalid File Format";
-                header("location:../../product_table.php");
+                header("location:../../product_form.php");
                 exit();
             }
             $thumbnail_name = time() . rand(1, 10000) . '.' . $ext;
@@ -60,7 +53,7 @@ try {
                 $ext = strtolower(pathinfo($item, PATHINFO_EXTENSION));
                 if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
                     $_SESSION['error'] = "Invalid File Format";
-                    header("location:../../product_table.php");
+                    header("location:../../product_form.php");
                     exit();
                 }
                 $pImgs_ext[] = $ext;
@@ -83,16 +76,17 @@ try {
         $run = mysqli_query($conn, $query);
         if ($run) {
             $_SESSION['success'] = "Product Added Successfully";
-        } else {
-            $_SESSION['error'] = "Failed To Add";
+            header("location:../../product_table.php");
+            exit();
         }
         // response
 
-        header("location:../../product_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error:" . $e->getMessage();
-    header("location:../../product_table.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../product_form.php");
     exit();
 }

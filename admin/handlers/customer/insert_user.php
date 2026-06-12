@@ -1,11 +1,7 @@
 <?php
 include "../../sql/conn.php";
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
 try {
-    // print_r($_POST);
-    // die();
     if (isset($_POST) && !empty($_POST)) {
 
 
@@ -24,7 +20,7 @@ try {
 
         if (empty($f_name) || empty($last_name) || empty($u_email) || empty($p_number) || empty($country) || empty($state) || empty($city) || empty($address) || empty($gender) || empty($password)) {
             $_SESSION['error'] = "Please Fill All Fields Correctly";
-            header("location:../../register_users.php");
+            header("location:../../add_user.php");
             exit();
         }
 
@@ -39,7 +35,7 @@ try {
 
             $_SESSION['error'] = "Email Already Exists";
 
-            header("Location:../../register_users.php");
+            header("Location:../../add_user.php");
             exit();
         }
 
@@ -49,13 +45,15 @@ try {
         $run = mysqli_query($conn, $query);
         if ($run) {
             $_SESSION['success'] = "User Added Successfully";
+            header("location:../../register_users.php");
+            exit();
         }
-
-        header("location:../../register_users.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error :" . $e->getMessage();
-    header("location:../../register_users.php");
+
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../add_user.php");
     exit();
 }

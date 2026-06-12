@@ -1,10 +1,6 @@
 <?php
 include "../../sql/conn.php";
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
-// print_r($_POST);
-// die();
 
 try {
 
@@ -19,7 +15,7 @@ try {
         // validation
         if (empty($supp_name) || empty($supp_email) || empty($supp_telno) || empty($id)) {
             $_SESSION['error'] = "Please Fill All Fields Correctly";
-            header('location:../../supplier_table.php');
+            header('location:../../supplier_form.php');
             exit();
         }
         // validation
@@ -31,16 +27,20 @@ try {
 
         // response
         $run = mysqli_query($conn, $query);
+        if ($run) {
+            $_SESSION['success'] = "Supplier Updated Successfully";
 
-        $_SESSION['success'] = "Supplier Updated Successfully";
+            header("location:../../supplier_table.php");
+            exit();
+        }
         // response
 
-        header("location:../../supplier_table.php");
-        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    $_SESSION['error'] = "Error : " . $e->getMessage();
 
-    header("location:../../supplier_table.php");
+    error_log($e->getMessage());
+
+    $_SESSION['error'] = "Something went wrong.";
+    header("Location: ../../supplier_form.php");
     exit();
 }
