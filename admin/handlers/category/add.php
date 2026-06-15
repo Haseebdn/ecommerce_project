@@ -13,7 +13,7 @@ try {
             exit();
         }
 
-        $query = "INSERT INTO c categories (cat_name, cat_description) 
+        $query = "INSERT INTO  categories (cat_name, cat_description) 
                   VALUES ('$cat_name', '$cat_description')";
 
         $run = mysqli_query($conn, $query);

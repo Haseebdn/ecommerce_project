@@ -1,7 +1,7 @@
 <?php
 include "./sql/conn.php";
 if (!isset($_SESSION['user_email'])) {
-    $_SESSION['error']="Please Login First";
+    $_SESSION['error'] = "Please Login First";
     header("Location: /login.php");
     exit();
 }
@@ -51,9 +51,9 @@ $email = $_SESSION['user_email'];
                     <div class="img_wrapper">
                         <img class="p_pic" src="./img/default.jpg" alt=""
                             onclick="document.getElementById('pic').click()">
-                            <div class="icon">
-                                <i class=" h4 fa fa-camera" aria-hidden="true"></i>
-                            </div>
+                        <div class="icon">
+                            <i class=" h4 fa fa-camera" aria-hidden="true"></i>
+                        </div>
                     </div>
                 </div>
             <?php
@@ -63,7 +63,7 @@ $email = $_SESSION['user_email'];
                     <div class="img_wrapper">
                         <img class="p_pic" src="./uploads/profile_pictures/<?php echo $p_pic ?>" alt="" onclick="document.getElementById('pic').click()">
                         <div class="icon">
-                                <i class=" h4 fa fa-camera" aria-hidden="true"></i>
+                            <i class=" h4 fa fa-camera" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@ $email = $_SESSION['user_email'];
             </form>
             <form method="POST" class="w-100 pt-3 " action="./change_email.php">
                 <input type="hidden" name="email_change" value="">
-                <button type="submit" class="btn text-white btn-warning w-100">Change Email</button>
+                <button type="submit" class="btn text-white btn-primary w-100">Change Email</button>
             </form>
             <form method="POST" class="w-100 pt-3 " action="./change_password.php">
                 <input type="hidden" name="password_change" value="">
@@ -177,17 +177,23 @@ $email = $_SESSION['user_email'];
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($pendingOrders as $r): ?>
+                                    <?php if (empty($pendingOrders)): ?>
                                         <tr>
-                                            <td class="order-no"><?= $r['order_no'] ?></td>
-                                            <td><?= $r['p_name'] ?></td>
-                                            <td><?= $r['p_code'] ?></td>
-                                            <td><?= $r['price'] ?> PKR</td>
-                                            <td><?= $r['p_qty'] ?></td>
-                                            <td><strong><?= $r['t_price'] ?> PKR</strong></td>
-                                            <td><span class="badge-pending">Pending</span></td>
+                                            <td colspan="7" class="text-center text-muted py-4">No pending orders available.</td>
                                         </tr>
-                                    <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <?php foreach ($pendingOrders as $r): ?>
+                                            <tr>
+                                                <td class="order-no"><?= $r['order_no'] ?></td>
+                                                <td><?= $r['p_name'] ?></td>
+                                                <td><?= $r['p_code'] ?></td>
+                                                <td><?= $r['price'] ?> PKR</td>
+                                                <td><?= $r['p_qty'] ?></td>
+                                                <td><strong><?= $r['t_price'] ?> PKR</strong></td>
+                                                <td><span class="badge-pending">Pending</span></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -213,17 +219,23 @@ $email = $_SESSION['user_email'];
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($completedOrders as $r): ?>
+                                    <?php if (empty($completedOrders)): ?>
                                         <tr>
-                                            <td class="order-no"><?= $r['order_no'] ?></td>
-                                            <td><?= $r['p_name'] ?></td>
-                                            <td><?= $r['p_code'] ?></td>
-                                            <td><?= $r['price'] ?> PKR</td>
-                                            <td><?= $r['p_qty'] ?></td>
-                                            <td><strong><?= $r['t_price'] ?> PKR</strong></td>
-                                            <td><span class="badge-completed">Completed</span></td>
+                                            <td colspan="7" class="text-center text-muted py-4">No completed orders available.</td>
                                         </tr>
-                                    <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <?php foreach ($completedOrders as $r): ?>
+                                            <tr>
+                                                <td class="order-no"><?= $r['order_no'] ?></td>
+                                                <td><?= $r['p_name'] ?></td>
+                                                <td><?= $r['p_code'] ?></td>
+                                                <td><?= $r['price'] ?> PKR</td>
+                                                <td><?= $r['p_qty'] ?></td>
+                                                <td><strong><?= $r['t_price'] ?> PKR</strong></td>
+                                                <td><span class="badge-completed">Completed</span></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -242,29 +254,28 @@ include "./includes/footer.php";
 ?>
 
 <script>
-    
     <?php if (isset($_SESSION['success'])) { ?>
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "<?php echo $_SESSION['success']; ?>",
-                showConfirmButton: false,
-                timer: 2000
-            });
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "<?php echo $_SESSION['success']; ?>",
+            showConfirmButton: false,
+            timer: 2000
+        });
 
-            <?php unset($_SESSION['success']); ?>
-        <?php } ?>
+        <?php unset($_SESSION['success']); ?>
+    <?php } ?>
 
-        <?php if (isset($_SESSION['error'])) { ?>
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "<?php echo $_SESSION['error']; ?>",
-                showConfirmButton: false,
-                timer: 2000
-            });
-            <?php unset($_SESSION['error']); ?>
-        <?php } ?>
+    <?php if (isset($_SESSION['error'])) { ?>
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "<?php echo $_SESSION['error']; ?>",
+            showConfirmButton: false,
+            timer: 2000
+        });
+        <?php unset($_SESSION['error']); ?>
+    <?php } ?>
 
     function paginate(tableId, pgBarId, rowsPerPage) {
         const rows = Array.from(document.querySelectorAll('#' + tableId + ' tbody tr'));

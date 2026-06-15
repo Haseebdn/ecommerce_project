@@ -18,6 +18,12 @@ try {
         $qty = mysqli_real_escape_string($conn, $_POST['qty']);
         $stock = mysqli_real_escape_string($conn, $_POST['stock']);
 
+        if (empty($cat_id) || empty($subcat_id) || empty($supp_id) || empty($p_code) || empty($p_name) || empty($unit_price) || empty($stock) || empty($p_thumbnail) || empty($qty_type)) {
+            $_SESSION['error'] = "Please Fill All Fields Correctly";
+            header("location:../../product_form.php");
+            exit();
+        }
+
         $p_thumbnail = $_FILES['p_thumbnail']['name'];
         $p_tmp = $_FILES['p_thumbnail']['tmp_name'];
 
@@ -112,7 +118,7 @@ try {
             $_SESSION['success'] = "Product Updated Successfully";
             header("location:../../product_table.php");
             exit();
-        } 
+        }
         // response
 
     }

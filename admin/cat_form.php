@@ -30,7 +30,7 @@ if (isset($_GET['id']) && $_GET['id'] != "") {
             </div>
             <!-- heading -->
             <!-- form -->
-            <form id="cat_form" action="<?php echo isset($_GET['id']) ? './handlers/category/update.php' : './handlers/category/add.php' ?>" method="POST">
+            <form id="cat_form" action="<?php echo isset($_GET['id']) ? './handlers/category/update.php' : './handlers/category/add.php' ?>" method="POST" novalidate>
 
               <div class="card-body">
                 <!-- index to edit -->

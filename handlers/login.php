@@ -32,7 +32,7 @@ try {
             if (password_verify($pass, $hashed_password)) {
 
                 $_SESSION['user_email'] = $User['u_email'];
-
+                $_SESSION['success'] = "Logged In Successfully";
                 header("Location: ../index.php");
                 exit();
             } else {

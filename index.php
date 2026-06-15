@@ -316,5 +316,28 @@ include "./includes/footer.php"
                 $(this).addClass('active');
             });
         }
+
+        <?php if (isset($_SESSION['success'])) { ?>
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "<?php echo $_SESSION['success']; ?>",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                <?php unset($_SESSION['success']); ?>
+            <?php } ?>
+
+            <?php if (isset($_SESSION['error'])) { ?>
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "<?php echo $_SESSION['error']; ?>",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                <?php unset($_SESSION['error']); ?>
+            <?php } ?>
     });
 </script>

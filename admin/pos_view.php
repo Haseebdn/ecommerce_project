@@ -66,9 +66,6 @@
                                                      </a>
                                                  </td>
                                                  <td>
-                                                     <a class="btn btn-primary btn-sm"
-                                                         href=""><i class="fa-solid fa-pen"></i>
-                                                     </a>
                                                      <a class="btn btn-danger btn-sm deleteBtn"
                                                          href="./handlers/postable/delete.php?iNo=<?php echo base64_encode($order['invoice_no'])  ?>">
                                                          <i class="fa-solid fa-trash"></i>

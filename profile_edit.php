@@ -35,7 +35,7 @@ $row = mysqli_fetch_assoc($sql);
 
 <div class="container mt-5">
     <h2>Edit Profile</h2>
-    <form id="edit_form" action="./handlers/edit_profile.php" method="POST">
+    <form id="edit_form" action="./handlers/edit_profile.php" method="POST" novalidate>
         <div class="row">
             <div class="div_input col-md-6">
                 <label for="">First Name</label><span class="text-danger"> *</span>
