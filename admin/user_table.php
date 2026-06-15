@@ -39,6 +39,7 @@
                                      <!-- table head -->
                                      <thead>
                                          <tr>
+                                            <th>ID</th>
                                              <th>User Name</th>
                                              <th>User Email</th>
                                              <th>Role</th>
@@ -58,6 +59,7 @@
                                             ?>
 
                                              <tr>
+                                                <td><?php  echo $row ['id']    ?></td>
                                                  <td><?php echo $row['adm_name'] ?? '' ?></td>
                                                  <td><?php echo $row['adm_email'] ?? '' ?></td>
                                                  <td><?php echo $row['role_name'] ?? ''    ?></td>

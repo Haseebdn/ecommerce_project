@@ -25,6 +25,7 @@
 
                    <thead>
                      <tr>
+                      <th>ID</th>
                        <th>Category</th>
                        <th>Description</th>
                        <th>Status</th>
@@ -42,6 +43,7 @@
                       while ($row = mysqli_fetch_assoc($sql)) {
                       ?>
                        <tr>
+                        <td><?php  echo $row['id']    ?></td>
                          <td><?php echo $row['cat_name']; ?></td>
                          <td><?php echo $row['cat_description']; ?></td>
                          <!-- switch -->

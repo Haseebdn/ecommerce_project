@@ -28,6 +28,7 @@
                    <!-- table head -->
                    <thead>
                      <tr>
+                       <th>ID</th>
                        <th>Subcategory</th>
                        <th>Category</th>
                        <th>Description</th>
@@ -52,6 +53,7 @@
                       while ($row = mysqli_fetch_assoc($sql)) {
                       ?>
                        <tr>
+                         <td><?php echo $row['id']    ?></td>
                          <td><?php echo $row['cat_name']; ?></td>
                          <td><?php echo $row['parent_name']    ?></td>
                          <td><?php echo $row['cat_description']; ?></td>

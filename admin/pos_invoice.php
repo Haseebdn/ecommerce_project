@@ -2,13 +2,14 @@
     include "./sql/conn.php";
     include "./include/header.php";
     include "./include/sidebar.php";
-    $email = null;
-    $order_no = null;
-
     if (isset($_GET)) {
-        $order_no = $_GET['oNo'];
-        $email = $_GET['email'];
+        $invoice_no = $_GET['iNo'];
     }
+    // else{
+    //     $_SESSION['error']="Invalid Order";
+    //     header("location:./pos_view.php");
+    //     exit();
+    // }
 
     ?>
 
@@ -22,48 +23,39 @@
                          <div class="col-lg-12">
                              <div class="invoice-title">
                                  <h2>Invoice</h2>
-                                 <div class="invoice-number">Order #<?php echo $order_no   ?></div>
+                                 <div class="invoice-number">Invoice #<?php echo $invoice_no   ?></div>
                              </div>
                              <hr>
                              <?php
-                                $users = "SELECT * FROM `user` WHERE `u_email`='$email'";
+                                $users = "SELECT * FROM `pos_user` WHERE `invoice_no`='$invoice_no'";
                                 $uql = mysqli_query($conn, $users);
                                 $fetched = mysqli_fetch_assoc($uql);
                                 ?>
-                             <div class="row">
+                             <div class="row mb-3">
                                  <div class="col-md-6">
                                      <address>
-                                         <strong>Billed To:</strong><br>
-                                         <?php echo $fetched['f_name'] . ' ' . $fetched['last_name'];     ?> <br>
-                                         <?php echo $fetched['address']    ?>
-
+                                         <strong>Purchased By:</strong><br>
+                                         <?php echo $fetched['name']   ?><br>
+                                         <strong>Phone NO.</strong><br>
+                                         <?php echo $fetched['p_number']    ?>
                                      </address>
                                  </div>
-                                 <?php
-                                    $oUsers = "SELECT * FROM `order_user` WHERE `order_no`='$order_no'";
-                                    $oUql = mysqli_query($conn, $oUsers);
-                                    $oFetched = mysqli_fetch_assoc($oUql);
-                                    ?>
                                  <div class="col-md-6 text-md-right">
-                                     <address>
-                                         <strong>Shipped To:</strong><br>
-                                         <?php echo $oFetched['f_name'] . ' ' . $oFetched['last_name'];     ?><br>
-                                         <?php echo $oFetched['od_address']    ?>
-                                     </address>
+                                     <strong>Cashier Email:</strong> <br>
+                                     <?php echo $fetched['adm_email']    ?>
                                  </div>
                              </div>
                              <div class="row">
                                  <div class="col-md-6">
                                      <address>
-                                         <strong>Payment Method:</strong><br>
-                                         <?php echo $oFetched['payment_method']    ?><br>
-                                         <?php echo $oFetched['od_email']    ?>
+                                         <strong>Payment Status:</strong><br>
+                                         <?php echo ucfirst($fetched['status'])    ?>
                                      </address>
                                  </div>
                                  <div class="col-md-6 text-md-right">
                                      <address>
                                          <strong>Order Date:</strong><br>
-                                         <?php echo $oFetched['date']    ?><br><br>
+                                         <?php echo $fetched['date']   ?>
                                      </address>
                                  </div>
                              </div>
@@ -84,19 +76,19 @@
                                      </tr>
                                      <?php
                                         $g_total = null;
-                                        $query = "SELECT * FROM `orders` WHERE `order_no`='$order_no' ";
+                                        $query = "SELECT * FROM `pos_orders` WHERE `invoice_no`='$invoice_no' ";
                                         $sql = mysqli_query($conn, $query);
                                         while ($order = mysqli_fetch_assoc($sql)) {
                                         ?>
                                          <tr>
                                              <td>1</td>
                                              <td><?php echo $order['p_name']    ?></td>
-                                             <td class="text-center"><?php echo $order['price']    ?> PKR</td>
+                                             <td class="text-center"><?php echo $order['p_price']    ?> PKR</td>
                                              <td class="text-center"><?php echo $order['p_qty']    ?></td>
-                                             <td class="text-right"><?php echo $order['t_price']    ?> PKR</td>
+                                             <td class="text-right"><?php echo $order['total_price']    ?> PKR</td>
                                          </tr>
                                      <?php
-                                            $g_total += $order['t_price'];
+                                            $g_total += $order['total_price'];
                                         }
                                         ?>
 

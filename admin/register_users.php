@@ -25,6 +25,7 @@
 
                                      <thead>
                                          <tr>
+                                            <th>ID</th>
                                              <th>Name</th>
                                              <th>Email</th>
                                              <th>Phone Number</th>
@@ -44,6 +45,7 @@
                                             while ($row = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
+                                                <td><?php  echo $row['id']    ?></td>
                                                  <td><?php echo $row['f_name'] . ' ' . $row['last_name']; ?></td>
                                                  <td><?php echo $row['u_email']    ?></td>
                                                  <td><?php echo $row['p_number']    ?></td>

@@ -205,7 +205,7 @@ if (isset($_SESSION['role_id'])) {
 
             <!-- POS -->
             <?php
-            $userPages = ['pos_orders', 'pos_view'];
+            $userPages = ['pos_orders.php','pos_view.php'];
             if (@$role['role_type'] == "All" || @$role['pos'] == 1) {
             ?>
                 <li class="dropdown <?php echo isActive($userPages, $page) ? 'active' : ''; ?>">

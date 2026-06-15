@@ -24,6 +24,7 @@
                                      <!-- table head -->
                                      <thead>
                                          <tr>
+                                            <th>ID</th>
                                              <th>Image</th>
                                              <th>Category</th>
                                              <th>Subcategory</th>
@@ -45,6 +46,7 @@
                                             while ($row = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
+                                                <td><?php  echo $row['id']    ?></td>
                                                  <td><img id="p_img_table" class="img-fluid" src="./uploads/thumbnail/<?php echo $row['p_thumbnail'] ?? '' ?>" alt="image" width="50"></td>
                                                  <td><?php echo $row['category_name']    ?></td>
                                                  <td><?php echo $row['subcat_name']    ?></td>

@@ -24,6 +24,7 @@
                                      <!-- table head -->
                                      <thead>
                                          <tr>
+                                            <th>ID</th>
                                              <th>Role Name</th>
                                              <th>Role Type</th>
                                              <th>Category</th>
@@ -46,6 +47,7 @@
                                             while ($row = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
+                                                 <td><?php echo $row['id'] ?? ''    ?></td>
                                                  <td><?php echo $row['role_name'] ?? ''    ?></td>
                                                  <td><?php echo $row['role_type'] ?? ''    ?></td>
                                                  <td><?php echo isset($row['role_type']) && ($row["role_type"] === 'All') ? '' : $row['categories']   ?></td>

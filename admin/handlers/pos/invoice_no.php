@@ -24,7 +24,7 @@ try {
             $no = $invoice + 1;
         } else {
 
-            $no = 1001; // starting invoice number
+            $no ="001"; // starting invoice number
 
         }
 

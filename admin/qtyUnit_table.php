@@ -24,6 +24,7 @@
                                      <!-- table head -->
                                      <thead>
                                          <tr>
+                                            <th>ID</th>
                                              <th>Unit Name</th>
                                              <th>Description</th>
                                              <th>Status</th>
@@ -41,6 +42,7 @@
                                             while ($row = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
+                                                <td><?php  echo $row ['id']    ?></td>
                                                  <td><?php echo $row['unit_name']  ?></td>
                                                  <td><?php echo $row['unit_description'] ?? '' ?></td>
                                                  <!-- switch -->

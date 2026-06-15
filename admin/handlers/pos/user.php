@@ -64,20 +64,20 @@ try {
                 $dql = mysqli_query($conn, $delete);
                 echo json_encode([
                     'status' => 200,
-                    'msg' => "Data Inserted Successfully"
+                    'msg' => "Order Placed Successfully"
                 ]);
             } else {
 
                 echo json_encode([
                     'status' => 500,
-                    'msg' => "Data Insertion Failed"
+                    'msg' => "Failed To Place Order"
                 ]);
             }
         } else {
 
             echo json_encode([
                 'status' => 500,
-                'msg' => "Data Insertion Failed"
+                'msg' => "Failed To Place Order"
             ]);
         }
     }

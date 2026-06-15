@@ -25,6 +25,7 @@
 
                                      <thead>
                                          <tr>
+                                            <th>ID</th>
                                              <th>Name</th>
                                              <th>Email</th>
                                              <th>Message</th>
@@ -42,6 +43,7 @@
                                             while ($row = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
+                                                <td><?php  echo $row['id']    ?></td>
                                                  <td><?php echo $row['name']    ?></td>
                                                  <td><?php echo $row['u_email']    ?></td>
                                                  <td><?php echo $row['msg']    ?></td>

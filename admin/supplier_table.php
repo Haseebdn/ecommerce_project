@@ -24,6 +24,7 @@
                    <!-- table head -->
                    <thead>
                      <tr>
+                       <th>ID</th>
                        <th>Supplier</th>
                        <th>Email</th>
                        <th>Phone Number</th>
@@ -43,6 +44,7 @@
                       ?>
 
                        <tr>
+                         <td><?php echo $row['id']    ?></td>
                          <td><?php echo $row['supp_name']    ?></td>
                          <td><?php echo $row['supp_email']    ?></td>
                          <td><?php echo $row['supp_telno']    ?></td>

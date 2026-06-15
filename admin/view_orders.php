@@ -25,6 +25,7 @@
                                      <!-- table head -->
                                      <thead>
                                          <tr>
+                                             <th>ID</th>
                                              <th>Product</th>
                                              <th>Product Code</th>
                                              <th>Total Price</th>
@@ -46,6 +47,9 @@
                                             while ($order = mysqli_fetch_assoc($sql)) {
                                             ?>
                                              <tr>
+                                                 <td>
+                                                     <?php echo $order['id']    ?>
+                                                 </td>
                                                  <td>
                                                      <?php echo $order['p_name']    ?>
                                                  </td>
@@ -83,7 +87,8 @@
                                                      </form>
                                                  </td>
                                                  <td>
-                                                     <a class="btn btn-primary btn-sm" href="./invoice.php?oNo=<?php echo $order['order_no'] ?>">
+                                                     <a class="btn btn-primary btn-sm"
+                                                         href="./invoice.php?oNo=<?php echo urlencode($order['order_no']); ?>&email=<?php echo urlencode($order['order_email']); ?>">
                                                          <i class="fa-solid fa-receipt"></i>
                                                      </a>
                                                  </td>
